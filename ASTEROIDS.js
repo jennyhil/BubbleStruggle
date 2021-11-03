@@ -51,6 +51,7 @@ function createInitialPlayer() {
     entityManager.generatePlayer({
         cx : g_canvas.width/2,
         cy : g_canvas.height-30
+        
     });
     
 }
@@ -111,6 +112,7 @@ var KEY_2 = keyCode('2');
 var KEY_K = keyCode('K');
 
 function processDiagnostics() {
+    
 
     if (eatKey(KEY_MIXED))
         g_allowMixedActions = !g_allowMixedActions;

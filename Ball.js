@@ -75,6 +75,8 @@ Ball.prototype.setVelocity = function () {
         this.velY = 4;
         i++;
     }
+
+    if (this.split) this.velY *= -1;
     /*
     var MIN_ROT_SPEED = 0.5,
         MAX_ROT_SPEED = 2.5;
@@ -133,6 +135,7 @@ Ball.prototype._spawnFragment = function () {
         cx: this.cx,
         cy: this.cy,
         scale: this.scale / 2,
+        split: true
         
     });
 };

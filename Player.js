@@ -104,7 +104,7 @@ Player.prototype._moveToASafePlace = function () {
         var warpDirn = Math.random() * consts.FULL_CIRCLE;
 
         this.cx = origX + warpDistance * Math.sin(warpDirn);
-        this.cy = g_canvas.height-30;
+        this.cy = g_canvas.height - 30;
 
         this.wrapPosition();
 
@@ -122,22 +122,18 @@ Player.prototype._moveToASafePlace = function () {
 
     }
 };
-var GRAVITY = 2;
+//var GRAVITY = 2;
 Player.prototype.update = function (du) {
     var nextX = this.cx;
     var nextY = this.cy;
 
-    if (this.cy+g_sprites.player.height/2  < 600) {
-        nextY += GRAVITY;
-    }
-
     if (keys[this.KEY_RIGHT]) {
-            nextX += 5 * du;
+        if(this.notOnGround()) nextX+=2*du;
+        else nextX += 4 * du;
     } else if (keys[this.KEY_LEFT]) {
-            nextX -= 5 * du;
-    } else if (eatKey(this.KEY_JUMP)) {
-        nextY -= 100 * du;
-    }
+        if(this.notOnGround()) nextX-=2*du;
+        else nextX -= 4 * du;
+    } 
     this.cx = nextX
     this.cy = nextY;
 
@@ -153,11 +149,11 @@ Player.prototype.update = function (du) {
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
     // Perform movement substeps
-   /* var steps = this.numSubSteps;
+    var steps = this.numSubSteps;
     var dStep = du / steps;
     for (var i = 0; i < steps; ++i) {
         this.computeSubStep(dStep);
-    }*/
+    }
 
     // Handle firing
     this.maybeFireBullet();
@@ -168,7 +164,7 @@ Player.prototype.update = function (du) {
 
 };
 
-/*Player.prototype.computeSubStep = function (du) {
+Player.prototype.computeSubStep = function (du) {
     var thrust = this.computeThrustMag();
     // Apply thrust directionally, based on our rotation
     var accelX = +Math.sin(this.rotation) * thrust;
@@ -176,28 +172,40 @@ Player.prototype.update = function (du) {
     accelY += this.computeGravity();
     this.applyAccel(accelX, accelY, du);
     this.wrapPosition();
-    if (thrust === 0 || g_allowMixedActions) {
-        this.updateRotation(du);
-    }
-};*/
+};
 
-var NOMINAL_GRAVITY = 0.12;
+// Spurning hvað við viljum að gravity sé, hækkaði í 0.15 úr 0.12
+var NOMINAL_GRAVITY = 0.15;
 
 Player.prototype.computeGravity = function () {
     return g_useGravity ? NOMINAL_GRAVITY : 0;
 };
 
-//var NOMINAL_THRUST = 30;
-var NOMINAL_RETRO = -0.1;
+var NOMINAL_THRUST = +6;
+var maxJumpHeight = 500;
 
-/*Player.prototype.computeThrustMag = function () {
+// Hjálparfall til að ath hvort sprite sé á jörðinni/lentur eftir hoppið
+Player.prototype.notOnGround = function () {
+    if (this.cy + this.getRadius() <= 600 - 10) {
+        return true
+    }
+    return false
+}
+
+// Sér um hoppið og passar að það sé ekki hægt að hoppa tvisvar
+Player.prototype.computeThrustMag = function () {
     var thrust = 0;
-    if (eatKey(this.KEY_THRUST)) {
-        this.cy -= 100;
+    // Ef ýtt er á Jump (w) og við erum ekki í miðju hoppi eða búin að ná max hæð þá eykst thrust
+    if (eatKey(this.KEY_JUMP) && this.cy > maxJumpHeight && !this.notOnGround()) {
+        // hér erum við í stökkinu
+        thrust += NOMINAL_THRUST;
+    } else {
+        // Ef við erum búin að ná max hæð í stökkinu þá kickar gravity inn
+        g_useGravity = true;
     }
     return thrust;
 };
-*/
+
 Player.prototype.applyAccel = function (accelX, accelY, du) {
 
     // u = original velocity
@@ -222,20 +230,13 @@ Player.prototype.applyAccel = function (accelX, accelY, du) {
 
     // bounce
     if (g_useGravity) {
-    
+
         var minY = g_sprites.player.height / 2;
         var maxY = g_canvas.height - minY;
-/*
-        // Ignore the bounce if the Player is already in
-        // the "border zone" (to avoid trapping them there)
-        if (this.cy > maxY || this.cy < minY) {
-            // do nothing
-        } else if (nextY > maxY || nextY < minY) {
-            this.velY = oldVelY * -0.9;
-            intervalVelY = this.velY;
-        }*/
+     
         if (nextY > maxY || nextY < minY) {
-            this.velY = 1 * -0.9;
+            // Stay put on ground
+            this.velY = 0;
             intervalVelY = this.velY;
         }
     }
@@ -261,7 +262,6 @@ Player.prototype.maybeFireBullet = function () {
             this.cx + dX * launchDist, this.cy + dY * launchDist,
             this.velX + relVelX, this.velY + relVelY,
             this.rotation);
-
     }
 
 };
@@ -284,26 +284,6 @@ Player.prototype.reset = function () {
 Player.prototype.halt = function () {
     this.velX = 0;
     this.velY = 0;
-};
-
-var NOMINAL_ROTATE_RATE = 0.1;
-// Modified from asteroids below
-/*Player.prototype.updateRotation = function (du) {
-    if (keys[this.KEY_LEFT]) {
-        this.rotation -= NOMINAL_ROTATE_RATE * du;
-    }
-    if (keys[this.KEY_RIGHT]) {
-        this.rotation += NOMINAL_ROTATE_RATE * du;
-    }
-}; */
-Player.prototype.updateRotation = function (du) {
-    if (keys[this.KEY_LEFT]) {
-        this.cx -= 2*du;
-    }
-    if (keys[this.KEY_RIGHT]) {
-        this.cx +=2* du;
-    }
-    
 };
 
 Player.prototype.render = function (ctx) {
