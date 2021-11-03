@@ -98,6 +98,7 @@ fillCircle: function (ctx, x, y, r) {
     ctx.fill();
 },
 
+// Can be used to make platforms
 fillBox: function (ctx, x, y, w, h, style) {
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = style;

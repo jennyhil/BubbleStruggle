@@ -82,7 +82,6 @@ function gatherInputs() {
 function updateSimulation(du) {
     
     processDiagnostics();
-    
     entityManager.update(du);
 
     // Prevent perpetual firing!
@@ -123,7 +122,7 @@ function processDiagnostics() {
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     if (eatKey(KEY_HALT)) entityManager.haltPlayer();
-
+    
     if (eatKey(KEY_RESET)) entityManager.resetPlayer();
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
@@ -161,7 +160,7 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-
+    
     entityManager.render(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }

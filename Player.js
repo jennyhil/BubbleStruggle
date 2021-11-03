@@ -169,19 +169,13 @@ Player.prototype.update = function (du) {
 };
 
 /*Player.prototype.computeSubStep = function (du) {
-
     var thrust = this.computeThrustMag();
-
     // Apply thrust directionally, based on our rotation
     var accelX = +Math.sin(this.rotation) * thrust;
     var accelY = -Math.cos(this.rotation) * thrust;
-
     accelY += this.computeGravity();
-
     this.applyAccel(accelX, accelY, du);
-
     this.wrapPosition();
-
     if (thrust === 0 || g_allowMixedActions) {
         this.updateRotation(du);
     }
@@ -197,14 +191,10 @@ Player.prototype.computeGravity = function () {
 var NOMINAL_RETRO = -0.1;
 
 /*Player.prototype.computeThrustMag = function () {
-
     var thrust = 0;
-
     if (eatKey(this.KEY_THRUST)) {
         this.cy -= 100;
     }
-
-
     return thrust;
 };
 */
