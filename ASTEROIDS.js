@@ -95,7 +95,6 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
-
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -160,9 +159,10 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
+var _level = new Level({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
-    
+    _level.render(ctx);
     entityManager.render(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
