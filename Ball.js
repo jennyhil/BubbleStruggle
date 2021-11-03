@@ -68,6 +68,8 @@ Ball.prototype.setVelocity = function () {
   var speed = MAX_SPEED / SECS_TO_NOMINALS;
   var dirn = Math.random() * consts.FULL_CIRCLE;
   */
+    var isBallSplit = false;
+    if (this.velY) isBallSplit = true;
     if (i % 2 === 0) {
         this.velX = 2;
         this.velY = 4;
@@ -78,6 +80,8 @@ Ball.prototype.setVelocity = function () {
         this.velY = 4;
         i++;
     }
+
+    if (isBallSplit) this.velY *= -1;
     /*
     var MIN_ROT_SPEED = 0.5,
         MAX_ROT_SPEED = 2.5;
@@ -136,6 +140,7 @@ Ball.prototype._spawnFragment = function () {
         cx: this.cx,
         cy: this.cy,
         scale: this.scale / 2,
+        velY: -1*this.velY
         
     });
 };
