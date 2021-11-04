@@ -181,7 +181,7 @@ Player.prototype.computeGravity = function () {
     return g_useGravity ? NOMINAL_GRAVITY : 0;
 };
 
-var NOMINAL_THRUST = +6;
+var NOMINAL_THRUST = +8;
 var maxJumpHeight = 500;
 
 // Hjálparfall til að ath hvort sprite sé á jörðinni/lentur eftir hoppið

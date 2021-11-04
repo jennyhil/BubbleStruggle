@@ -33,7 +33,7 @@ function Ball(descr) {
     */
 
 };
-var i=0;
+var i = 0;
 Ball.prototype = new Entity();
 
 Ball.prototype.keepInbounds = function () {
@@ -96,7 +96,9 @@ Ball.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
-
+    
+    
+   
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
@@ -136,7 +138,7 @@ Ball.prototype._spawnFragment = function () {
         cy: this.cy,
         scale: this.scale / 2,
         split: true
-        
+
     });
 };
 
