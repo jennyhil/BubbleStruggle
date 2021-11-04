@@ -50,7 +50,7 @@ Player.prototype.cx = 200;
 Player.prototype.cy = 200;
 Player.prototype.velX = 0;
 Player.prototype.velY = 0;
-Player.prototype.launchVel = 2;
+Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
 
 // HACKED-IN AUDIO (no preloading)
