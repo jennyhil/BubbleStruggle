@@ -31,8 +31,8 @@ function Ball(descr) {
         this._rockProperty = true;
         console.dir(this);
     */
-
 };
+
 var i = 0;
 Ball.prototype = new Entity();
 
