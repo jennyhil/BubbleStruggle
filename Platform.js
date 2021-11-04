@@ -1,8 +1,8 @@
-function Level(descr) {
+function Platform(descr) {
     for (var property in descr) {
         this[property] = descr[property];
     }
-    this.level = [
+    this.platform = [
         [0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0,0],
@@ -22,19 +22,19 @@ function Level(descr) {
         [0,0,1,1,0,0,0,0,1]
     ]
 }
-//Level.prototype = new Entity();
+//Platform.prototype = new Entity();
 
-Level.prototype.width = 100;
-Level.prototype.height = 30;
+Platform.prototype.width = 100;
+Platform.prototype.height = 30;
 
-Level.prototype.row = 17;
-Level.prototype.col = 10;
+Platform.prototype.row = 17;
+Platform.prototype.col = 10;
 
-Level.prototype.render = function (ctx) {
+Platform.prototype.render = function (ctx) {
 
     for (i=0; i<this.row; i++){
         for(j=0; j < this.col; j++) {
-            if(this.level[i][j] === 1) {
+            if(this.platform[i][j] === 1) {
                 util.fillBox(ctx,
                     (j*(this.width)),
                     (i*(this.height)),
@@ -45,3 +45,15 @@ Level.prototype.render = function (ctx) {
     }
 };
  
+Platform.prototype.collidesWith = function (nextX, nextY) {
+
+    var rowNr = Math.floor(nextY / this.height);
+    var colNr = Math.floor(nextX / this.width);
+
+    if ( nextY < this.row * this.height && rowNr >= 0 && colNr >= 0 && this.platform[rowNr][colNr] === 1) {
+        //this.platform[rowNr][colNr] = 0;
+        return true;
+    }
+    return false;
+
+};

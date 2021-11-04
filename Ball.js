@@ -92,18 +92,23 @@ Ball.prototype.setVelocity = function () {
 };*/
 
 Ball.prototype.update = function (du) {
-
+    var nextX = this.cx += this.velX * du;
+    var nextY = this.cy += this.velY * du;
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-    this.cx += this.velX * du;
-    this.cy += this.velY * du;
-
+    //this.cx += this.velX * du;
+    //this.cy += this.velY * du;
 
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
+
+    if(_level.collidesWith(nextX,nextY)){
+        this.velY *= -1;
+        console.log("collision!");
+    }
 
 };
 
