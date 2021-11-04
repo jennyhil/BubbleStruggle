@@ -30,30 +30,8 @@ Level.prototype.height = 30;
 Level.prototype.row = 17;
 Level.prototype.col = 10;
 
-/*Level.prototype.setCoords = function (x,y) {
- this.cx=
 
-}*/
 
-Level.prototype.collidesWith = function (cx, cy, r) {
-  
-    var leftEdge=this.cx-this.width;
-    var rightEdge=this.cx+this.width;
-    var topEdge=this.cy-this.height;
-    var bottomEdge =this.cy-this.width;
-    console.log("cx: ",cx," cy: ",cy," r: ",r)
-    console.log("Level topedege",topEdge," Level BottomEdge: ",bottomEdge)
-    
-
-    if (cx+ r >= leftEdge && cx - r <= rightEdge) {
-        if ((((cx - r >= topEdge) || (cy + r >= topEdge)) && cy - r <= bottomEdge) ||
-            (cy + r >= topEdge && cy + r <= bottomEdge)) {
-            return true
-        }
-    }
-    return false;
-
-}
 
 Level.prototype.render = function (ctx) {
 
