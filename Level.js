@@ -30,9 +30,6 @@ Level.prototype.height = 30;
 Level.prototype.row = 17;
 Level.prototype.col = 10;
 
-
-
-
 Level.prototype.render = function (ctx) {
 
     for (i = 0; i < this.row; i++) {
