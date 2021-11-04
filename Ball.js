@@ -77,28 +77,14 @@ Ball.prototype.setVelocity = function () {
     }
 
     if (this.split) this.velY *= -1;
-    /*
-    var MIN_ROT_SPEED = 0.5,
-        MAX_ROT_SPEED = 2.5;
-    
-    this.velRot = this.velRot ||
-        util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
-    */
-
 };
-/*Ball.prototype.setVelocity = function () {
-    this.velX = 4;
-    this.velY =4;
-};*/
 
 Ball.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
-    
-    
-   
+    //g_useGravity=true;
     this.cx += this.velX * du;
     this.cy += this.velY * du;
 
