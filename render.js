@@ -35,8 +35,9 @@ function render(ctx) {
     //
     // i.e. double-buffering prevents flicker!
     //
-    if (g_doBox) util.fillBox(ctx, 200, 200, 50, 50, "red");
-  
+    if (g_doBox) { 
+        util.fillBox(ctx, 200, 200, 50, 50, "red");
+    }
     
     // The core rendering of the actual game / simulation
     //

@@ -40,17 +40,14 @@ Ball.prototype.keepInbounds = function () {
     // Bounce off top and bottom edges
     if (this.cy - this.radius < 0) {    // top edge
         this.velY *= -1;
-        console.log("OUT BOTTOM OR TOP");
     }
     if (this.cy + this.radius > g_canvas.height) {               // bottom edge
         this.velY *= -1;
-        console.log("OUT BOTTOM OR TOP");
     }
     // Bounce off left and right edges
     if (this.cx - this.radius < 0 || // left edge
         this.cx + this.radius > g_canvas.width) { // right edge
-        this.velX *= -1;
-        console.log("OUT left OR right");
+        this.velX *= -1
     }
 }
 

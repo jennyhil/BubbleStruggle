@@ -51,6 +51,7 @@ function createInitialPlayer() {
     entityManager.generatePlayer({
         cx : g_canvas.width/2,
         cy : g_canvas.height-30
+        
     });
     
 }
@@ -82,7 +83,6 @@ function gatherInputs() {
 function updateSimulation(du) {
     
     processDiagnostics();
-    
     entityManager.update(du);
 
     // Prevent perpetual firing!
@@ -95,7 +95,6 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
-
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -112,6 +111,7 @@ var KEY_2 = keyCode('2');
 var KEY_K = keyCode('K');
 
 function processDiagnostics() {
+    
 
     if (eatKey(KEY_MIXED))
         g_allowMixedActions = !g_allowMixedActions;
@@ -123,7 +123,7 @@ function processDiagnostics() {
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     if (eatKey(KEY_HALT)) entityManager.haltPlayer();
-
+    
     if (eatKey(KEY_RESET)) entityManager.resetPlayer();
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
@@ -159,9 +159,10 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
+var _level = new Level({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
-
+    _level.render(ctx);
     entityManager.render(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
