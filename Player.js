@@ -29,6 +29,7 @@ function Player(descr) {
 }
 
 Player.prototype = new Entity();
+Player.prototype.name = "player";
 
 Player.prototype.rememberResets = function () {
     // Remember my reset positions
@@ -160,7 +161,8 @@ Player.prototype.update = function (du) {
     this.maybeFireBullet();
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
-    if (this.isColliding()) this.warp();
+    var isColliding = this.isColliding();
+    if (isColliding && isColliding.name != "bullet") this.warp();
     else spatialManager.register(this);
 
 };
@@ -259,6 +261,8 @@ Player.prototype.maybeFireBullet = function () {
         var relVelX = dX * relVel;
         var relVelY = dY * relVel;
 
+        var bullets = entityManager._bullets;
+        if (bullets.length > 0 && bullets[0].type == 2) entityManager.resetBullets();
         entityManager.fireBullet(
             this.cx + dX * launchDist, this.cy + dY * launchDist,
             this.velX + relVelX, this.velY + relVelY,

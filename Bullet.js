@@ -30,6 +30,7 @@ function Bullet(descr) {
 }
 
 Bullet.prototype = new Entity();
+Bullet.prototype.name = "bullet";
 
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.fireSound = new Audio(
@@ -74,7 +75,8 @@ Bullet.prototype.update = function (du) {
     // Handle collisions
     //
     var hitEntity = this.findHitEntity();
-    if (hitEntity) {
+    if (hitEntity && hitEntity.name != "player") {
+        console.log("bullet hit ", hitEntity);
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
         if (this.type == 2) entityManager.resetBullets();
