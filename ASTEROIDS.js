@@ -160,7 +160,7 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-var _level = new Level({}); // TODO: get rid when we have proper level manager.
+var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
     _level.render(ctx);
