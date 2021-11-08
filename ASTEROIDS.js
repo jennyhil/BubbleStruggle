@@ -95,6 +95,7 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
+var g_bulletType = 1;
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');

@@ -52,6 +52,7 @@ Player.prototype.velX = 0;
 Player.prototype.velY = 0;
 Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
+Player.prototype.weaponType = 2;
 
 // HACKED-IN AUDIO (no preloading)
 Player.prototype.warpSound = new Audio(
@@ -261,7 +262,7 @@ Player.prototype.maybeFireBullet = function () {
         entityManager.fireBullet(
             this.cx + dX * launchDist, this.cy + dY * launchDist,
             this.velX + relVelX, this.velY + relVelY,
-            this.rotation);
+            this.rotation, this.weaponType);
     }
 
 };
@@ -270,9 +271,6 @@ Player.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9;
 };
 
-Player.prototype.takeBulletHit = function () {
-    this.warp();
-};
 
 Player.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
