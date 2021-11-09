@@ -128,9 +128,11 @@ Player.prototype.update = function (du) {
     var nextY = this.cy;
 
     if (keys[this.KEY_RIGHT]) {
+        // Todo breyta um sprite
         if(this.notOnGround()) nextX+=2*du;
         else nextX += 4 * du;
     } else if (keys[this.KEY_LEFT]) {
+        // Todo breyta um sprite
         if(this.notOnGround()) nextX-=2*du;
         else nextX -= 4 * du;
     } 
