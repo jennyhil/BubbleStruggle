@@ -140,14 +140,28 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
 
 Ball.prototype.update = function (du) {
+
+    var minY = this.getRadius();
+    var maxY = g_canvas.height - minY;
+
     var nextX = this.cx += this.velX * du;
-    var nextY = this.cy += this.velY * du;
+    var nextY = this.cy + this.velY * du;
+
+    debugger;
+    if (nextY > maxY || nextY < minY) {
+        this.velY = 1 * -0.9;
+    }
+    if (this.velY < 0) this.velY /= 1.01;
+    else if (this.velY > 0.05) this.velY *= 1.02
+    else this.velY += 0.1;
+    this.cy += this.velY * du;
+
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
     //this.cx += this.velX * du;
-    //this.cy += this.velY * du;
+    
 
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register

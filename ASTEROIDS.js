@@ -129,12 +129,6 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_1)) entityManager.generatePlayer({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.player});
-
     if (eatKey(KEY_2)) entityManager.generatePlayer({
         cx : g_mouseX,
         cy : g_mouseY,

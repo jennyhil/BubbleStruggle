@@ -44,6 +44,8 @@ Player.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Player.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 
 Player.prototype.KEY_FIRE = ' '.charCodeAt(0);
+Player.prototype.KEY_ONE = '1'.charCodeAt(0);
+Player.prototype.KEY_TWO = '2'.charCodeAt(0);
 
 // Initial, inheritable, default values
 Player.prototype.rotation = 0;
@@ -138,6 +140,9 @@ Player.prototype.update = function (du) {
     } 
     this.cx = nextX
     this.cy = nextY;
+
+    if (keys[this.KEY_ONE]) this.weaponType = 1;
+    if (keys[this.KEY_TWO]) this.weaponType = 2;
 
     // Handle warping
     if (this._isWarping) {
@@ -261,10 +266,17 @@ Player.prototype.maybeFireBullet = function () {
         var relVelX = dX * relVel;
         var relVelY = dY * relVel;
 
-        var bullets = entityManager._bullets;
-        if (bullets.length > 0 && bullets[0].type == 2) entityManager.resetBullets();
+        var launchX = this.cx + dX * launchDist;
+        var launchY = this.cy + dY * launchDist;
+
+        if (this.weaponType == 2) {
+            launchY += launchDist;
+            var bullets = entityManager._bullets;
+            if (bullets.length > 0) entityManager.resetBullets();
+        }
+        
         entityManager.fireBullet(
-            this.cx + dX * launchDist, this.cy + dY * launchDist,
+            launchX, launchY,
             this.velX + relVelX, this.velY + relVelY,
             this.rotation, this.weaponType);
     }
