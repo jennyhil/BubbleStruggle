@@ -29,7 +29,6 @@ function Player(descr) {
 }
 
 Player.prototype = new Entity();
-Player.prototype.name = "player";
 
 Player.prototype.rememberResets = function () {
     // Remember my reset positions
@@ -51,9 +50,8 @@ Player.prototype.cx = 200;
 Player.prototype.cy = 200;
 Player.prototype.velX = 0;
 Player.prototype.velY = 0;
-Player.prototype.launchVel = 4;
+Player.prototype.launchVel = 2;
 Player.prototype.numSubSteps = 1;
-Player.prototype.weaponType = 2;
 
 // HACKED-IN AUDIO (no preloading)
 Player.prototype.warpSound = new Audio(
@@ -136,9 +134,14 @@ Player.prototype.update = function (du) {
         if(this.notOnGround()) nextX-=2*du;
         else nextX -= 4 * du;
     } 
+
     this.cx = nextX
     this.cy = nextY;
-
+    /*
+    if(_level.collidesWith(nextX, nextY)) {
+        this.velY = _level.height;
+    }
+    */
     // Handle warping
     if (this._isWarping) {
         this._updateWarp(du);
@@ -161,8 +164,7 @@ Player.prototype.update = function (du) {
     this.maybeFireBullet();
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
-    var isColliding = this.isColliding();
-    if (isColliding && isColliding.name != "bullet") this.warp();
+    if (this.isColliding()) this.warp();
     else spatialManager.register(this);
 
 };
@@ -261,12 +263,10 @@ Player.prototype.maybeFireBullet = function () {
         var relVelX = dX * relVel;
         var relVelY = dY * relVel;
 
-        var bullets = entityManager._bullets;
-        if (bullets.length > 0 && bullets[0].type == 2) entityManager.resetBullets();
         entityManager.fireBullet(
             this.cx + dX * launchDist, this.cy + dY * launchDist,
             this.velX + relVelX, this.velY + relVelY,
-            this.rotation, this.weaponType);
+            this.rotation);
     }
 
 };
@@ -275,6 +275,9 @@ Player.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9;
 };
 
+Player.prototype.takeBulletHit = function () {
+    this.warp();
+};
 
 Player.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);

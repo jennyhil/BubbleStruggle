@@ -30,6 +30,7 @@ var entityManager = {
     _balls: [],
     _bullets: [],
     _players: [],
+    _platform: [],
 
     _bShowBalls: true,
 
@@ -87,11 +88,12 @@ var entityManager = {
     // i.e. thing which need `this` to be defined.
     //
     deferredSetup: function () {
-        this._categories = [this._balls, this._bullets, this._players ];
+        this._categories = [this._balls, this._bullets, this._players, this._platform ];
     },
 
     init: function () {
         this._generateBalls();
+        
         //this._generatePlayer();
     },
 
@@ -118,6 +120,9 @@ var entityManager = {
 
     generatePlayer: function (descr) {
         this._players .push(new Player(descr));
+    },
+    generatePlatform: function (descr) {
+        this._platform .push(new Platform(descr));
     },
 
     killNearestPlayer: function (xPos, yPos) {

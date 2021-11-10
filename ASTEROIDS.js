@@ -56,6 +56,10 @@ function createInitialPlayer() {
     
 }
 
+function createInitialPlatform() {
+    entityManager.generatePlatform({});
+}
+
 // =============
 // GATHER INPUTS
 // =============
@@ -160,10 +164,11 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-var _level = new Platform({}); // TODO: get rid when we have proper level manager.
+//var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
-    _level.render(ctx);
+    //_level.render(ctx);
+    //levelManager.render(ctx);
     entityManager.render(ctx);
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
@@ -199,7 +204,8 @@ function preloadDone() {
 
     entityManager.init();
     createInitialPlayer();
-
+    createInitialPlatform();
+    //levelManager.initLevel();
     main.init();
 }
 

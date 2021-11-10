@@ -152,11 +152,11 @@ Ball.prototype.update = function (du) {
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
-
+    /*
     if(_level.collidesWith(nextX,nextY)){
         this.velY *= -1;
         console.log("collision!");
-    }
+    }*/
 
 };
 
