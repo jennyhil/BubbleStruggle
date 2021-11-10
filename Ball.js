@@ -46,8 +46,8 @@ Ball.prototype.keepInbounds = function () {
 
 Ball.prototype.setPosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
-    this.cx = g_canvas.width/2;
-    this.cy = g_canvas.height/2;
+    this.cx = this.cx || g_canvas.width/2;
+    this.cy = this.cy || g_canvas.height/2;
 };
 
 Ball.prototype.setVelocity = function () {
@@ -207,7 +207,7 @@ Ball.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this.scale;
-    this.sprite.drawWrappedCentredAt(
+    this.sprite.drawCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
 };

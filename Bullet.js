@@ -46,7 +46,7 @@ Bullet.prototype.velX = 4;
 Bullet.prototype.velY = 4;
 
 // Convert times from milliseconds to "nominal" time units.
-Bullet.prototype.lifeSpan = 5000 / NOMINAL_UPDATE_INTERVAL;
+Bullet.prototype.lifeSpan = 2200 / NOMINAL_UPDATE_INTERVAL;
 Bullet.prototype.isOnCeiling = false;
 Bullet.prototype.hasFired = false;
 

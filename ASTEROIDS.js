@@ -42,7 +42,7 @@ function createInitialPlayer() {
 
     entityManager.generatePlayer({
         cx: g_canvas.width / 2,
-        cy: g_canvas.height - 30
+        cy: g_canvas.height -30
 
     });
 
