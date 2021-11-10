@@ -157,7 +157,7 @@ function processDiagnostics() {
 var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
-    console.log(gameOver)
+    //console.log(gameOver)
     if(!gameOver){
     _level.render(ctx);
     entityManager.render(ctx);
@@ -178,13 +178,13 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-       
-        player   : "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
-        playerside   : "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
-        player2  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
-        player2side  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
-        fireball  : "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball   : "https://notendur.hi.is/sbm11/assets/bolti50.png"
+        //player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
+        //playerside: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
+        //player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
+        //player2side: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
+        player   : "https://notendur.hi.is/~pk/308G/images/ship.png",
+        player2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
+        ball: "https://notendur.hi.is/~pk/308G/images/rock.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -198,7 +198,7 @@ function preloadDone() {
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
 
-    g_sprites.bullet = new Sprite(g_images.fireball);
+    g_sprites.bullet = new Sprite(g_images.player);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();

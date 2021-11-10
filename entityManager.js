@@ -88,7 +88,7 @@ var entityManager = {
     // i.e. thing which need `this` to be defined.
     //
     deferredSetup: function () {
-        this._categories = [this._balls, this._bullets, this._players, this._powerups];
+        this._categories = [this._balls, this._bullets, this._powerups, this._players];
     },
 
     init: function () {

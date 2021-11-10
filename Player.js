@@ -137,6 +137,8 @@ Player.prototype.isGameOver = function () {
     else return false;
 }
 Player.prototype.showLives = function () {
+    //console.log("Inní í showlives")
+    console.log(entityManager._players.length )
     g_ctx.font = "30px Arial";
     // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
     g_ctx.fillText("Player 1", 30, 30);
@@ -144,12 +146,14 @@ Player.prototype.showLives = function () {
     if (entityManager._players.length > 1) {
         g_ctx.fillText("Player 2", 870, 30);
         g_ctx.fillText(entityManager._players[1].lives, 920, 60);
+    
     }
 
 }
 
 //var GRAVITY = 2;
 Player.prototype.update = function (du) {
+    this.showLives();
     if (this.lives <= 0) this.kill();
 
     var nextX = this.cx;
@@ -340,7 +344,8 @@ Player.prototype.halt = function () {
 };
 var gameOver = false;
 Player.prototype.render = function (ctx) {
-    if (this.lives > 0) this.showLives();
+    //if (this.lives > 0) 
+    this.showLives();
     if (this.isGameOver()) gameOver = true;
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing

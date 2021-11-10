@@ -47,6 +47,7 @@ Platform.prototype.render = function (ctx) {
             }
         }
     }
+
 };
  
 Platform.prototype.collidesWith = function (nextX, nextY,r) {
