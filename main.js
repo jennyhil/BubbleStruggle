@@ -105,7 +105,7 @@ main._requestNextIteration = function () {
 
 // Mainloop-level debug-rendering
 
-var TOGGLE_TIMER_SHOW = 'T'.charCodeAt(0);
+var TOGGLE_TIMER_SHOW = 'Y'.charCodeAt(0);
 
 main._doTimerShow = false;
 

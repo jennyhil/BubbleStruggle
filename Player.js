@@ -40,7 +40,6 @@ Player.prototype.rememberResets = function () {
 };
 
 Player.prototype.KEY_JUMP = 'W'.charCodeAt(0);
-//Player.prototype.KEY_RETRO = 'S'.charCodeAt(0);
 Player.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Player.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 
@@ -136,6 +135,7 @@ Player.prototype.isGameOver = function () {
         else if(entityManager._players[0]._isDeadNow && entityManager._players[1]._isDeadNow) return true;
         else return false;
     }
+
     Player.prototype.showLives = function () {
         g_ctx.font = "30px Arial";
         // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
@@ -195,7 +195,7 @@ Player.prototype.isGameOver = function () {
 
         // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
         var isColliding = this.isColliding();
-        if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup") {
+        if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup" && isColliding.name !="player") {
             if (this.shieldActive) {
                 // TODO: Make it fade or put hit animation
                 setTimeout(() => {
@@ -346,8 +346,8 @@ Player.prototype.isGameOver = function () {
         // pass my scale into the sprite, for drawing
 
         this.sprite.scale = this._scale;
-        this.sprite.drawWrappedCentredAt(
-            ctx, this.cx, this.cy, this.rotation
+        this.sprite.drawCentredAt(
+            ctx, this.cx, this.cy-60, this.rotation
         );
         this.sprite.scale = origScale;
 

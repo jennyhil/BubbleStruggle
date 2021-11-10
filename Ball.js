@@ -17,22 +17,14 @@ function Ball(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-
-    this.randomisePosition();
-    //this.randomiseVelocity();
+    this.setPosition();
     this.setVelocity();
 
     // Default sprite and scale, if not otherwise specified
     this.sprite = this.sprite || g_sprites.ball;
     this.scale = this.scale || 2;
-
-    /*
-        // Diagnostics to check inheritance stuff
-        this._rockProperty = true;
-        console.dir(this);
-    */
-
 };
+
 var i=0;
 Ball.prototype = new Entity();
 Ball.prototype.lastJumpAt = 0;
@@ -52,20 +44,14 @@ Ball.prototype.keepInbounds = function () {
     }
 }
 
-Ball.prototype.randomisePosition = function () {
+Ball.prototype.setPosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
-    this.cx = this.cx || Math.random() * g_canvas.width;
-    this.cy = this.cy || Math.random() * g_canvas.height;
+    this.cx = g_canvas.width/2;
+    this.cy = g_canvas.height/2;
 };
 
 Ball.prototype.setVelocity = function () {
 
-    //var MIN_SPEED = 20,
-    /* var MAX_SPEED = 70;
-  
-  var speed = MAX_SPEED / SECS_TO_NOMINALS;
-  var dirn = Math.random() * consts.FULL_CIRCLE;
-  */
     if (i % 2 === 0) {
         this.velX = 2;
         this.velY = 4;
@@ -78,14 +64,6 @@ Ball.prototype.setVelocity = function () {
     }
 
     if (this.split) this.velY *= -1;
-    /*
-    var MIN_ROT_SPEED = 0.5,
-        MAX_ROT_SPEED = 2.5;
-    
-    this.velRot = this.velRot ||
-        util.randRange(MIN_ROT_SPEED, MAX_ROT_SPEED) / SECS_TO_NOMINALS;
-    */
-
 };
 /*Ball.prototype.setVelocity = function () {
     this.velX = 4;

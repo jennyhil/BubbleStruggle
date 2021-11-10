@@ -18,13 +18,12 @@ function Sprite(image) {
     this.image = image;
 
     this.width = image.width;
-    this.height = image.height;
+    this.height =40;
     this.scale = 1;
 }
 
 Sprite.prototype.drawAt = function (ctx, x, y) {
-    ctx.drawImage(this.image, 
-                  x, y);
+    ctx.drawImage(this.image, x, y);
 };
 
 Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
