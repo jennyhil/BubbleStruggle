@@ -148,12 +148,12 @@ Ball.prototype.update = function (du) {
     var nextX = this.cx += this.velX * du;
     var nextY = this.cy + this.velY * du;
 
-    if (nextY > maxY || nextY < minY) {
+   /* if (nextY > maxY || nextY < minY) {
         this.velY = 1 * -0.9;
     }
     if (this.velY < 0) this.velY /= 1.01;
     else if (this.velY > 0.05) this.velY *= 1.02
-    else this.velY += 0.1;
+    else this.velY += 0.1;*/
     this.cy += this.velY * du;
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √

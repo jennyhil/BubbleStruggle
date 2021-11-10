@@ -315,7 +315,7 @@ Player.prototype.halt = function () {
 Player.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
-    this.sprite.scale = this._scale;
+    this.sprite.scale = this._scale - 0.2;
     this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
@@ -323,6 +323,6 @@ Player.prototype.render = function (ctx) {
 
     if (this.shieldActive) {
         ctx.strokeStyle = "red";
-        util.strokeCircle(ctx, this.cx, this.cy, 40); // TODO: find dynamic radius value
+        util.strokeCircle(ctx, this.cx, this.cy - 20, this._scale * 60); // TODO: find dynamic radius value
     }
 };
