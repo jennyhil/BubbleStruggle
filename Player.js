@@ -172,7 +172,13 @@ Player.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
     var isColliding = this.isColliding();
     if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup") {
-        this.warp();
+        if (this.shieldActive) {
+            // TODO: Make it fade or put hit animation
+            setTimeout(() => {
+                this.shieldActive = false;
+            }, 1000);
+        }
+        else this.warp();
     }
     else spatialManager.register(this);
 
