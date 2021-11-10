@@ -26,9 +26,11 @@ function Player(descr) {
     // Set normal drawing scale, and warp state off
     this._scale = 1;
     this._isWarping = false;
+    this.lives=3;
 }
 
 Player.prototype = new Entity();
+Player.prototype.name = "player";
 
 Player.prototype.rememberResets = function () {
     // Remember my reset positions
@@ -43,6 +45,8 @@ Player.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Player.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 
 Player.prototype.KEY_FIRE = ' '.charCodeAt(0);
+Player.prototype.KEY_ONE = '1'.charCodeAt(0);
+Player.prototype.KEY_TWO = '2'.charCodeAt(0);
 
 // Initial, inheritable, default values
 Player.prototype.rotation = 0;
@@ -50,8 +54,9 @@ Player.prototype.cx = 200;
 Player.prototype.cy = 200;
 Player.prototype.velX = 0;
 Player.prototype.velY = 0;
-Player.prototype.launchVel = 2;
+Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
+Player.prototype.weaponType = 2;
 
 // HACKED-IN AUDIO (no preloading)
 Player.prototype.warpSound = new Audio(
@@ -129,15 +134,18 @@ Player.prototype.update = function (du) {
 
     if (keys[this.KEY_RIGHT]) {
         // Todo breyta um sprite
-        if(this.notOnGround()) nextX+=2*du;
+        if (this.notOnGround()) nextX += 2 * du;
         else nextX += 4 * du;
     } else if (keys[this.KEY_LEFT]) {
         // Todo breyta um sprite
-        if(this.notOnGround()) nextX-=2*du;
+        if (this.notOnGround()) nextX -= 2 * du;
         else nextX -= 4 * du;
-    } 
+    }
     this.cx = nextX
     this.cy = nextY;
+
+    if (keys[this.KEY_ONE]) this.weaponType = 1;
+    if (keys[this.KEY_TWO]) this.weaponType = 2;
 
     // Handle warping
     if (this._isWarping) {
@@ -156,12 +164,26 @@ Player.prototype.update = function (du) {
     for (var i = 0; i < steps; ++i) {
         this.computeSubStep(dStep);
     }
-
+Player.prototype.showLives = function(){
+    g_ctx.font = "30px Arial";
+    // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
+    g_ctx.fillText("Player 1", 30, 30);
+    g_ctx.fillText(entityManager._players[0].lives, 60, 60);
+    if(entityManager._players.length>1) {
+        g_ctx.fillText("Player 2", 870, 30);
+        g_ctx.fillText(entityManager._players[1].lives, 920, 60);
+    }
+}
     // Handle firing
     this.maybeFireBullet();
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
-    if (this.isColliding()) this.warp();
+    var isColliding = this.isColliding();
+    if (isColliding && isColliding.name != "bullet") { 
+        this.warp(); 
+        this.lives--;
+        console.log(this.lives);
+    }
     else spatialManager.register(this);
 
 };
@@ -235,7 +257,7 @@ Player.prototype.applyAccel = function (accelX, accelY, du) {
 
         var minY = g_sprites.player.height / 2;
         var maxY = g_canvas.height - minY;
-     
+
         if (nextY > maxY || nextY < minY) {
             // Stay put on ground
             this.velY = 0;
@@ -260,10 +282,19 @@ Player.prototype.maybeFireBullet = function () {
         var relVelX = dX * relVel;
         var relVelY = dY * relVel;
 
+        var launchX = this.cx + dX * launchDist;
+        var launchY = this.cy + dY * launchDist;
+
+        if (this.weaponType == 2) {
+            launchY += launchDist;
+            var bullets = entityManager._bullets;
+            if (bullets.length > 0) entityManager.resetBullets();
+        }
+
         entityManager.fireBullet(
-            this.cx + dX * launchDist, this.cy + dY * launchDist,
+            launchX, launchY,
             this.velX + relVelX, this.velY + relVelY,
-            this.rotation);
+            this.rotation, this.weaponType);
     }
 
 };
@@ -272,9 +303,6 @@ Player.prototype.getRadius = function () {
     return (this.sprite.width / 2) * 0.9;
 };
 
-Player.prototype.takeBulletHit = function () {
-    this.warp();
-};
 
 Player.prototype.reset = function () {
     this.setPos(this.reset_cx, this.reset_cy);
@@ -289,6 +317,7 @@ Player.prototype.halt = function () {
 };
 
 Player.prototype.render = function (ctx) {
+    this.showLives();
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this._scale;

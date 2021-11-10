@@ -95,15 +95,21 @@ var entityManager = {
         //this._generatePlayer();
     },
 
-    fireBullet: function (cx, cy, velX, velY, rotation) {
+    fireBullet: function (cx, cy, velX, velY, rotation, type) {
         this._bullets.push(new Bullet({
             cx: cx,
             cy: cy,
             velX: velX,
             velY: velY,
-
-            rotation: rotation
+            rotation: rotation,
+            type: type
         }));
+    },
+
+    resetBullets: function () {
+        this._bullets.forEach((bullet) => {
+            bullet.kill();
+        });
     },
 
     generateBall: function (descr) {

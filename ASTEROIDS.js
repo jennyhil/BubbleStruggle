@@ -1,3 +1,5 @@
+
+   
 // =========
 // ASTEROIDS
 // =========
@@ -85,11 +87,11 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
-var KEY_MIXED   = keyCode('M');
+var g_bulletType = 1;
+var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
-var KEY_LOL = keyCode('K');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -99,7 +101,7 @@ var KEY_0 = keyCode('0');
 var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
-var KEY_K = keyCode('K');
+//var KEY_K = keyCode('K');
 
 function processDiagnostics() {
     
@@ -119,21 +121,22 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_1)) entityManager.generatePlayer({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.player});
-
     if (eatKey(KEY_2)) entityManager.generatePlayer({
-        cx : g_mouseX,
-        cy : g_mouseY,
+        cx : 300,
+        cy : 300,
+
+        KEY_LEFT : 'J'.charCodeAt(0),
+        KEY_RIGHT : 'L'.charCodeAt(0),
+        KEY_FIRE :'K'.charCodeAt(0),
+        KEY_JUMP : 'I'.charCodeAt(0),
         
         sprite : g_sprites.player2
         });
+     
 
-    if (eatKey(KEY_K)) entityManager.killNearestPlayer(
-        g_mouseX, g_mouseY);
+
+  //  if (eatKey(KEY_K)) entityManager.killNearestPlayer(
+    //    g_mouseX, g_mouseY);
 }
 
 
