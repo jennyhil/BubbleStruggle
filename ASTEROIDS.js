@@ -177,7 +177,7 @@ function requestPreloads() {
         player2  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
         player2side  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         fireball  : "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+        ball   : "https://notendur.hi.is/sbm11/assets/bolti50.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
