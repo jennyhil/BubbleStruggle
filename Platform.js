@@ -52,17 +52,3 @@ Platform.prototype.render = function (ctx) {
     }
 
 };
- 
-Platform.prototype.collidesWith = function (nextX, nextY,r) {
-    //console.log(nextY)
-    var rowNr = Math.floor(nextY / this.height);
-    var colNr = Math.floor(nextX / this.width);
-    
-    if (  rowNr >= 0 && colNr >= 0 && this.platform[rowNr][colNr] === 1) {
-        //this.platform[rowNr][colNr] = 0;
-       // console.log(rowNr)
-        return true;
-    }
-    return false;
-
-};
