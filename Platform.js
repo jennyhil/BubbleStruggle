@@ -32,6 +32,7 @@ Platform.prototype.col = 10;
 
 Platform.prototype.render = function (ctx) {
 
+    ctx.fillStyle = "white";
     for (i=0; i<this.row; i++){
         for(j=0; j < this.col; j++) {
             if(this.platform[i][j] === 1) {

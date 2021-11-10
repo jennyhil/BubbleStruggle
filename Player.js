@@ -44,8 +44,9 @@ Player.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Player.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 
 Player.prototype.KEY_FIRE = ' '.charCodeAt(0);
-Player.prototype.KEY_ONE = '1'.charCodeAt(0);
-Player.prototype.KEY_TWO = '2'.charCodeAt(0);
+Player.prototype.KEY_ONE = '1'.charCodeAt(0); // Regular bullet
+Player.prototype.KEY_TWO = '2'.charCodeAt(0); // Rope bullet
+Player.prototype.KEY_THREE = '3'.charCodeAt(0); // Shield
 
 // Initial, inheritable, default values
 Player.prototype.rotation = 0;
@@ -56,6 +57,7 @@ Player.prototype.velY = 0;
 Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
 Player.prototype.weaponType = 2;
+Player.prototype.shieldActive = false;
 
 // HACKED-IN AUDIO (no preloading)
 Player.prototype.warpSound = new Audio(
@@ -143,6 +145,8 @@ Player.prototype.update = function (du) {
 
     if (keys[this.KEY_ONE]) this.weaponType = 1;
     if (keys[this.KEY_TWO]) this.weaponType = 2;
+    if (eatKey(this.KEY_THREE)) this.shieldActive = !this.shieldActive;
+    
 
     // Handle warping
     if (this._isWarping) {
@@ -167,7 +171,9 @@ Player.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
     var isColliding = this.isColliding();
-    if (isColliding && isColliding.name != "bullet") this.warp();
+    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup") {
+        this.warp();
+    }
     else spatialManager.register(this);
 
 };
@@ -308,4 +314,9 @@ Player.prototype.render = function (ctx) {
         ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;
+
+    if (this.shieldActive) {
+        ctx.strokeStyle = "red";
+        util.strokeCircle(ctx, this.cx, this.cy, 40); // TODO: find dynamic radius value
+    }
 };
