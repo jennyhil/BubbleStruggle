@@ -35,6 +35,7 @@ function Ball(descr) {
 };
 var i=0;
 Ball.prototype = new Entity();
+Ball.prototype.lastJumpAt = 0;
 
 Ball.prototype.keepInbounds = function () {
     // Bounce off top and bottom edges
@@ -141,13 +142,12 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
 Ball.prototype.update = function (du) {
 
-    var minY = this.getRadius();
+    var minY = this.lastJumpAt;
     var maxY = g_canvas.height - minY;
 
     var nextX = this.cx += this.velX * du;
     var nextY = this.cy + this.velY * du;
 
-    //debugger;
     if (nextY > maxY || nextY < minY) {
         this.velY = 1 * -0.9;
     }
@@ -169,6 +169,7 @@ Ball.prototype.update = function (du) {
 /*
     if(_level.collidesWith(nextX,nextY)){
         this.velY *= -1;
+        this.lastJumpAt = this.cy;
         console.log("collision!");
     }*/
 
@@ -195,7 +196,24 @@ Ball.prototype.takeBulletHit = function () {
     } else {
         this.evaporateSound.play();
     }
+
+    if (Math.random() < 0.4) {
+        this._spawnPowerup();
+    }
 };
+
+Ball.prototype._spawnPowerup = function () {
+    var id = Math.floor(Math.random() * 3) + 1; // currently 3 powerups
+    
+    entityManager.generatePowerup({
+        cx: this.cx,
+        cy: this.cy,
+        velY: 3,
+        type: id,
+        isActive: false
+
+    });
+}
 
 Ball.prototype._spawnFragment = function () {
     entityManager.generateBall({
