@@ -31,6 +31,7 @@ var entityManager = {
     _bullets: [],
     _players: [],
     _platform: [],
+    _powerups: [],
 
     _bShowBalls: true,
 
@@ -88,7 +89,7 @@ var entityManager = {
     // i.e. thing which need `this` to be defined.
     //
     deferredSetup: function () {
-        this._categories = [this._balls, this._bullets, this._players, this._platform ];
+        this._categories = [this._balls, this._bullets, this._players, this._powerups, this.Platform];
     },
 
     init: function () {
@@ -112,6 +113,10 @@ var entityManager = {
         this._bullets.forEach((bullet) => {
             bullet.kill();
         });
+    },
+
+    generatePowerup: function (descr) {
+        this._powerups.push(new PowerUp(descr));
     },
 
     generateBall: function (descr) {
@@ -157,9 +162,9 @@ var entityManager = {
 
             var aCategory = this._categories[c];
             var i = 0;
-
+            if(aCategory!==this._levels){
             while (i < aCategory.length) {
-
+              
                 var status = aCategory[i].update(du);
 
                 if (status === this.KILL_ME_NOW) {
@@ -171,6 +176,7 @@ var entityManager = {
                     ++i;
                 }
             }
+        }
         }
 
         if (this._balls.length === 0) this._generateBalls();
@@ -193,7 +199,9 @@ var entityManager = {
 
                 aCategory[i].render(ctx);
                 //debug.text(".", debugX + i * 10, debugY);
-
+              //  if(aCategory== this._levels)console.log(aCategory[i])
+               // else console.log("FML")
+                
             }
             debugY += 10;
         }

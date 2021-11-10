@@ -59,7 +59,7 @@ var spatialManager = {
     },
     findEntityInRange: function (posX, posY, radius) {
 
-        // TODO: YOUR STUFF HERE! - Sjá fyrirlestur (sqrt)
+        // TODO: YOUR STUFF HERE! 
         var entityInRange = null;
         for (var ID in this._entities) {
             var e = this._entities[ID];

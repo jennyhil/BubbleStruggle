@@ -26,6 +26,7 @@ function Player(descr) {
     // Set normal drawing scale, and warp state off
     this._scale = 1;
     this._isWarping = false;
+    this.lives = 3;
 }
 
 Player.prototype = new Entity();
@@ -43,6 +44,9 @@ Player.prototype.KEY_LEFT = 'A'.charCodeAt(0);
 Player.prototype.KEY_RIGHT = 'D'.charCodeAt(0);
 
 Player.prototype.KEY_FIRE = ' '.charCodeAt(0);
+Player.prototype.KEY_ONE = '1'.charCodeAt(0); // Regular bullet
+Player.prototype.KEY_TWO = '2'.charCodeAt(0); // Rope bullet
+Player.prototype.KEY_THREE = '3'.charCodeAt(0); // Shield
 
 // Initial, inheritable, default values
 Player.prototype.rotation = 0;
@@ -52,6 +56,11 @@ Player.prototype.velX = 0;
 Player.prototype.velY = 0;
 Player.prototype.launchVel = 2;
 Player.prototype.numSubSteps = 1;
+<<<<<<< HEAD
+=======
+Player.prototype.weaponType = 2;
+Player.prototype.shieldActive = false;
+>>>>>>> b1fda6fd5923fb96546f7d5f41139a95ae304f29
 
 // HACKED-IN AUDIO (no preloading)
 Player.prototype.warpSound = new Audio(
@@ -61,7 +70,7 @@ Player.prototype.warp = function () {
 
     this._isWarping = true;
     this._scaleDirn = -1;
-    this.warpSound.play();
+    //this.warpSound.play();
 
     // Unregister me from my old posistion
     // ...so that I can't be collided with while warping
@@ -122,17 +131,41 @@ Player.prototype._moveToASafePlace = function () {
 
     }
 };
+Player.prototype.isGameOver = function () {
+    if (entityManager._players.length == 1) {
+        if (entityManager._players[0]._isDeadNow) return true;
+    }
+    else if (entityManager._players[0]._isDeadNow && entityManager._players[1]._isDeadNow) return true;
+    else return false;
+}
+Player.prototype.showLives = function () {
+    g_ctx.font = "30px Arial";
+    // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
+    g_ctx.fillText("Player 1", 30, 30);
+    g_ctx.fillText(entityManager._players[0].lives, 60, 60);
+    if (entityManager._players.length > 1) {
+        g_ctx.fillText("Player 2", 870, 30);
+        g_ctx.fillText(entityManager._players[1].lives, 920, 60);
+    }
+
+}
+
 //var GRAVITY = 2;
 Player.prototype.update = function (du) {
+    if (this.lives <= 0) this.kill();
+
     var nextX = this.cx;
     var nextY = this.cy;
 
     if (keys[this.KEY_RIGHT]) {
-        if(this.notOnGround()) nextX+=2*du;
+        // Todo breyta um sprite
+        if (this.notOnGround()) nextX += 2 * du;
         else nextX += 4 * du;
     } else if (keys[this.KEY_LEFT]) {
-        if(this.notOnGround()) nextX-=2*du;
+        // Todo breyta um sprite
+        if (this.notOnGround()) nextX -= 2 * du;
         else nextX -= 4 * du;
+<<<<<<< HEAD
     } 
 
     this.cx = nextX
@@ -142,6 +175,17 @@ Player.prototype.update = function (du) {
         this.velY = _level.height;
     }
     */
+=======
+    }
+    this.cx = nextX
+    this.cy = nextY;
+
+    if (keys[this.KEY_ONE]) this.weaponType = 1;
+    if (keys[this.KEY_TWO]) this.weaponType = 2;
+    if (eatKey(this.KEY_THREE)) this.shieldActive = !this.shieldActive;
+
+
+>>>>>>> b1fda6fd5923fb96546f7d5f41139a95ae304f29
     // Handle warping
     if (this._isWarping) {
         this._updateWarp(du);
@@ -153,18 +197,34 @@ Player.prototype.update = function (du) {
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
+
     // Perform movement substeps
     var steps = this.numSubSteps;
     var dStep = du / steps;
     for (var i = 0; i < steps; ++i) {
         this.computeSubStep(dStep);
     }
-
     // Handle firing
     this.maybeFireBullet();
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
+<<<<<<< HEAD
     if (this.isColliding()) this.warp();
+=======
+    var isColliding = this.isColliding();
+    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup") {
+        if (this.shieldActive) {
+            // TODO: Make it fade or put hit animation
+            setTimeout(() => {
+                this.shieldActive = false;
+            }, 1000);
+        }
+        else {
+            this.lives--;
+            this.warp();
+        }
+    }
+>>>>>>> b1fda6fd5923fb96546f7d5f41139a95ae304f29
     else spatialManager.register(this);
 
 };
@@ -186,7 +246,7 @@ Player.prototype.computeGravity = function () {
     return g_useGravity ? NOMINAL_GRAVITY : 0;
 };
 
-var NOMINAL_THRUST = +6;
+var NOMINAL_THRUST = +8;
 var maxJumpHeight = 500;
 
 // Hjálparfall til að ath hvort sprite sé á jörðinni/lentur eftir hoppið
@@ -238,7 +298,7 @@ Player.prototype.applyAccel = function (accelX, accelY, du) {
 
         var minY = g_sprites.player.height / 2;
         var maxY = g_canvas.height - minY;
-     
+
         if (nextY > maxY || nextY < minY) {
             // Stay put on ground
             this.velY = 0;
@@ -263,8 +323,20 @@ Player.prototype.maybeFireBullet = function () {
         var relVelX = dX * relVel;
         var relVelY = dY * relVel;
 
+<<<<<<< HEAD
+=======
+        var launchX = this.cx + dX * launchDist;
+        var launchY = this.cy + dY * launchDist;
+
+        if (this.weaponType == 2) {
+            launchY += launchDist;
+            var bullets = entityManager._bullets;
+            if (bullets.length > 0) entityManager.resetBullets();
+        }
+
+>>>>>>> b1fda6fd5923fb96546f7d5f41139a95ae304f29
         entityManager.fireBullet(
-            this.cx + dX * launchDist, this.cy + dY * launchDist,
+            launchX, launchY,
             this.velX + relVelX, this.velY + relVelY,
             this.rotation);
     }
@@ -290,13 +362,31 @@ Player.prototype.halt = function () {
     this.velX = 0;
     this.velY = 0;
 };
-
+var gameOver = false;
 Player.prototype.render = function (ctx) {
+    if (this.lives > 0) this.showLives();
+    if (this.isGameOver()) gameOver = true;
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
+
     this.sprite.scale = this._scale;
     this.sprite.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;
-};
+
+    Player.prototype.render = function (ctx) {
+        var origScale = this.sprite.scale;
+        // pass my scale into the sprite, for drawing
+        this.sprite.scale = this._scale - 0.2;
+        this.sprite.drawWrappedCentredAt(
+            ctx, this.cx, this.cy, this.rotation
+        );
+        this.sprite.scale = origScale;
+
+        if (this.shieldActive) {
+            ctx.strokeStyle = "red";
+            util.strokeCircle(ctx, this.cx, this.cy - 20, this._scale * 60); // TODO: find dynamic radius value
+        }
+    };
+}

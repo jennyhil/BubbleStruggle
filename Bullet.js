@@ -46,7 +46,7 @@ Bullet.prototype.velX = 4;
 Bullet.prototype.velY = 4;
 
 // Convert times from milliseconds to "nominal" time units.
-Bullet.prototype.lifeSpan = 10000 / NOMINAL_UPDATE_INTERVAL;
+Bullet.prototype.lifeSpan = 5000 / NOMINAL_UPDATE_INTERVAL;
 Bullet.prototype.isOnCeiling = false;
 Bullet.prototype.hasFired = false;
 
@@ -55,7 +55,6 @@ Bullet.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
-
     
 
     this.lifeSpan -= du;
@@ -83,7 +82,7 @@ Bullet.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    if (this.cy >= g_canvas.height - 50) {
+    if (this.cy > g_canvas.height - 2) {
         if (this.type == 2) {
             this.isOnCeiling = true;
             this.cy -= this.velY * du; //hackedyhack svo kúlan haldist kyrr

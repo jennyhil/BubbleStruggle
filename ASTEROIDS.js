@@ -1,28 +1,20 @@
+
+
 // =========
 // ASTEROIDS
 // =========
 /*
-
 A sort-of-playable version of the classic arcade game.
-
-
 HOMEWORK INSTRUCTIONS:
-
 You have some "TODO"s to fill in again, particularly in:
-
 spatialManager.js
-
 But also, to a lesser extent, in:
-
 Rock.js
 Bullet.js
 Player.js
-
-
 ...Basically, you need to implement the core of the spatialManager,
 and modify the Rock/Bullet/Player to register (and unregister)
 with it correctly, so that they can participate in collisions.
-
 Be sure to test the diagnostic rendering for the spatialManager,
 as toggled by the 'X' key. We rely on that for marking. My default
 implementation will work for the "obvious" approach, but you might
@@ -49,11 +41,11 @@ var g_ctx = g_canvas.getContext("2d");
 function createInitialPlayer() {
 
     entityManager.generatePlayer({
-        cx : g_canvas.width/2,
-        cy : g_canvas.height-30
-        
+        cx: g_canvas.width / 2,
+        cy: g_canvas.height - 30
+
     });
-    
+
 }
 
 function createInitialPlatform() {
@@ -85,7 +77,7 @@ function gatherInputs() {
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-    
+
     processDiagnostics();
     entityManager.update(du);
 
@@ -100,12 +92,12 @@ var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
-var KEY_MIXED   = keyCode('M');;
+var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
 
-var KEY_HALT  = keyCode('H');
+var KEY_HALT = keyCode('H');
 var KEY_RESET = keyCode('R');
 
 var KEY_0 = keyCode('0');
@@ -113,10 +105,10 @@ var KEY_0 = keyCode('0');
 var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
-var KEY_K = keyCode('K');
-
+//var KEY_K = keyCode('K');
+var twoPlayer = false;
 function processDiagnostics() {
-    
+
 
     if (eatKey(KEY_MIXED))
         g_allowMixedActions = !g_allowMixedActions;
@@ -128,26 +120,28 @@ function processDiagnostics() {
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     if (eatKey(KEY_HALT)) entityManager.haltPlayer();
-    
+
     if (eatKey(KEY_RESET)) entityManager.resetPlayer();
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_1)) entityManager.generatePlayer({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.player});
+    if (eatKey(KEY_2) && !twoPlayer) {
+        entityManager.generatePlayer({
+            cx: 100,
+            cy: 300,
 
-    if (eatKey(KEY_2)) entityManager.generatePlayer({
-        cx : g_mouseX,
-        cy : g_mouseY,
-        
-        sprite : g_sprites.player2
+            KEY_LEFT: 'J'.charCodeAt(0),
+            KEY_RIGHT: 'L'.charCodeAt(0),
+            KEY_FIRE: 'K'.charCodeAt(0),
+            KEY_JUMP: 'I'.charCodeAt(0),
+
+            sprite: g_sprites.player2
         });
+        twoPlayer = true;
+    }
 
-    if (eatKey(KEY_K)) entityManager.killNearestPlayer(
-        g_mouseX, g_mouseY);
+    //  if (eatKey(KEY_K)) entityManager.killNearestPlayer(
+    //    g_mouseX, g_mouseY);
 }
 
 
@@ -167,9 +161,14 @@ function processDiagnostics() {
 //var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
-    //_level.render(ctx);
-    //levelManager.render(ctx);
+    console.log(gameOver)
+    if(!gameOver){
+    _level.render(ctx);
     entityManager.render(ctx);
+    }else {
+        ctx.font ="60px VT323"
+         ctx.fillText("GAME OVER",400,300);
+    }
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
@@ -183,9 +182,13 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        player   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        player2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        ball   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+       
+        player   : "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
+        playerside   : "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
+        player2  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
+        player2side  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
+        fireball  : "https://notendur.hi.is/sbm11/assets/fireball100.png",
+        ball   : "https://notendur.hi.is/sbm11/assets/bolti50.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -195,11 +198,11 @@ var g_sprites = {};
 
 function preloadDone() {
 
-    g_sprites.player  = new Sprite(g_images.player);
+    g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
 
-    g_sprites.bullet = new Sprite(g_images.player);
+    g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();

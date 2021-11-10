@@ -35,6 +35,7 @@ function Ball(descr) {
 };
 var i=0;
 Ball.prototype = new Entity();
+Ball.prototype.lastJumpAt = 0;
 
 Ball.prototype.keepInbounds = function () {
     // Bounce off top and bottom edges
@@ -140,21 +141,39 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
 
 Ball.prototype.update = function (du) {
+
+    var minY = this.lastJumpAt;
+    var maxY = g_canvas.height - minY;
+
     var nextX = this.cx += this.velX * du;
-    var nextY = this.cy += this.velY * du;
+    var nextY = this.cy + this.velY * du;
+
+   /* if (nextY > maxY || nextY < minY) {
+        this.velY = 1 * -0.9;
+    }
+    if (this.velY < 0) this.velY /= 1.01;
+    else if (this.velY > 0.05) this.velY *= 1.02
+    else this.velY += 0.1;*/
+    this.cy += this.velY * du;
+
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
     //this.cx += this.velX * du;
-    //this.cy += this.velY * du;
+    
 
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
+<<<<<<< HEAD
     /*
+=======
+/*
+>>>>>>> b1fda6fd5923fb96546f7d5f41139a95ae304f29
     if(_level.collidesWith(nextX,nextY)){
         this.velY *= -1;
+        this.lastJumpAt = this.cy;
         console.log("collision!");
     }*/
 
@@ -181,7 +200,24 @@ Ball.prototype.takeBulletHit = function () {
     } else {
         this.evaporateSound.play();
     }
+
+    if (Math.random() < 0.4) {
+        this._spawnPowerup();
+    }
 };
+
+Ball.prototype._spawnPowerup = function () {
+    var id = Math.floor(Math.random() * 3) + 1; // currently 3 powerups
+    
+    entityManager.generatePowerup({
+        cx: this.cx,
+        cy: this.cy,
+        velY: 3,
+        type: id,
+        isActive: false
+
+    });
+}
 
 Ball.prototype._spawnFragment = function () {
     entityManager.generateBall({
