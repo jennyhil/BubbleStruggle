@@ -48,6 +48,10 @@ function createInitialPlayer() {
 
 }
 
+function createInitialPlatform() {
+    entityManager.generatePlatform({});
+}
+
 // =============
 // GATHER INPUTS
 // =============
@@ -99,7 +103,7 @@ var KEY_RESET = keyCode('R');
 var KEY_0 = keyCode('0');
 
 var KEY_1 = keyCode('1');
-var KEY_2 = keyCode('2');
+var KEY_TWO_PLAYER = keyCode('T');
 
 //var KEY_K = keyCode('K');
 var twoPlayer = false;
@@ -121,7 +125,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_2) && !twoPlayer) {
+    if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
             cx: 100,
             cy: 300,
@@ -154,12 +158,12 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-var _level = new Platform({}); // TODO: get rid when we have proper level manager.
+//var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
     //console.log(gameOver)
     if(!gameOver){
-    _level.render(ctx);
+    //_level.render(ctx);
     entityManager.render(ctx);
     }else {
         ctx.font ="60px VT323"
@@ -203,7 +207,8 @@ function preloadDone() {
 
     entityManager.init();
     createInitialPlayer();
-
+    createInitialPlatform();
+    //levelManager.initLevel();
     main.init();
 }
 
