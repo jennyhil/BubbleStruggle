@@ -176,6 +176,7 @@ function requestPreloads() {
         playerside   : "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
         player2  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
         player2side  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
+        fireball  : "https://notendur.hi.is/sbm11/assets/fireball100.png",
         ball   : "https://notendur.hi.is/~pk/308G/images/rock.png"
     };
 
@@ -190,7 +191,7 @@ function preloadDone() {
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
 
-    g_sprites.bullet = new Sprite(g_images.player);
+    g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
