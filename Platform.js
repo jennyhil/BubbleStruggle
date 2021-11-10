@@ -31,7 +31,9 @@ Platform.prototype.height = 30;
 Platform.prototype.row = 17;
 Platform.prototype.col = 10;
 
-
+Platform.prototype.update = function() {
+    
+}
 Platform.prototype.render = function (ctx) {
 
     ctx.fillStyle = "white";
