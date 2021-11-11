@@ -35,8 +35,9 @@ Platform.prototype.update = function() {
     
 }
 Platform.prototype.render = function (ctx) {
-    ctx.fillStyle = "white";
-    util.fillBox(ctx,this.cx,this.cy, this.width, this.height)
+    var platform; 
+    platform = g_images.platform1;
+    ctx.drawImage(platform,this.cx,this.cy, this.width, this.height);
 /*
     ctx.fillStyle = "white";
     for (i=0; i<this.row; i++){

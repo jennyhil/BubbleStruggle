@@ -170,11 +170,13 @@ function renderSimulation(ctx) {
     if(!g_gameOver){
         _level.render(ctx);
         entityManager.render(ctx);
+        var timeFillRatio = levelManager._timeLeft / levelManager._time;
+        util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
         }else {
             ctx.font ="60px VT323"
-             ctx.fillText("GAME OVER",400,300);
+            ctx.fillText("GAME OVER",400,300);
         }
-        if (g_renderSpatialDebug) spatialManager.render(ctx);
+    if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
 
@@ -198,7 +200,8 @@ function requestPreloads() {
         background: "milky-way.jpg",
         pair: "pair.png",
         cherry : "cherry.png",
-        banana : "banana.png"
+        banana : "banana.png",
+        platform1 : "platform1.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
