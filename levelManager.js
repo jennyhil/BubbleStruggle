@@ -11,6 +11,8 @@ var levelManager = {
 
     _levels: [],
     _levelID: 0,
+    _time: 0,
+    _timeLeft: 0,
     
 
     nextLevel: function() {
@@ -43,10 +45,14 @@ var levelManager = {
     },
 
     initTimer: function () {
-        var time = levels.level[this._levelID].time;
+        this._time = levels.level[this._levelID].time;
+        this._timeLeft = this._time;
         setTimeout(() => {
             this.gameOver();
-        }, time)
+        }, this._time);
+        setInterval(() => {
+            this._timeLeft -= 500;
+        }, 500);
     },
 
     gameOver: function () {
