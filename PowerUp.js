@@ -56,7 +56,7 @@ PowerUp.prototype.render = function (ctx) {
 };
 
 PowerUp.prototype.activate = function (type, player) {
-    debugger;
+    //debugger;
     this.isActive = true;
     switch (type) {
         case 1: // Normal bullet

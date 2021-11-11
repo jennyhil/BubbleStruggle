@@ -135,34 +135,55 @@ Player.prototype.isGameOver = function () {
     else if (entityManager._players[0]._isDeadNow && entityManager._players[1]._isDeadNow) return true;
     else return false;
 }
-// TODO: Þarf að finpussa, skores hja player 2 færist í player 1 þegar player 1 deyr 
+// TODO: Þarf að finpussa, skores hja player 2 færist í player 1 þegar deyr 
 Player.prototype.showLives = function () {
     var oldStyle = ctx.fillStyle;
-    g_ctx.fillStyle="white";
+    g_ctx.fillStyle = "white";
     g_ctx.font = "30px Arial";
     // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
     g_ctx.fillText("Player 1", 30, 30);
     g_ctx.fillText(entityManager._players[0].lives, 60, 60);
-    if (entityManager._players.length > 1) {
+    if (twoPlayer) {
         g_ctx.fillText("Player 2", 870, 30);
         g_ctx.fillText(entityManager._players[1].lives, 920, 60);
     }
     ctx.fillStyle = oldStyle;
- }
+}
+// Changes direction of sprite image
+Player.prototype.changeDirection = function () {
+    var isPlayerOne = this.sprite.image.name === "player" || this.sprite.image.name === "playerright" || this.sprite.image === "playerleft";
+    var isPlayerTwo = this.sprite.image.name === "player2" || this.sprite.image.name === "player2right" || this.sprite.image === "player2left";
 
-//var GRAVITY = 2;
+    if (isPlayerOne) {
+        if (keys[this.KEY_LEFT]) this.sprite = new Sprite(g_images.playerleft);
+        else this.sprite = new Sprite(g_images.playerright);
+        return this.sprite;
+    }
+    if (isPlayerTwo) {
+        if (keys[this.KEY_LEFT]) this.sprite = new Sprite(g_images.player2left);
+        else this.sprite = new Sprite(g_images.player2right);
+        return this.sprite;
+    }
+    return this.sprite;
+}
+
 Player.prototype.update = function (du) {
+    if (this.sprite.image.name === "playerleft" ||
+        this.sprite.image.name === "playerright") this.sprite = new Sprite(g_images.player);
+    else if (this.sprite.image.name === "player2left"
+        || this.sprite.image.name === "player2right") this.sprite = new Sprite(g_images.player2)
+
     if (this.lives <= 0) this.kill();
 
     var nextX = this.cx;
     var nextY = this.cy;
 
     if (keys[this.KEY_RIGHT]) {
-        // Todo breyta um sprite
+        this.changeDirection();
         if (this.notOnGround()) nextX += 2 * du;
         else nextX += 4 * du;
     } else if (keys[this.KEY_LEFT]) {
-        // Todo breyta um sprite
+        this.changeDirection();
         if (this.notOnGround()) nextX -= 2 * du;
         else nextX -= 4 * du;
     }
@@ -197,7 +218,7 @@ Player.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
     var isColliding = this.isCollidingWithBall();
-    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup" && isColliding.name != "player") {
+    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup" && isColliding.name != ("player")) {
         if (this.shieldActive) {
             // TODO: Make it fade or put hit animation
             setTimeout(() => {
@@ -207,26 +228,26 @@ Player.prototype.update = function (du) {
         else {
             this.lives--;
             this.warp();
-        }  
+        }
     }
-    else spatialManager.register(this);    
+    else spatialManager.register(this);
 };
 
 Player.prototype.isCollidingWithBall = function () {
     var entityInRange = null;
-        for (var e in entityManager._balls) {
-            var ball = entityManager._balls[e];
-            var distSq = util.wrappedDistSq(
-                ball.posX, ball.posY, 
-                this.cx, this.cy, 
-                g_canvas.width, g_canvas.height);
+    for (var e in entityManager._balls) {
+        var ball = entityManager._balls[e];
+        var distSq = util.wrappedDistSq(
+            ball.posX, ball.posY,
+            this.cx, this.cy,
+            g_canvas.width, g_canvas.height);
 
-            if (distSq < util.square(this.radius + ball.radius) && 
-            (this.cx!=ball.posX && this.cy !=ball.posY) ) {
-                if(ball.posY>100)entityInRange = e;
-            }
+        if (distSq < util.square(this.radius + ball.radius) &&
+            (this.cx != ball.posX && this.cy != ball.posY)) {
+            if (ball.posY > 100) entityInRange = e;
         }
-        return entityInRange;
+    }
+    return entityInRange;
 }
 
 Player.prototype.computeSubStep = function (du) {

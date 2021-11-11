@@ -202,7 +202,7 @@ Ball.prototype._spawnFragment = function () {
         
     });
 };
-
+            
 Ball.prototype.render = function (ctx) {
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing

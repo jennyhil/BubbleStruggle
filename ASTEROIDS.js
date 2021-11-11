@@ -127,7 +127,7 @@ function processDiagnostics() {
 
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
-            cx: 100,
+            cx: 550,
             cy: 300,
 
             KEY_LEFT: 'J'.charCodeAt(0),
@@ -182,11 +182,13 @@ function requestPreloads() {
 
     var requiredImages = {
         player   : "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
-        //playerside   : "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
+        playerright   : "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
+        playerleft   : "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
         player2  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
-        //player2side  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
+        player2right  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
+        player2left   : "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         //fireball  : "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball   : "https://notendur.hi.is/sbm11/assets/bolti50.png",
+        ball   : "https://notendur.hi.is/sbm11/assets/bolti50.png"
         //player   : "https://notendur.hi.is/~pk/308G/images/ship.png",
         //player2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
         //ball: "https://notendur.hi.is/~pk/308G/images/rock.png"
