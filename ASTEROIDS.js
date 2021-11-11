@@ -148,7 +148,6 @@ function processDiagnostics() {
         g_mouseX, g_mouseY);*/
 }
 
-
 // =================
 // RENDER SIMULATION
 // =================

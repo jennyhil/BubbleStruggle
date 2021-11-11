@@ -125,9 +125,9 @@ Player.prototype._moveToASafePlace = function () {
 
         // Get out as soon as we find a safe place
         if (isSafePlace) break;
-
     }
 };
+
 Player.prototype.isGameOver = function () {
     if (entityManager._players.length == 1) {
         if (entityManager._players[0]._isDeadNow) return true;
@@ -139,13 +139,11 @@ Player.prototype.isGameOver = function () {
 Player.prototype.showLives = function () {
     var oldStyle = ctx.fillStyle;
     g_ctx.fillStyle = "white";
-    g_ctx.font = "30px Arial";
+    g_ctx.font = "16px Arial";
     // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
-    g_ctx.fillText("Player 1", 30, 30);
-    g_ctx.fillText(entityManager._players[0].lives, 60, 60);
+    g_ctx.fillText("Lives: "+entityManager._players[0].lives, 10, 590);
     if (entityManager._players.length > 1) {
-        g_ctx.fillText("Player 2", 870, 30);
-        g_ctx.fillText(entityManager._players[1].lives, 920, 60);
+        g_ctx.fillText("Lives: "+entityManager._players[1].lives, 940, 590);
     }
     ctx.fillStyle = oldStyle;
 }
