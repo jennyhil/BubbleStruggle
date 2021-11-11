@@ -37,11 +37,10 @@ var entityManager = {
 
     // "PRIVATE" METHODS
 
-    _generateBalls: function () {
-        var i,
-            NUM_Balls = 1;
+    _generateBalls: function (numBalls) {
+        var i = 1;
 
-        for (i = 0; i < NUM_Balls; ++i) {
+        for (i = 0; i < numBalls; ++i) {
             this.generateBall();
         }
     },
@@ -93,7 +92,7 @@ var entityManager = {
     },
 
     init: function () {
-        this._generateBalls();
+        //levelManager.initLevel();
         
         //this._generatePlayer();
     },
@@ -179,7 +178,7 @@ var entityManager = {
         }
         }
 
-        if (this._balls.length === 0) this._generateBalls();
+        if (this._balls.length === 0) levelManager.nextLevel();
 
     },
 
