@@ -165,6 +165,8 @@ function processDiagnostics() {
 var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
+    ctx.drawImage(g_images.background,0,0);
+
     if(!gameOver){
         _level.render(ctx);
         entityManager.render(ctx);
@@ -192,7 +194,8 @@ function requestPreloads() {
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball: "https://notendur.hi.is/sbm11/assets/bolti50.png"
+        ball: "https://notendur.hi.is/sbm11/assets/bolti50.png",
+        background: "milky-way.jpg"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
