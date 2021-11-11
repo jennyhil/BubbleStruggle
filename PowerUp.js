@@ -44,14 +44,11 @@ PowerUp.prototype.update = function (du) {
 
 PowerUp.prototype.render = function (ctx) {
     // (cx, cy) is the centre; must offset it for drawing
-    var color;
-    if (this.type == 1) color = "green";
-    else if (this.type == 2) color = "yellow";
-    else color = "blue";
-    ctx.fillStyle = color;
-    util.fillCircle(ctx, this.cx - this.halfWidth,
-        this.cy - this.halfHeight,
-        this.halfWidth * 2);
+    var image; 
+    if (this.type == 1) image = g_images.pair;
+    else if (this.type == 2) image = g_images.cherry;
+    else image = g_images.banana;
+    ctx.drawImage(image,this.cx - this.halfWidth,this.cy - this.halfHeight);
 };
 
 PowerUp.prototype.activate = function (type, player) {
