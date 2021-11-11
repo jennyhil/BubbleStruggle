@@ -10,7 +10,7 @@ var levelManager = {
 
 
     _levels: [],
-    _levelID: 1,
+    _levelID: 0,
     
 
     nextLevel: function() {
@@ -18,17 +18,42 @@ var levelManager = {
     },
 
     initLevel : function() {
-        this.generatePlatform();
+        this.generatePlatforms();
+        this.generateBalls();
+        this.initTimer();
     },
 
-    generatePlatform: function() {
-        for(var i=0; i< levels.level[this._levelID-1].platform.length; i++) {
+    generatePlatforms: function() {
+        for(var i=0; i< levels.level[this._levelID].platforms.length; i++) {
             entityManager.generatePlatform({
-                cx: levels.level[this._levelID-1].platform[i].cx,
-                cy: levels.level[this._levelID-1].platform[i].cy
+                cx: levels.level[this._levelID].platforms[i].cx,
+                cy: levels.level[this._levelID].platforms[i].cy
             })
         }
     },
+
+    generateBalls: function () {
+        debugger;
+        for (var i = 0; i < levels.level[this._levelID].balls.length; i++) {
+            entityManager.generateBall({
+                cx: levels.level[this._levelID].balls[i].cx,
+                cy: levels.level[this._levelID].balls[i].cy
+            })
+        }
+    },
+
+    initTimer: function () {
+        var time = levels.level[this._levelID].time;
+        setTimeout(() => {
+            this.gameOver();
+        }, time)
+    },
+
+    gameOver: function () {
+        g_gameOver = true;
+    },
+
+
 /*
     render: function(ctx) {
         for (var c = 0; c < this._levels.length; ++c) {

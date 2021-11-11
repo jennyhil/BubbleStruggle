@@ -376,10 +376,10 @@ Player.prototype.halt = function () {
     this.velX = 0;
     this.velY = 0;
 };
-var gameOver = false;
+
 Player.prototype.render = function (ctx) {
     if (this.lives > 0) this.showLives();
-    if (this.isGameOver()) gameOver = true;
+    if (this.isGameOver()) g_gameOver = true;
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
 
