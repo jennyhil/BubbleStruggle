@@ -201,7 +201,8 @@ function requestPreloads() {
         background: "milky-way.jpg",
         pair: "pair.png",
         cherry : "cherry.png",
-        banana : "banana.png"
+        banana : "banana.png",
+        platform1 : "platform1.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
