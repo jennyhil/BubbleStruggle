@@ -47,11 +47,11 @@ function createInitialPlayer() {
     });
 
 }
-
+/*
 function createInitialPlatform() {
     entityManager.generatePlatform({});
 }
-
+*/
 // =============
 // GATHER INPUTS
 // =============
@@ -208,8 +208,8 @@ function preloadDone() {
 
     entityManager.init();
     createInitialPlayer();
-    createInitialPlatform();
-    //levelManager.initLevel();
+    //createInitialPlatform();
+    levelManager.initLevel();
     main.init();
 }
 
