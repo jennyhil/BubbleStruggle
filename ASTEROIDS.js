@@ -89,6 +89,7 @@ var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
+var g_gameOver = false;
 var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -167,7 +168,7 @@ var _level = new Platform({}); // TODO: get rid when we have proper level manage
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
 
-    if(!gameOver){
+    if(!g_gameOver){
         _level.render(ctx);
         entityManager.render(ctx);
         }else {
