@@ -36,7 +36,6 @@ PowerUp.prototype.update = function (du) {
     // ...using whatever velocity I've ended up with
     //
     this.cy += this.velY * du;
-
     
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
     spatialManager.register(this);

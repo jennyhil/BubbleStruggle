@@ -28,6 +28,8 @@ function Ball(descr) {
 var i=0;
 Ball.prototype = new Entity();
 Ball.prototype.lastJumpAt = 0;
+Ball.prototype.maxJumpHeight = 400;
+Ball.prototype.useGravity = false;
 
 Ball.prototype.keepInbounds = function () {
     // Bounce off top and bottom edges
@@ -46,8 +48,8 @@ Ball.prototype.keepInbounds = function () {
 
 Ball.prototype.setPosition = function () {
     // Rock randomisation defaults (if nothing otherwise specified)
-    this.cx = this.cx || g_canvas.width/2;
-    this.cy = this.cy || g_canvas.height/2;
+    this.cx = this.cx || g_canvas.width / 2;
+    this.cy = this.cy || this.maxJumpHeight - 1;
 };
 
 Ball.prototype.setVelocity = function () {
@@ -72,6 +74,7 @@ Ball.prototype.setVelocity = function () {
 
 Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
+
     // u = original velocity
     var oldVelX = this.velX;
     var oldVelY = this.velY;
@@ -93,21 +96,25 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
     var nextY = this.cy + intervalVelY * du;
 
     // bounce
-    if (g_useGravity) {
+    if (this.useGravity) {
+        debugger;
+        var ballRadius = g_sprites.ball.height / 2; // TODO: this might not be a sprite
+        var minY = g_canvas.height - this.maxJumpHeight;
+        var maxY = g_canvas.height - ballRadius;
 
-        var minY = g_sprites.player.height / 2;
-        var maxY = g_canvas.height - minY;
-        /*
-                // Ignore the bounce if the Player is already in
-                // the "border zone" (to avoid trapping them there)
-                if (this.cy > maxY || this.cy < minY) {
-                    // do nothing
-                } else if (nextY > maxY || nextY < minY) {
-                    this.velY = oldVelY * -0.9;
-                    intervalVelY = this.velY;
-                }*/
         if (nextY > maxY || nextY < minY) {
-            this.velY = 1 * -0.9;
+            // Stay put on ground
+            debugger;
+            if (nextY > maxY) {
+                this.useGravity = false;
+                this.velY = 0;
+                if (this.split) this.split = false;
+            } else {
+                this.velY = 0;
+                this.cy += 2*du;
+            }
+            //this.velY *= -1;
+            
             intervalVelY = this.velY;
         }
     }
@@ -117,14 +124,45 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
     this.cy += du * intervalVelY;
 };
 
+Ball.prototype.computeGravity = function () {
+    return this.useGravity ? 0.12 : 0;
+};
+
+Ball.prototype.computeThrustMag = function () {
+    var thrust = 0;
+    // Ef við erum ekki í miðju hoppi eða búin að ná max hæð þá eykst thrust
+    if (this.cy > 560) { // TODO: Ná í hæð bolta
+        // hér er boltinn að fara upp
+        debugger;
+        this.useGravity = false;
+        thrust += 3; 
+    } else {
+        // Ef boltinn er í max hæð þá kickar gravity inn
+        this.useGravity = true;
+    }
+    return thrust;
+};
+
 
 Ball.prototype.update = function (du) {
+    spatialManager.unregister(this);
+    if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
-    var minY = this.lastJumpAt;
+
+    var thrust = this.computeThrustMag();
+    // Apply thrust directionally, based on our rotation
+    //var accelX = +Math.sin(this.rotation) * thrust;
+    var accelX = 0;
+    var accelY = -1 * thrust;
+
+    accelY += this.computeGravity();
+    this.applyAccel(accelX, accelY, du);
+
+ /*   var minY = this.lastJumpAt;
     var maxY = g_canvas.height - minY;
 
     var nextX = this.cx += this.velX * du;
-    var nextY = this.cy + this.velY * du;
+    var nextY = this.cy + this.velY * du;*/
 
    /* if (nextY > maxY || nextY < minY) {
         this.velY = 1 * -0.9;
@@ -132,11 +170,10 @@ Ball.prototype.update = function (du) {
     if (this.velY < 0) this.velY /= 1.01;
     else if (this.velY > 0.05) this.velY *= 1.02
     else this.velY += 0.1;*/
-    this.cy += this.velY * du;
+    // this.cy += this.velY * du;
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
-    spatialManager.unregister(this);
-    if (this._isDeadNow) return entityManager.KILL_ME_NOW;
+   
 
     //this.cx += this.velX * du;
     
@@ -144,7 +181,9 @@ Ball.prototype.update = function (du) {
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
+
 /*
+
     if(_level.collidesWith(nextX,nextY)){
         this.velY *= -1;
         this.lastJumpAt = this.cy;
@@ -198,7 +237,9 @@ Ball.prototype._spawnFragment = function () {
         cx: this.cx,
         cy: this.cy,
         scale: this.scale / 2,
-        split: true
+        velY: this.velY,
+        split: true,
+        maxJumpHeight: 3*this.maxJumpHeight / 4
         
     });
 };

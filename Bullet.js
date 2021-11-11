@@ -82,16 +82,16 @@ Bullet.prototype.update = function (du) {
         return entityManager.KILL_ME_NOW;
     }
 
-    if (this.cy > g_canvas.height - 2) {
+    if (this.cy > g_canvas.height - 5) {
         if (this.type == 2) {
-            this.isOnCeiling = true;
+            entityManager._bullets[0].isOnCeiling = true;
             this.cy -= this.velY * du; //hackedyhack svo kúlan haldist kyrr
         }
         else return entityManager.KILL_ME_NOW;
     }
 
     // handle types
-    if (this.type == 2 && !this.isOnCeiling) {
+    if (this.type == 2 && !entityManager._bullets[0].isOnCeiling) {
         if (!this.hasFired) {
             entityManager.fireBullet(this.cx, this.cy, this.velX, this.velY, this.rotation, 2);
             this.hasFired = true;
