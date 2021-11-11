@@ -1,5 +1,3 @@
-
-
 // =========
 // ASTEROIDS
 // =========
@@ -28,6 +26,9 @@ need to tweak it if you do something "non-obvious" in yours.
 var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 
+
+
+
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
@@ -42,14 +43,10 @@ function createInitialPlayer() {
 
     entityManager.generatePlayer({
         cx: g_canvas.width / 2,
-        cy: g_canvas.height -30
+        cy: g_canvas.height - 30
 
     });
 
-}
-
-function createInitialPlatform() {
-    entityManager.generatePlatform({});
 }
 
 // =============
@@ -103,10 +100,12 @@ var KEY_RESET = keyCode('R');
 var KEY_0 = keyCode('0');
 
 var KEY_1 = keyCode('1');
-var KEY_TWO_PLAYER = keyCode('T');
+var KEY_2 = keyCode('2');
 
+var KEY_TWO_PLAYER = keyCode('T');
 //var KEY_K = keyCode('K');
 var twoPlayer = false;
+
 function processDiagnostics() {
 
 
@@ -125,23 +124,28 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
+    if (eatKey(KEY_2)) entityManager.generatePlayer({
+        cx: g_mouseX,
+        cy: g_mouseY,
+
+        sprite: g_sprites.player2
+    });
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
-            cx: 550,
+            cx: 100,
             cy: 300,
-
             KEY_LEFT: 'J'.charCodeAt(0),
             KEY_RIGHT: 'L'.charCodeAt(0),
             KEY_FIRE: 'K'.charCodeAt(0),
             KEY_JUMP: 'I'.charCodeAt(0),
-
             sprite: g_sprites.player2
         });
         twoPlayer = true;
     }
 
-    //  if (eatKey(KEY_K)) entityManager.killNearestPlayer(
-    //    g_mouseX, g_mouseY);
+
+    /*if (eatKey(KEY_K)) entityManager.killNearestPlayer(
+        g_mouseX, g_mouseY);*/
 }
 
 
@@ -158,17 +162,17 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-//var _level = new Platform({}); // TODO: get rid when we have proper level manager.
+var _level = new Platform({}); // TODO: get rid when we have proper level manager.
 
 function renderSimulation(ctx) {
     if(!gameOver){
-    //_level.render(ctx);
-    entityManager.render(ctx);
-    }else {
-        ctx.font ="60px VT323"
-         ctx.fillText("GAME OVER",400,300);
-    }
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
+        _level.render(ctx);
+        entityManager.render(ctx);
+        }else {
+            ctx.font ="60px VT323"
+             ctx.fillText("GAME OVER",400,300);
+        }
+        if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
 
@@ -181,17 +185,14 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        player   : "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
-        playerright   : "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
-        playerleft   : "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
-        player2  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
-        player2right  : "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
-        player2left   : "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
-        //fireball  : "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball   : "https://notendur.hi.is/sbm11/assets/bolti50.png"
-        //player   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        //player2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        //ball: "https://notendur.hi.is/~pk/308G/images/rock.png"
+        player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
+        playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
+        playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
+        player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
+        player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
+        player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
+        fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
+        ball: "https://notendur.hi.is/sbm11/assets/bolti50.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -205,13 +206,12 @@ function preloadDone() {
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
 
-    g_sprites.bullet = new Sprite(g_images.player);
+    g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();
     createInitialPlayer();
-    createInitialPlatform();
-    //levelManager.initLevel();
+    levelManager.initLevel();
     main.init();
 }
 

@@ -38,11 +38,7 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
     ctx.translate(cx, cy);
     ctx.rotate(rotation);
     ctx.scale(this.scale,this.scale);
-   // if (keys[Player.prototype.KEY_LEFT]) { console.log("left"); ctx.scale(-this.scale, this.scale); }
-    //else ctx.scale(this.scale, this.scale);
-    //if(keys[player2Left])ctx.scale(-scale,this.scale)
-    //else ctx.scale(this.scale,this.scale);
-
+  
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,

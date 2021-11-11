@@ -143,12 +143,13 @@ Player.prototype.showLives = function () {
     // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
     g_ctx.fillText("Player 1", 30, 30);
     g_ctx.fillText(entityManager._players[0].lives, 60, 60);
-    if (twoPlayer) {
+    if (entityManager._players.length > 1) {
         g_ctx.fillText("Player 2", 870, 30);
         g_ctx.fillText(entityManager._players[1].lives, 920, 60);
     }
     ctx.fillStyle = oldStyle;
 }
+
 // Changes direction of sprite image
 Player.prototype.changeDirection = function () {
     var isPlayerOne = this.sprite.image.name === "player" || this.sprite.image.name === "playerright" || this.sprite.image === "playerleft";
