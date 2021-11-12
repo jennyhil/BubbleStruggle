@@ -77,6 +77,7 @@ function updateSimulation(du) {
 
     processDiagnostics();
     entityManager.update(du);
+    levelManager.update(); // checks if time is finished
 
     // Prevent perpetual firing!
     eatKey(Player.prototype.KEY_FIRE);
@@ -189,6 +190,7 @@ var g_images = {};
 
 function requestPreloads() {
 
+    // Ath. eigum við að sækja myndir af netinu eða hafa þær inní ehv folder..
     var requiredImages = {
         player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
@@ -212,6 +214,7 @@ var g_sprites = {};
 
 function preloadDone() {
 
+    debugger;
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);

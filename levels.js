@@ -2,7 +2,8 @@ var levels = {
     level :
     [
             { // Level 1
-            time : 30000,
+            time: 30000,
+            isFinished: false,
             platforms : [
                 {
                     cx: 200,
@@ -35,7 +36,8 @@ var levels = {
             ]
             },
             { // Level 2
-            time: 35000,
+                time: 35000,
+                isFinished: false,
             platforms: [
                 {
                     cx: 200,
