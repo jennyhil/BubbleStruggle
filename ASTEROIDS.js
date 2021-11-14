@@ -190,7 +190,7 @@ var g_images = {};
 
 function requestPreloads() {
 
-    // Ath. eigum við að sækja myndir af netinu eða hafa þær inní ehv folder..
+    // Ath. eigum viï¿½ aï¿½ sï¿½kja myndir af netinu eï¿½a hafa ï¿½ï¿½r innï¿½ ehv folder..
     var requiredImages = {
         player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
@@ -200,7 +200,7 @@ function requestPreloads() {
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
         ball: "https://notendur.hi.is/sbm11/assets/bolti50.png",
-        background: "milky-way.jpg",
+        background: "grassy.png",
         pair: "pair.png",
         cherry : "cherry.png",
         banana : "banana.png",
