@@ -77,6 +77,7 @@ function updateSimulation(du) {
 
     processDiagnostics();
     entityManager.update(du);
+    levelManager.update(); // checks if time is finished
 
     // Prevent perpetual firing!
     eatKey(Player.prototype.KEY_FIRE);
@@ -133,7 +134,7 @@ function processDiagnostics() {
     });*/
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
-            cx: 800,
+            cx: 700,
             cy: 500,
             KEY_LEFT: 'J'.charCodeAt(0),
             KEY_RIGHT: 'L'.charCodeAt(0),
@@ -162,13 +163,12 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-var _level = new Platform({}); // TODO: get rid when we have proper level manager.
+
 
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
 
     if(!g_gameOver){
-        _level.render(ctx);
         entityManager.render(ctx);
         var timeFillRatio = levelManager._timeLeft / levelManager._time;
         util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
@@ -188,6 +188,7 @@ var g_images = {};
 
 function requestPreloads() {
 
+    // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
         player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
@@ -197,7 +198,7 @@ function requestPreloads() {
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
         ball: "https://notendur.hi.is/sbm11/assets/bolti50.png",
-        background: "milky-way.jpg",
+        background: "grassy.png",
         pair: "pair.png",
         cherry : "cherry.png",
         banana : "banana.png",

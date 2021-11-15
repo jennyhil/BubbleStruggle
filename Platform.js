@@ -1,26 +1,7 @@
 function Platform(descr) {
     this.setup(descr);
-/*
-    this.platform = [
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [1,1,1,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,1,1,1],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,1,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0,0],
-        [0,0,0,1,0,0,0,0,1]
-    ]
-  */
+
+    spatialManager.register(this);
 }
 Platform.prototype = new Entity();
 Platform.prototype.cx;
@@ -28,30 +9,29 @@ Platform.prototype.cy;
 Platform.prototype.width = 150;
 Platform.prototype.height = 30;
 
-Platform.prototype.row = 17;
-Platform.prototype.col = 10;
+Platform.prototype.name = "platform";
 
+Platform.prototype.getRadius = function() {
+    return this.height / 2;
+}
+Platform.prototype.getWidth = function() {
+    return this.width;
+}
 Platform.prototype.update = function() {
     
+}
+Platform.prototype.collidesWith = function(posX, posY, width, height) {
+    var halfWidth = width /2;
+    var halfHeight = height/2;
+    if (posY + halfHeight > this.cy && posX - halfWidth < this.cx + this.width
+        &&posX + halfWidth > this.cx && posY - halfHeight < this.cy + this.height) {
+            return true;
+        } else {
+            return false;
+        }
 }
 Platform.prototype.render = function (ctx) {
     var platform; 
     platform = g_images.platform1;
     ctx.drawImage(platform,this.cx,this.cy, this.width, this.height);
-/*
-    ctx.fillStyle = "white";
-    for (i=0; i<this.row; i++){
-        for(j=0; j < this.col; j++) {
-            if(this.platform[i][j] === 1) {
-                this.cx=j*this.width;
-                this.cy=i*this.height;
-                util.fillBox(ctx,
-                    (j*(this.width)),
-                    (i*(this.height)),
-                    this.width,
-                    this.height);
-            }
-        }
-    }
-*/
 };

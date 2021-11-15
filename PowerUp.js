@@ -48,11 +48,11 @@ PowerUp.prototype.render = function (ctx) {
     if (this.type == 1) image = g_images.pair;
     else if (this.type == 2) image = g_images.cherry;
     else image = g_images.banana;
+    // bæta við 4 og 5 (aukatími og aukastig)
     ctx.drawImage(image,this.cx - this.halfWidth,this.cy - this.halfHeight);
 };
 
 PowerUp.prototype.activate = function (type, player) {
-    //debugger;
     this.isActive = true;
     switch (type) {
         case 1: // Normal bullet
@@ -63,6 +63,9 @@ PowerUp.prototype.activate = function (type, player) {
             break;
         case 3:
             player.shieldActive = true;
+            break;
+        case 4: // 3 extra seconds (or more/less if we want)
+            levelManager._timeLeft += 3000;
             break;
         default:
             break;
