@@ -45,6 +45,8 @@ var spatialManager = {
         entity.posX = pos.posX;
         entity.posY = pos.posY;
         entity.radius = entity.getRadius();
+        
+        
 
         // TODO: YOUR STUFF HERE! 
         this._entities[spatialID] = entity
@@ -63,26 +65,38 @@ var spatialManager = {
         var entityInRange = null;
         for (var ID in this._entities) {
             var e = this._entities[ID];
-            var distSq = util.wrappedDistSq(
+            if(e.name != "platform") {
+                var distSq = util.wrappedDistSq(
                 e.posX, e.posY, 
                 posX, posY, 
                 g_canvas.width, g_canvas.height);
 
-            if (distSq < util.square(radius + e.radius) && 
-            (posX!=e.posX && posY !=e.posY) ) {
-                entityInRange = e;
+                if (distSq < util.square(radius + e.radius) && 
+                (posX!=e.posX && posY !=e.posY) ) {
+                    entityInRange = e;
             }
+            } else {
+                if(e.collidesWith(posX,posY,radius,radius*2)) entityInRange = e;
+            }
+
         }
         return entityInRange;
     },
 
+    
     render: function (ctx) {
         var oldStyle = ctx.strokeStyle;
         ctx.strokeStyle = "red";
 
         for (var ID in this._entities) {
             var e = this._entities[ID];
-            util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+            if(e.name != "platform") {
+                util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+            } else {
+                //util.fillBox(ctx, e.posX, e.posY, e.width, e.height, "red");
+                ctx.strokeRect(e.posX,e.posY,e.width, e.height);
+            }
+            
         }
         ctx.strokeStyle = oldStyle;
     }

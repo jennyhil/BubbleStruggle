@@ -164,13 +164,12 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-var _level = new Platform({}); // TODO: get rid when we have proper level manager.
+
 
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
 
     if(!g_gameOver){
-        _level.render(ctx);
         entityManager.render(ctx);
         var timeFillRatio = levelManager._timeLeft / levelManager._time;
         util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
@@ -190,7 +189,7 @@ var g_images = {};
 
 function requestPreloads() {
 
-    // Ath. eigum við að sækja myndir af netinu eða hafa þær inní ehv folder..
+    // Ath. eigum viï¿½ aï¿½ sï¿½kja myndir af netinu eï¿½a hafa ï¿½ï¿½r innï¿½ ehv folder..
     var requiredImages = {
         player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
@@ -214,7 +213,6 @@ var g_sprites = {};
 
 function preloadDone() {
 
-    debugger;
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);

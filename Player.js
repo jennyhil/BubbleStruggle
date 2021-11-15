@@ -195,6 +195,11 @@ Player.prototype.update = function (du) {
     if (keys[this.KEY_TWO]) this.weaponType = 2;
     if (eatKey(this.KEY_THREE)) this.shieldActive = !this.shieldActive;
 
+    //platform trampolin collision!
+    var hitEntity = this.findHitEntity();
+    if (hitEntity && hitEntity.name === "platform") {
+        this.velY *= -1.2;
+    }
 
     // Handle warping
     if (this._isWarping) {

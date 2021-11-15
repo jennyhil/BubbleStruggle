@@ -97,14 +97,13 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
     // bounce
     if (this.useGravity) {
-        debugger;
         var ballRadius = g_sprites.ball.height / 2; // TODO: this might not be a sprite
         var minY = g_canvas.height - this.maxJumpHeight;
         var maxY = g_canvas.height - ballRadius;
 
         if (nextY > maxY || nextY < minY) {
             // Stay put on ground
-            debugger;
+           
             if (nextY > maxY) {
                 this.useGravity = false;
                 this.velY = 0;
@@ -133,7 +132,7 @@ Ball.prototype.computeThrustMag = function () {
     // Ef við erum ekki í miðju hoppi eða búin að ná max hæð þá eykst thrust
     if (this.cy > 560) { // TODO: Ná í hæð bolta
         // hér er boltinn að fara upp
-        debugger;
+        
         this.useGravity = false;
         thrust += 3; 
     } else {
@@ -182,8 +181,11 @@ Ball.prototype.update = function (du) {
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
 
+    var hitEntity = this.findHitEntity();
+    if (hitEntity && hitEntity.name === "platform") {
+        this.velY *= -1;
+    }
 /*
-
     if(_level.collidesWith(nextX,nextY)){
         this.velY *= -1;
         this.lastJumpAt = this.cy;
