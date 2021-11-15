@@ -82,7 +82,7 @@ var spatialManager = {
 
         for (var ID in this._entities) {
             var e = this._entities[ID];
-            util.strokeCircle(ctx, e.posX, e.posY, e.radius);
+            util.strokeCircle(ctx, e.posX, e.posY-30, e.radius*1.3);
         }
         ctx.strokeStyle = oldStyle;
     }

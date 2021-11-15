@@ -125,16 +125,16 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_2)) entityManager.generatePlayer({
+    /*if (eatKey(KEY_2)) entityManager.generatePlayer({
         cx: g_mouseX,
         cy: g_mouseY,
 
         sprite: g_sprites.player2
-    });
+    });*/
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
-            cx: 100,
-            cy: 300,
+            cx: 800,
+            cy: 500,
             KEY_LEFT: 'J'.charCodeAt(0),
             KEY_RIGHT: 'L'.charCodeAt(0),
             KEY_FIRE: 'K'.charCodeAt(0),
