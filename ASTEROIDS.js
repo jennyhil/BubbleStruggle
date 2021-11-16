@@ -199,7 +199,7 @@ function requestPreloads() {
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball: "https://notendur.hi.is/sbm11/assets/bolti50.png",
+        ball: "bolti.png",
         background: "grassy.png",
         pair: "pair.png",
         cherry : "cherry.png",
