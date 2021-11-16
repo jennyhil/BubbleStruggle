@@ -13,12 +13,14 @@ var levelManager = {
     _levelID: 0,
     _time: 0,
     _timeLeft: 0,
+    _score: 0,
     
 
     nextLevel: function () {
         entityManager.clearPlatforms();
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
+        this.addTimerToScore();
         this.initLevel();
     },
 
@@ -50,12 +52,16 @@ var levelManager = {
     initTimer: function () {
         this._time = levels.level[this._levelID].time;
         this._timeLeft = this._time;
-        /*setTimeout(() => {
-            this.gameOver();
-        }, this._time);*/
+        
         setInterval(() => {
-            this._timeLeft -= 500;
-        }, 500);
+            this._timeLeft -= 200;
+        }, 200);
+    },
+
+    addTimerToScore: function () {
+        debugger;
+        var timerScore = this._timeLeft / 10;
+        this._score += timerScore;
     },
 
     gameOver: function () {
@@ -64,6 +70,13 @@ var levelManager = {
 
     update: function () {
         if (this._timeLeft <= 0) this.gameOver();
+    },
+
+    render: function (ctx) {
+        ctx.font = "60px VT323"
+        ctx.fillText(this._score.toString(), 50, 50);
+        var timeFillRatio = this._timeLeft / this._time;
+        util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
     },
 
     renderStart: function (ctx) {

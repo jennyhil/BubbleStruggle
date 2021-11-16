@@ -205,6 +205,7 @@ Ball.prototype.evaporateSound = new Audio(
 
 Ball.prototype.takeBulletHit = function () {
     this.kill();
+    levelManager._score += 50;
 
     if (this.scale > 0.25) {
         this._spawnFragment();
