@@ -387,16 +387,22 @@ Player.prototype.halt = function () {
     this.velY = 0;
 };
 Player.prototype.drawLives = function (ctx) {
+    g_sprites.playerIcon = new Sprite(g_images.playerIcon);
+    g_sprites.player2Icon = new Sprite(g_images.player2Icon);
 
+    
     for (var i = 0; i < this.lives; i++) {
-        this.sprite.scale = this._scale-0.6;
+        g_sprites.playerIcon.scale = this._scale-0.5;
+        g_sprites.player2Icon.scale = this._scale-0.5;
         if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
         this.sprite.image.name === "playerright"){
-        this.sprite.drawCentredAt(
-            ctx, 60 - i * 20, 550, this.rotation
+
+
+            g_sprites.playerIcon.drawCentredAt(
+            ctx, 50 +i * 25, 550, this.rotation
         );
-    }else this.sprite.drawCentredAt(
-        ctx, (g_canvas.width - 60) - i * 20, 550, this.rotation
+    }else g_sprites.player2Icon.drawCentredAt(
+        ctx, (g_canvas.width - 90) + i * 25, 550, this.rotation
     );
     }
 }
@@ -409,7 +415,7 @@ Player.prototype.render = function (ctx) {
     this.sprite.scale = this._scale;
     // 60 is a weird little margin so the sprites will be drawn in the right pos
     this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy - 30, this.rotation
+        ctx, this.cx, this.cy , this.rotation
     );
     this.sprite.scale = origScale;
 
@@ -417,4 +423,4 @@ Player.prototype.render = function (ctx) {
         ctx.strokeStyle = "red";
         util.strokeCircle(ctx, this.cx, this.cy, 40); // TODO: find dynamic radius value
     }
-}; 
+};

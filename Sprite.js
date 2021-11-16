@@ -15,13 +15,10 @@
 // Construct a "sprite" from the given `image`,
 //
 function Sprite(image) {
-    debugger;
     this.image = image;
 
     this.width = image.width;
-    this.height = image.height;
-    if(image.name==="player" || image.name==="playerright" || image.name==="playerleft" ||
-    image.name==="player2" || image.name==="player2right" || image.name==="player2left" )this.height=80;
+    this.height = 40;
     this.scale = 1;
 
 }
@@ -46,7 +43,7 @@ Sprite.prototype.drawCentredAt = function (ctx, cx, cy, rotation) {
     // drawImage expects "top-left" coords, so we offset our destination
     // coords accordingly, to draw our sprite centred at the origin
     ctx.drawImage(this.image,
-        -w / 2, -h / 2);
+        -w / 2, -h / 1.3);
 
     ctx.restore();
 };

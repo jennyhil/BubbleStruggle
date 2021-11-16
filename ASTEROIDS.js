@@ -166,7 +166,6 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
-    util.fillBox(ctx,g_canvas.width/2,g_canvas.height-112,10,112,"red")
     if(!g_gameOver){
         entityManager.render(ctx);
        // var timeFillRatio = levelManager._timeLeft / levelManager._time;
@@ -189,10 +188,12 @@ function requestPreloads() {
 
     // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
-        player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
+        player:"ship.png",
+        player2:"ship.png",
+        //player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
         playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
-        player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
+        //player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
