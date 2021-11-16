@@ -190,21 +190,22 @@ function requestPreloads() {
 
     // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
-        player: "rabbidssharkback100.png",
-        playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
-        playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
-        player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
-        player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
-        player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
-        fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball: "bolti.png",
-        background: "grassy.png",
-        pair: "pair.png",
-        cherry : "cherry.png",
-        banana : "banana.png",
-        platform1 : "platform1.png",
-        playerIcon : "sharklitillhaus.png",
-        player2Icon : "sportylitillhaus.png"
+        player: "img/rabbitsharkback.png",
+        playerright: "img/rabbitsharkright.png",
+        playerleft: "img/rabbitsharkleft.png",
+        player2: "img/rabbitfitnessback.png",
+        player2right: "img/rabbitfitnessright.png",
+        player2left: "img/rabbitfitnessleft.png",
+        fireball: "img/fireball.png",
+        ball: "img/bolti.png",
+        background: "img/grassy.png",
+        pair: "img/pair.png",
+        cherry : "img/cherry.png",
+        umbrella : "img/umbrella.png",
+        klukka : "img/klukka.png",
+        platform1 : "img/platform1.png",
+        playericon : "img/sharklitillhaus.png",
+        player2icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -218,7 +219,7 @@ function preloadDone() {
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
     g_sprites.playerIcon = new Sprite(g_images.playerIcon);
-    g_sprites.player2Icon = new Sprite(g_images.player2con);
+    g_sprites.player2Icon = new Sprite(g_images.player2Icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;

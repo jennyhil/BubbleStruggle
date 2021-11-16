@@ -78,7 +78,10 @@ Bullet.prototype.update = function (du) {
         console.log("bullet hit ", hitEntity);
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
-        if (this.type == 2) entityManager.resetBullets();
+        if (this.type == 2) {
+            if (hitEntity.name == "platform") entityManager._bullets[0].isOnCeiling = true;
+            else entityManager.resetBullets();
+        }
         return entityManager.KILL_ME_NOW;
     }
 
@@ -91,8 +94,8 @@ Bullet.prototype.update = function (du) {
     }
 
     // handle types
-    if (this.type == 2 && !entityManager._bullets[0].isOnCeiling) {
-        if (!this.hasFired) {
+    if (this.type == 2) {
+        if (!this.hasFired && !entityManager._bullets[0].isOnCeiling) {
             entityManager.fireBullet(this.cx, this.cy, this.velX, this.velY, this.rotation, 2);
             this.hasFired = true;
         }
