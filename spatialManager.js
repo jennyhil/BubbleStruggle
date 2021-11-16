@@ -83,7 +83,6 @@ var spatialManager = {
         return entityInRange;
     },
 
-    
     render: function (ctx) {
         var oldStyle = ctx.strokeStyle;
         ctx.strokeStyle = "red";

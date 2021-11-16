@@ -16,8 +16,10 @@ var levelManager = {
     
 
     nextLevel: function () {
+        entityManager.clearPlatform();
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
+        this.initLevel();
     },
 
     initLevel : function() {
