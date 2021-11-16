@@ -129,6 +129,13 @@ var entityManager = {
     generatePlatform: function (descr) {
         this._platform .push(new Platform(descr));
     },
+    clearPlatform: function () {
+        for(var i=0; i <this._platform.length; i++) {
+            spatialManager.unregister(this._platform[i])
+            this._platform.splice(i, 1);
+            //this._platform[i] = this.KILL_ME_NOW;
+        }
+    },
 
     killNearestPlayer: function (xPos, yPos) {
         var player = this._findNearestPlayer(xPos, yPos).player;
@@ -155,6 +162,7 @@ var entityManager = {
     toggleBalls: function () {
         this._bShowBalls = !this._bShowBalls;
     },
+    
 
     update: function (du) {
         
@@ -180,7 +188,7 @@ var entityManager = {
         }
 
         if (this._balls.length === 0) levelManager.nextLevel();
-
+        
     },
 
     render: function (ctx) {

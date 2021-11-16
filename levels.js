@@ -2,7 +2,7 @@ var levels = {
     level :
     [
             { // Level 1
-            time: 30000,
+            //time: 30000,
             isFinished: false,
             platforms : [
                 {
@@ -23,11 +23,8 @@ var levels = {
                 {
                     cx: 200,
                     cy: 300
-                },
-               {
-                    cx: 400,
-                    cy: 300
                 }
+ 
 
             ]
             },
@@ -36,16 +33,16 @@ var levels = {
                 isFinished: false,
             platforms: [
                 {
-                    cx: 200,
+                    cx: 100,
                     cy: 200
                 },
                 {
-                    cx: 450,
-                    cy: 350
+                    cx: 500,
+                    cy: 400
                 },
                 {
-                    cx: 750,
-                    cy: 450
+                    cx: 600,
+                    cy: 500
                 }
             ],
 
