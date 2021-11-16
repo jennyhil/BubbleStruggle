@@ -196,11 +196,11 @@ function requestPreloads() {
         player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
-        fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
+        fireball: "img/fireball.png",
+        fireballpwr: "img/fireballpwr.png",
         ball: "img/bolti.png",
         background: "img/grassy.png",
-        pair: "img/pair.png",
-        cherry : "img/cherry.png",
+        rope : "img/rope.png",
         umbrella : "img/umbrella.png",
         klukka : "img/klukka.png",
         platform1 : "img/platform1.png",
@@ -222,6 +222,8 @@ function preloadDone() {
     g_sprites.player2icon = new Sprite(g_images.player2icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
+    g_sprites.bullet.scale = 0.25;
+    g_sprites.bullet = new Sprite(g_images.rope);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();

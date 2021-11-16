@@ -47,8 +47,8 @@ PowerUp.prototype.update = function (du) {
 PowerUp.prototype.render = function (ctx) {
     // (cx, cy) is the centre; must offset it for drawing
     var image; 
-    if (this.type == 1) image = g_images.pair;
-    else if (this.type == 2) image = g_images.cherry;
+    if (this.type == 1) image = g_images.fireball;
+    else if (this.type == 2) image = g_images.rope;
     else if (this.type == 3) image = g_images.umbrella; //shield
     else image = g_images.klukka; //klukka
     // b�ta vi� 4 og 5 (aukat�mi og aukastig)
@@ -60,9 +60,13 @@ PowerUp.prototype.activate = function (type, player) {
     switch (type) {
         case 1: // Normal bullet
             player.weaponType = 1;
+            g_sprites.bullet = new Sprite(g_images.fireball);
+            g_sprites.bullet.scale = 0.25;
             break;
         case 2: // Rope bullet
             player.weaponType = 2;
+            g_sprites.bullet = new Sprite(g_images.rope);
+            g_sprites.bullet.scale = 0.25;
             break;
         case 3: // Activate shield
             player.shieldActive = true;
