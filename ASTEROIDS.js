@@ -218,7 +218,7 @@ function preloadDone() {
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
     g_sprites.playerIcon = new Sprite(g_images.playerIcon);
-    g_sprites.player2Icon = new Sprite(g_images.player2con);
+    g_sprites.player2Icon = new Sprite(g_images.player2Icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
