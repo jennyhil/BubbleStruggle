@@ -190,7 +190,9 @@ function requestPreloads() {
 
     // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
-        player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
+        player   : "ship.png",
+        //player2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
+        //player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
         playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
         player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",

@@ -53,7 +53,7 @@ var levelManager = {
         }, this._time);*/
         setInterval(() => {
             this._timeLeft -= 500;
-        }, 500);
+        }, 600000);
     },
 
     gameOver: function () {

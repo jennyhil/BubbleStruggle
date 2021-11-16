@@ -93,7 +93,7 @@ var spatialManager = {
             if(e.name != "platform") {
                 util.strokeCircle(ctx, e.posX, e.posY, e.radius);
             } else {
-                //util.fillBox(ctx, e.posX, e.posY, e.width, e.height, "red");
+                
                 ctx.strokeRect(e.posX,e.posY,e.width, e.height);
             }
             

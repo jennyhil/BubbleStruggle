@@ -382,7 +382,7 @@ Player.prototype.halt = function () {
     this.velY = 0;
 };
 Player.prototype.drawLives = function (ctx) {
-
+ 
     for (var i = 0; i < this.lives; i++) {
         this.sprite.scale = this._scale-0.6;
         if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||

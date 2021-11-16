@@ -184,6 +184,9 @@ Ball.prototype.update = function (du) {
     var hitEntity = this.findHitEntity();
     if (hitEntity && hitEntity.name === "platform") {
         this.velY *= -1;
+        
+        console.log("this.velY: ",this.velY);
+        
     }
 /*
     if(_level.collidesWith(nextX,nextY)){
