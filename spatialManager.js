@@ -76,7 +76,8 @@ var spatialManager = {
                     entityInRange = e;
             }
             } else {
-                if(e.collidesWith(posX,posY,radius,radius*2)) entityInRange = e;
+                //if(e.collidesWith(posX,posY,radius,radius*2)) entityInRange = e;
+                if(e.collidesWithPlatform(posX,posY,radius)) entityInRange = e;
             }
 
         }
