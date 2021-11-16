@@ -204,8 +204,8 @@ function requestPreloads() {
         umbrella : "img/umbrella.png",
         klukka : "img/klukka.png",
         platform1 : "img/platform1.png",
-        playerIcon : "img/sharklitillhaus.png",
-        player2Icon : "img/sportylitillhaus.png"
+        playericon : "img/sharklitillhaus.png",
+        player2icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -218,8 +218,8 @@ function preloadDone() {
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
-    g_sprites.playerIcon = new Sprite(g_images.playerIcon);
-    g_sprites.player2Icon = new Sprite(g_images.player2Icon);
+    g_sprites.playericon = new Sprite(g_images.playericon);
+    g_sprites.player2icon = new Sprite(g_images.player2icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
