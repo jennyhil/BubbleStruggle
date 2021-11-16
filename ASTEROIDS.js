@@ -168,8 +168,8 @@ function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
     if(!g_gameOver){
         entityManager.render(ctx);
-       // var timeFillRatio = levelManager._timeLeft / levelManager._time;
-       // util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+       var timeFillRatio = levelManager._timeLeft / levelManager._time;
+       util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
         }else {
             ctx.font ="60px VT323"
             ctx.fillText("GAME OVER",400,300);

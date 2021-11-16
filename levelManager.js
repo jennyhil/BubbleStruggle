@@ -51,12 +51,12 @@ var levelManager = {
     initTimer: function () {
         this._time = levels.level[this._levelID].time;
         this._timeLeft = this._time;
-        /*setTimeout(() => {
+        setTimeout(() => {
             this.gameOver();
-        }, this._time);*/
+        }, this._time);
         setInterval(() => {
             this._timeLeft -= 500;
-        }, 600000);
+        }, 500);
     },
 
     gameOver: function () {
