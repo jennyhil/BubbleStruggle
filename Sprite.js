@@ -15,7 +15,6 @@
 // Construct a "sprite" from the given `image`,
 //
 function Sprite(image) {
-    debugger;
     this.image = image;
 
     this.width = image.width;

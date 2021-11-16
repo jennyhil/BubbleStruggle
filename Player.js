@@ -281,10 +281,8 @@ var maxJumpHeight = 500;
 
 // Hjálparfall til að ath hvort sprite sé á jörðinni/lentur eftir hoppið
 Player.prototype.notOnGround = function () {
-    if (this.cy + this.getRadius() <= 600 - 10) {
-        return true
-    }
-    return false
+   
+    return (this.cy + this.getRadius() <= 590);
 }
 
 // Sér um hoppið og passar að það sé ekki hægt að hoppa tvisvar
