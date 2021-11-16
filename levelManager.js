@@ -36,7 +36,7 @@ var levelManager = {
     },
 
     generateBalls: function () {
-        debugger;
+       // debugger;
         for (var i = 0; i < levels.level[this._levelID].balls.length; i++) {
             entityManager.generateBall({
                 cx: levels.level[this._levelID].balls[i].cx,

@@ -126,16 +126,16 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_2)) entityManager.generatePlayer({
+    /*if (eatKey(KEY_2)) entityManager.generatePlayer({
         cx: g_mouseX,
         cy: g_mouseY,
 
         sprite: g_sprites.player2
-    });
+    });*/
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
-            cx: 100,
-            cy: 300,
+            cx: 700,
+            cy: 500,
             KEY_LEFT: 'J'.charCodeAt(0),
             KEY_RIGHT: 'L'.charCodeAt(0),
             KEY_FIRE: 'K'.charCodeAt(0),
@@ -150,7 +150,6 @@ function processDiagnostics() {
         g_mouseX, g_mouseY);*/
 }
 
-
 // =================
 // RENDER SIMULATION
 // =================
@@ -164,13 +163,12 @@ function processDiagnostics() {
 
 
 // GAME-SPECIFIC RENDERING
-var _level = new Platform({}); // TODO: get rid when we have proper level manager.
+
 
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
 
     if(!g_gameOver){
-        _level.render(ctx);
         entityManager.render(ctx);
         var timeFillRatio = levelManager._timeLeft / levelManager._time;
         util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
@@ -204,7 +202,9 @@ function requestPreloads() {
         pair: "pair.png",
         cherry : "cherry.png",
         banana : "banana.png",
-        platform1 : "platform1.png"
+        platform1 : "platform1.png",
+        playerIcon : "sharklitillhaus.png",
+        player2Icon : "sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -214,10 +214,11 @@ var g_sprites = {};
 
 function preloadDone() {
 
-    debugger;
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
+    g_sprites.playerIcon = new Sprite(g_images.playerIcon);
+    g_sprites.player2Icon = new Sprite(g_images.player2con);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;

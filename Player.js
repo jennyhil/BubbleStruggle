@@ -60,9 +60,9 @@ Player.prototype.weaponType = 2;
 Player.prototype.shieldActive = false;
 
 // HACKED-IN AUDIO (no preloading)
-Player.prototype.warpSound = new Audio(
+/*Player.prototype.warpSound = new Audio(
     "sounds/PlayerWarp.ogg");
-
+*/
 Player.prototype.warp = function () {
 
     this._isWarping = true;
@@ -125,9 +125,9 @@ Player.prototype._moveToASafePlace = function () {
 
         // Get out as soon as we find a safe place
         if (isSafePlace) break;
-
     }
 };
+
 Player.prototype.isGameOver = function () {
     if (entityManager._players.length == 1) {
         if (entityManager._players[0]._isDeadNow) return true;
@@ -135,20 +135,18 @@ Player.prototype.isGameOver = function () {
     else if (entityManager._players[0]._isDeadNow && entityManager._players[1]._isDeadNow) return true;
     else return false;
 }
-// TODO: Þarf að finpussa, skores hja player 2 færist í player 1 þegar deyr 
+/* TODO: Þarf að finpussa, skores hja player 2 færist í player 1 þegar deyr 
 Player.prototype.showLives = function () {
     var oldStyle = ctx.fillStyle;
     g_ctx.fillStyle = "white";
-    g_ctx.font = "30px Arial";
+    g_ctx.font = "16px Arial";
     // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
-    g_ctx.fillText("Player 1", 30, 30);
-    g_ctx.fillText(entityManager._players[0].lives, 60, 60);
+    g_ctx.fillText("Lives: " + entityManager._players[0].lives, 10, 570);
     if (entityManager._players.length > 1) {
-        g_ctx.fillText("Player 2", 870, 30);
-        g_ctx.fillText(entityManager._players[1].lives, 920, 60);
+        g_ctx.fillText("Lives: " + entityManager._players[1].lives, 940, 550);
     }
     ctx.fillStyle = oldStyle;
-}
+}*/
 
 // Changes direction of sprite image
 Player.prototype.changeDirection = function () {
@@ -195,6 +193,11 @@ Player.prototype.update = function (du) {
     if (keys[this.KEY_TWO]) this.weaponType = 2;
     if (eatKey(this.KEY_THREE)) this.shieldActive = !this.shieldActive;
 
+    //platform trampolin collision!
+    var hitEntity = this.findHitEntity();
+    if (hitEntity && hitEntity.name === "platform") {
+        this.velY *= -1.2;
+    }
 
     // Handle warping
     if (this._isWarping) {
@@ -378,13 +381,26 @@ Player.prototype.halt = function () {
     this.velX = 0;
     this.velY = 0;
 };
+Player.prototype.drawLives = function (ctx) {
 
+    for (var i = 0; i < this.lives; i++) {
+        this.sprite.scale = this._scale-0.6;
+        if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
+        this.sprite.image.name === "playerright"){
+        this.sprite.drawCentredAt(
+            ctx, 60 - i * 20, 550, this.rotation
+        );
+    }else this.sprite.drawCentredAt(
+        ctx, (g_canvas.width - 60) - i * 20, 550, this.rotation
+    );
+    }
+}
 Player.prototype.render = function (ctx) {
-    if (this.lives > 0) this.showLives();
+    if (this.lives > 0) this.drawLives(ctx);
     if (this.isGameOver()) g_gameOver = true;
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
-
+    this.drawLives(ctx);
     this.sprite.scale = this._scale;
     // 60 is a weird little margin so the sprites will be drawn in the right pos
     this.sprite.drawCentredAt(
