@@ -197,12 +197,14 @@ function requestPreloads() {
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball: "https://notendur.hi.is/sbm11/assets/bolti50.png",
+        ball: "bolti.png",
         background: "grassy.png",
         pair: "pair.png",
         cherry : "cherry.png",
         banana : "banana.png",
-        platform1 : "platform1.png"
+        platform1 : "platform1.png",
+        playerIcon : "sharklitillhaus.png",
+        player2Icon : "sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -215,6 +217,8 @@ function preloadDone() {
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
+    g_sprites.playerIcon = new Sprite(g_images.playerIcon);
+    g_sprites.player2Icon = new Sprite(g_images.player2con);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
