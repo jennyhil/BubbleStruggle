@@ -58,6 +58,7 @@ Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
 Player.prototype.weaponType = 2;
 Player.prototype.shieldActive = false;
+Player.prototype.isImmune = false;
 
 // HACKED-IN AUDIO (no preloading)
 /*Player.prototype.warpSound = new Audio(
@@ -222,16 +223,20 @@ Player.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
     var isColliding = this.isCollidingWithBall();
-    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup" && isColliding.name != ("player")) {
+    if (isColliding) {
         if (this.shieldActive) {
             // TODO: Make it fade or put hit animation
             setTimeout(() => {
                 this.shieldActive = false;
             }, 1000);
         }
-        else {
+        else if (!this.isImmune) {
             this.lives--;
             this.warp();
+            this.isImmune = true;
+            setTimeout(() => {
+                this.isImmune = false;
+            }, 2000);
         }
     }
     else spatialManager.register(this);
