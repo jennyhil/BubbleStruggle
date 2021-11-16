@@ -1,7 +1,7 @@
 html{
     font-family: 'VT323', monospace;
     font-size: 20px;
-    background-color:darkslategray;
+    background-color:rgb(6, 6, 48);
 }
 #container{
     margin: auto;

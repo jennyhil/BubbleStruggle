@@ -5,6 +5,7 @@ handles different platforms, number of balls etc.
 
 */
 "use strict";
+//debugger;
 
 var levelManager = {
 
@@ -16,8 +17,10 @@ var levelManager = {
     
 
     nextLevel: function () {
+        //debugger;
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
+        this.initLevel();
     },
 
     initLevel : function() {
@@ -26,7 +29,7 @@ var levelManager = {
         this.initTimer();
     },
 
-    generatePlatforms: function() {
+    generatePlatforms: function () {
         for(var i=0; i< levels.level[this._levelID].platforms.length; i++) {
             entityManager.generatePlatform({
                 cx: levels.level[this._levelID].platforms[i].cx,
@@ -62,6 +65,7 @@ var levelManager = {
 
     update: function () {
         if (this._timeLeft <= 0) this.gameOver();
+        //if (eatKey(this.KEY_NEXTLEVEL)) this.nextLevel();
     },
 
 

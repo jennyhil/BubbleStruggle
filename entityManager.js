@@ -125,6 +125,7 @@ var entityManager = {
     generatePlayer: function (descr) {
         this._players .push(new Player(descr));
     },
+
     generatePlatform: function (descr) {
         this._platform .push(new Platform(descr));
     },

@@ -32,6 +32,8 @@ function Bullet(descr) {
 Bullet.prototype = new Entity();
 Bullet.prototype.name = "bullet";
 
+
+
 // HACKED-IN AUDIO (no preloading)
 Bullet.prototype.fireSound = new Audio(
     "sounds/bulletFire.ogg");
