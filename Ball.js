@@ -159,7 +159,6 @@ Ball.prototype.update = function (du) {
 
  /*   var minY = this.lastJumpAt;
     var maxY = g_canvas.height - minY;
-
     var nextX = this.cx += this.velX * du;
     var nextY = this.cy + this.velY * du;*/
 

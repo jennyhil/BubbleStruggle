@@ -129,13 +129,12 @@ function processDiagnostics() {
     /*if (eatKey(KEY_2)) entityManager.generatePlayer({
         cx: g_mouseX,
         cy: g_mouseY,
-
         sprite: g_sprites.player2
     });*/
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
             cx: 700,
-            cy: 500,
+            cy: 570,
             KEY_LEFT: 'J'.charCodeAt(0),
             KEY_RIGHT: 'L'.charCodeAt(0),
             KEY_FIRE: 'K'.charCodeAt(0),
@@ -167,11 +166,10 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
-
     if(!g_gameOver){
         entityManager.render(ctx);
-        var timeFillRatio = levelManager._timeLeft / levelManager._time;
-        util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+       var timeFillRatio = levelManager._timeLeft / levelManager._time;
+       util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
         }else {
             ctx.font ="60px VT323"
             ctx.fillText("GAME OVER",400,300);
@@ -190,6 +188,8 @@ function requestPreloads() {
 
     // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
+        //player:"ship.png",
+        //player2:"ship.png",
         player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
         playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
@@ -201,10 +201,11 @@ function requestPreloads() {
         background: "img/grassy.png",
         pair: "img/pair.png",
         cherry : "img/cherry.png",
-        banana : "img/banana.png",
+        umbrella : "img/umbrella.png",
+        klukka : "img/klukka.png",
         platform1 : "img/platform1.png",
-        playerIcon : "img/sharklitillhaus.png",
-        player2Icon : "img/sportylitillhaus.png"
+        playericon : "img/sharklitillhaus.png",
+        player2icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -217,8 +218,8 @@ function preloadDone() {
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
-    g_sprites.playerIcon = new Sprite(g_images.playerIcon);
-    g_sprites.player2Icon = new Sprite(g_images.player2Icon);
+    g_sprites.playericon = new Sprite(g_images.playericon);
+    g_sprites.player2icon = new Sprite(g_images.player2icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;

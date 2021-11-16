@@ -17,25 +17,27 @@ PowerUp.prototype.name = "powerup";
 
 PowerUp.prototype.halfWidth = 5;
 PowerUp.prototype.halfHeight = 5;
+PowerUp.prototype.isOnFloor = false;
 
 PowerUp.prototype.update = function (du) {
     spatialManager.unregister(this);
     // Remember my previous position
-    var x = this.cx;
-    var prevY = this.cy;
-
-    // Compute my provisional new position (barring collisions)
-    var nextY = prevY + this.velY * du;
-
+  
     var isColliding = this.isColliding();
     if (isColliding && isColliding.name == "player") {
         this.activate(this.type, isColliding);
+    }
+    if (this.cy > g_canvas.height - 60) {
+        this.isOnFloor = true; // make not hardcoded if there is time
+        setTimeout(() => {
+            this.kill();
+        }, 3000);
     }
 
     // *Actually* update my position 
     // ...using whatever velocity I've ended up with
     //
-    this.cy += this.velY * du;
+    if (!this.isOnFloor) this.cy += this.velY * du;
     
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
     spatialManager.register(this);
@@ -47,8 +49,9 @@ PowerUp.prototype.render = function (ctx) {
     var image; 
     if (this.type == 1) image = g_images.pair;
     else if (this.type == 2) image = g_images.cherry;
-    else image = g_images.banana;
-    // bæta við 4 og 5 (aukatími og aukastig)
+    else if (this.type == 3) image = g_images.umbrella; //shield
+    else image = g_images.klukka; //klukka
+    // bï¿½ta viï¿½ 4 og 5 (aukatï¿½mi og aukastig)
     ctx.drawImage(image,this.cx - this.halfWidth,this.cy - this.halfHeight);
 };
 
@@ -58,10 +61,10 @@ PowerUp.prototype.activate = function (type, player) {
         case 1: // Normal bullet
             player.weaponType = 1;
             break;
-        case 2:
+        case 2: // Rope bullet
             player.weaponType = 2;
             break;
-        case 3:
+        case 3: // Activate shield
             player.shieldActive = true;
             break;
         case 4: // 3 extra seconds (or more/less if we want)

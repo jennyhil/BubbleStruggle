@@ -58,6 +58,7 @@ Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
 Player.prototype.weaponType = 2;
 Player.prototype.shieldActive = false;
+Player.prototype.isImmune = false;
 
 // HACKED-IN AUDIO (no preloading)
 /*Player.prototype.warpSound = new Audio(
@@ -135,18 +136,6 @@ Player.prototype.isGameOver = function () {
     else if (entityManager._players[0]._isDeadNow && entityManager._players[1]._isDeadNow) return true;
     else return false;
 }
-/* TODO: Þarf að finpussa, skores hja player 2 færist í player 1 þegar deyr 
-Player.prototype.showLives = function () {
-    var oldStyle = ctx.fillStyle;
-    g_ctx.fillStyle = "white";
-    g_ctx.font = "16px Arial";
-    // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
-    g_ctx.fillText("Lives: " + entityManager._players[0].lives, 10, 570);
-    if (entityManager._players.length > 1) {
-        g_ctx.fillText("Lives: " + entityManager._players[1].lives, 940, 550);
-    }
-    ctx.fillStyle = oldStyle;
-}*/
 
 // Changes direction of sprite image
 Player.prototype.changeDirection = function () {
@@ -222,16 +211,20 @@ Player.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
     var isColliding = this.isCollidingWithBall();
-    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup" && isColliding.name != ("player")) {
+    if (isColliding) {
         if (this.shieldActive) {
             // TODO: Make it fade or put hit animation
             setTimeout(() => {
                 this.shieldActive = false;
             }, 1000);
         }
-        else {
+        else if (!this.isImmune) {
             this.lives--;
             this.warp();
+            this.isImmune = true;
+            setTimeout(() => {
+                this.isImmune = false;
+            }, 2000);
         }
     }
     else spatialManager.register(this);
@@ -276,10 +269,8 @@ var maxJumpHeight = 500;
 
 // Hjálparfall til að ath hvort sprite sé á jörðinni/lentur eftir hoppið
 Player.prototype.notOnGround = function () {
-    if (this.cy + this.getRadius() <= 600 - 10) {
-        return true
-    }
-    return false
+   
+    return (this.cy + this.getRadius() <= 590);
 }
 
 // Sér um hoppið og passar að það sé ekki hægt að hoppa tvisvar
@@ -382,16 +373,18 @@ Player.prototype.halt = function () {
     this.velY = 0;
 };
 Player.prototype.drawLives = function (ctx) {
-
+    
     for (var i = 0; i < this.lives; i++) {
-        this.sprite.scale = this._scale-0.6;
+        g_sprites.playericon.scale = this._scale-0.5;
+        g_sprites.player2icon.scale = this._scale-0.5;
         if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
         this.sprite.image.name === "playerright"){
-        this.sprite.drawCentredAt(
-            ctx, 60 - i * 20, 550, this.rotation
+
+            g_sprites.playericon.drawCentredAt(
+            ctx, 50 +i * 25, 550, this.rotation
         );
-    }else this.sprite.drawCentredAt(
-        ctx, (g_canvas.width - 60) - i * 20, 550, this.rotation
+    }else g_sprites.player2icon.drawCentredAt(
+        ctx, (g_canvas.width - 90) + i * 25, 550, this.rotation
     );
     }
 }
@@ -404,7 +397,7 @@ Player.prototype.render = function (ctx) {
     this.sprite.scale = this._scale;
     // 60 is a weird little margin so the sprites will be drawn in the right pos
     this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy - 60, this.rotation
+        ctx, this.cx, this.cy , this.rotation
     );
     this.sprite.scale = origScale;
 
