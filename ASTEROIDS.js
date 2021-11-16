@@ -197,14 +197,14 @@ function requestPreloads() {
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball: "bolti.png",
-        background: "grassy.png",
-        pair: "pair.png",
-        cherry : "cherry.png",
-        banana : "banana.png",
-        platform1 : "platform1.png",
-        playerIcon : "sharklitillhaus.png",
-        player2Icon : "sportylitillhaus.png"
+        ball: "img/bolti.png",
+        background: "img/grassy.png",
+        pair: "img/pair.png",
+        cherry : "img/cherry.png",
+        banana : "img/banana.png",
+        platform1 : "img/platform1.png",
+        playerIcon : "img/sharklitillhaus.png",
+        player2Icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
