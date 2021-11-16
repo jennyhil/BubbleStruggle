@@ -129,13 +129,12 @@ function processDiagnostics() {
     /*if (eatKey(KEY_2)) entityManager.generatePlayer({
         cx: g_mouseX,
         cy: g_mouseY,
-
         sprite: g_sprites.player2
     });*/
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
             cx: 700,
-            cy: 500,
+            cy: 570,
             KEY_LEFT: 'J'.charCodeAt(0),
             KEY_RIGHT: 'L'.charCodeAt(0),
             KEY_FIRE: 'K'.charCodeAt(0),
@@ -167,11 +166,11 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
     ctx.drawImage(g_images.background,0,0);
-
+    util.fillBox(ctx,g_canvas.width/2,g_canvas.height-112,10,112,"red")
     if(!g_gameOver){
         entityManager.render(ctx);
-        var timeFillRatio = levelManager._timeLeft / levelManager._time;
-        util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+       // var timeFillRatio = levelManager._timeLeft / levelManager._time;
+       // util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
         }else {
             ctx.font ="60px VT323"
             ctx.fillText("GAME OVER",400,300);
@@ -190,8 +189,6 @@ function requestPreloads() {
 
     // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
-        //player   : "ship.png",
-        //player2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
         player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
         playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
         playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
@@ -199,14 +196,14 @@ function requestPreloads() {
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
-        ball: "bolti.png",
-        background: "grassy.png",
-        pair: "pair.png",
-        cherry : "cherry.png",
-        banana : "banana.png",
-        platform1 : "platform1.png",
-        playerIcon : "sharklitillhaus.png",
-        player2Icon : "sportylitillhaus.png"
+        ball: "img/bolti.png",
+        background: "img/grassy.png",
+        pair: "img/pair.png",
+        cherry : "img/cherry.png",
+        banana : "img/banana.png",
+        platform1 : "img/platform1.png",
+        playerIcon : "img/sharklitillhaus.png",
+        player2Icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -219,8 +216,8 @@ function preloadDone() {
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.ball = new Sprite(g_images.ball);
-    //g_sprites.playerIcon = new Sprite(g_images.playerIcon);
-    //g_sprites.player2Icon = new Sprite(g_images.player2con);
+    g_sprites.playerIcon = new Sprite(g_images.playerIcon);
+    g_sprites.player2Icon = new Sprite(g_images.player2Icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;

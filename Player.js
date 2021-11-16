@@ -58,6 +58,7 @@ Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
 Player.prototype.weaponType = 2;
 Player.prototype.shieldActive = false;
+Player.prototype.isImmune = false;
 
 // HACKED-IN AUDIO (no preloading)
 /*Player.prototype.warpSound = new Audio(
@@ -222,16 +223,20 @@ Player.prototype.update = function (du) {
 
     // TODO: YOUR STUFF HERE! --- Warp if isColliding, otherwise Register √
     var isColliding = this.isCollidingWithBall();
-    if (isColliding && isColliding.name != "bullet" && isColliding.name != "powerup" && isColliding.name != ("player")) {
+    if (isColliding) {
         if (this.shieldActive) {
             // TODO: Make it fade or put hit animation
             setTimeout(() => {
                 this.shieldActive = false;
             }, 1000);
         }
-        else {
+        else if (!this.isImmune) {
             this.lives--;
             this.warp();
+            this.isImmune = true;
+            setTimeout(() => {
+                this.isImmune = false;
+            }, 2000);
         }
     }
     else spatialManager.register(this);
@@ -382,7 +387,7 @@ Player.prototype.halt = function () {
     this.velY = 0;
 };
 Player.prototype.drawLives = function (ctx) {
- 
+
     for (var i = 0; i < this.lives; i++) {
         this.sprite.scale = this._scale-0.6;
         if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
@@ -404,7 +409,7 @@ Player.prototype.render = function (ctx) {
     this.sprite.scale = this._scale;
     // 60 is a weird little margin so the sprites will be drawn in the right pos
     this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy - 60, this.rotation
+        ctx, this.cx, this.cy - 30, this.rotation
     );
     this.sprite.scale = origScale;
 
@@ -412,4 +417,4 @@ Player.prototype.render = function (ctx) {
         ctx.strokeStyle = "red";
         util.strokeCircle(ctx, this.cx, this.cy, 40); // TODO: find dynamic radius value
     }
-};
+}; 
