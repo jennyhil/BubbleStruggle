@@ -18,8 +18,7 @@ Platform.prototype.getWidth = function() {
     return this.width;
 }
 Platform.prototype.update = function() {
-
-    
+    if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 }
 Platform.prototype.collidesWith = function(posX, posY, width, height) {
     var halfWidth = width /2;

@@ -16,7 +16,7 @@ var levelManager = {
     
 
     nextLevel: function () {
-        entityManager.clearPlatform();
+        entityManager.clearPlatforms();
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
         this.initLevel();

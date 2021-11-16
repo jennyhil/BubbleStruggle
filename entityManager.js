@@ -30,7 +30,7 @@ var entityManager = {
     _balls: [],
     _bullets: [],
     _players: [],
-    _platform: [],
+    _platforms: [],
     _powerups: [],
 
     _bShowBalls: true,
@@ -88,7 +88,7 @@ var entityManager = {
     // i.e. thing which need `this` to be defined.
     //
     deferredSetup: function () {
-        this._categories = [this._balls, this._bullets, this._players, this._powerups, this._platform];
+        this._categories = [this._balls, this._bullets, this._players, this._powerups, this._platforms];
     },
 
     init: function () {
@@ -98,6 +98,7 @@ var entityManager = {
     },
 
     fireBullet: function (cx, cy, velX, velY, rotation, type) {
+        console.log(this._bullets);
         this._bullets.push(new Bullet({
             cx: cx,
             cy: cy,
@@ -127,14 +128,18 @@ var entityManager = {
     },
 
     generatePlatform: function (descr) {
-        this._platform .push(new Platform(descr));
+        this._platforms .push(new Platform(descr));
     },
-    clearPlatform: function () {
-        for(var i=0; i <this._platform.length; i++) {
+
+    clearPlatforms: function () {
+        this._platforms.forEach((platform) => {
+            platform.kill();
+        });
+      /*  for(var i=0; i <this._platform.length; i++) {
             spatialManager.unregister(this._platform[i])
             this._platform.splice(i, 1);
             //this._platform[i] = this.KILL_ME_NOW;
-        }
+        }*/
     },
 
     killNearestPlayer: function (xPos, yPos) {
@@ -174,6 +179,7 @@ var entityManager = {
             while (i < aCategory.length) {
               
                 var status = aCategory[i].update(du);
+                debugger;
 
                 if (status === this.KILL_ME_NOW) {
                     // remove the dead guy, and shuffle the others down to
