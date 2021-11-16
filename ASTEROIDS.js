@@ -204,8 +204,8 @@ function requestPreloads() {
         umbrella : "img/umbrella.png",
         klukka : "img/klukka.png",
         platform1 : "img/platform1.png",
-        playericon : "img/sharklitillhaus.png",
-        player2icon : "img/sportylitillhaus.png"
+        playerIcon : "img/sharklitillhaus.png",
+        player2Icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
