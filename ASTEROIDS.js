@@ -190,21 +190,22 @@ function requestPreloads() {
 
     // Ath. eigum vi� a� s�kja myndir af netinu e�a hafa ��r inn� ehv folder..
     var requiredImages = {
-        player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
-        playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
-        playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
-        player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
-        player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
-        player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
-        fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
+        player: "img/rabbitsharkback.png",
+        playerright: "img/rabbitsharkright.png",
+        playerleft: "img/rabbitsharkleft.png",
+        player2: "img/rabbitfitnessback.png",
+        player2right: "img/rabbitfitnessright.png",
+        player2left: "img/rabbitfitnessleft.png",
+        fireball: "img/fireball.png",
         ball: "img/bolti.png",
         background: "img/grassy.png",
         pair: "img/pair.png",
         cherry : "img/cherry.png",
-        banana : "img/banana.png",
+        umbrella : "img/umbrella.png",
+        klukka : "img/klukka.png",
         platform1 : "img/platform1.png",
-        playerIcon : "img/sharklitillhaus.png",
-        player2Icon : "img/sportylitillhaus.png"
+        playericon : "img/sharklitillhaus.png",
+        player2icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);

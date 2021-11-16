@@ -49,8 +49,9 @@ PowerUp.prototype.render = function (ctx) {
     var image; 
     if (this.type == 1) image = g_images.pair;
     else if (this.type == 2) image = g_images.cherry;
-    else image = g_images.banana;
-    // bæta við 4 og 5 (aukatími og aukastig)
+    else if (this.type == 3) image = g_images.umbrella; //shield
+    else image = g_images.klukka; //klukka
+    // bï¿½ta viï¿½ 4 og 5 (aukatï¿½mi og aukastig)
     ctx.drawImage(image,this.cx - this.halfWidth,this.cy - this.halfHeight);
 };
 
