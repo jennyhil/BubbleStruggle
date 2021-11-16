@@ -27,13 +27,10 @@ var g_canvas = document.getElementById("myCanvas");
 var g_ctx = g_canvas.getContext("2d");
 
 
-
-
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
-
 
 // ====================
 // CREATE INITIAL Player
@@ -106,7 +103,9 @@ var KEY_2 = keyCode('2');
 
 var KEY_TWO_PLAYER = keyCode('T');
 //var KEY_K = keyCode('K');
+var KEY_START = keyCode('S')
 var twoPlayer = false;
+var gameStarted = false;
 
 function processDiagnostics() {
 
@@ -125,6 +124,8 @@ function processDiagnostics() {
     if (eatKey(KEY_RESET)) entityManager.resetPlayer();
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
+
+    if (eatKey(KEY_START)) gameStarted = true;
 
     /*if (eatKey(KEY_2)) entityManager.generatePlayer({
         cx: g_mouseX,
@@ -163,18 +164,20 @@ function processDiagnostics() {
 
 // GAME-SPECIFIC RENDERING
 
-
 function renderSimulation(ctx) {
+    levelManager.renderStart(ctx);
+    if(gameStarted){
     ctx.drawImage(g_images.background,0,0);
     if(!g_gameOver){
         entityManager.render(ctx);
-       var timeFillRatio = levelManager._timeLeft / levelManager._time;
-       util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+       // var timeFillRatio = levelManager._timeLeft / levelManager._time;
+       // util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
         }else {
             ctx.font ="60px VT323"
             ctx.fillText("GAME OVER",400,300);
         }
     if (g_renderSpatialDebug) spatialManager.render(ctx);
+    }
 }
 
 
