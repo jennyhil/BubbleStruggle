@@ -46,12 +46,36 @@ PowerUp.prototype.update = function (du) {
 
 PowerUp.prototype.render = function (ctx) {
     // (cx, cy) is the centre; must offset it for drawing
+<<<<<<< HEAD
     var image; 
     if (this.type == 1) image = g_images.fireball;
     else if (this.type == 2) image = g_images.rope;
     else if (this.type == 3) image = g_images.umbrella; //shield
     else image = g_images.klukka; //klukka
     // b�ta vi� 4 og 5 (aukat�mi og aukastig)
+=======
+    var image;
+    switch (this.type) {
+        case 1:
+            image = g_images.pair;
+            break;
+        case 2:
+            image = g_images.cherry; // breyta í fire
+            break;
+        case 3:
+            image = g_images.umbrella;
+            break;
+        case 4:
+            image = g_images.klukka;
+            break;
+        case 5:
+            image = g_images.cherry;
+            break;
+        default:
+            image = g_images.cherry;
+            break;
+    }
+>>>>>>> a35ec3fbacac3f41dc07014dde4783d2beec7142
     ctx.drawImage(image,this.cx - this.halfWidth,this.cy - this.halfHeight);
 };
 
@@ -73,6 +97,9 @@ PowerUp.prototype.activate = function (type, player) {
             break;
         case 4: // 3 extra seconds (or more/less if we want)
             levelManager._timeLeft += 3000;
+            break;
+        case 5: // Extra score
+            levelManager._score += 250;
             break;
         default:
             break;

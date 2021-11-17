@@ -205,6 +205,7 @@ Ball.prototype.evaporateSound = new Audio(
 
 Ball.prototype.takeBulletHit = function () {
     this.kill();
+    levelManager._score += 50;
 
     if (this.scale > 0.25) {
         this._spawnFragment();
@@ -221,7 +222,7 @@ Ball.prototype.takeBulletHit = function () {
 };
 
 Ball.prototype._spawnPowerup = function () {
-    var id = Math.floor(Math.random() * 4) + 1; // currently 4 powerups
+    var id = Math.floor(Math.random() * 5) + 1; // currently 5 powerups
     
     entityManager.generatePowerup({
         cx: this.cx,

@@ -13,12 +13,14 @@ var levelManager = {
     _levelID: 0,
     _time: 0,
     _timeLeft: 0,
+    _score: 0,
     
 
     nextLevel: function () {
-        entityManager.clearPlatform();
+        entityManager.clearPlatforms();
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
+        this.addTimerToScore();
         this.initLevel();
     },
 
@@ -50,12 +52,16 @@ var levelManager = {
     initTimer: function () {
         this._time = levels.level[this._levelID].time;
         this._timeLeft = this._time;
-        /*setTimeout(() => {
-            this.gameOver();
-        }, this._time);*/
+        
         setInterval(() => {
-            this._timeLeft -= 500;
-        }, 500);
+            this._timeLeft -= 200;
+        }, 200);
+    },
+
+    addTimerToScore: function () {
+        debugger;
+        var timerScore = this._timeLeft / 10;
+        this._score += timerScore;
     },
 
     gameOver: function () {
@@ -66,19 +72,30 @@ var levelManager = {
         if (this._timeLeft <= 0) this.gameOver();
     },
 
+    render: function (ctx) {
+        ctx.font = "60px VT323"
+        ctx.fillText(this._score.toString(), 50, 50);
+        var timeFillRatio = this._timeLeft / this._time;
+        util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+    },
 
-/*
-    render: function(ctx) {
-        for (var c = 0; c < this._levels.length; ++c) {
-            var aLevel = this._levels[c];
-            for (var i = 0; i < aLevel.length; ++i) {
-                aLevel[i].render(ctx);
-                //debug.text(".", debugX + i * 10, debugY);
+    renderStart: function (ctx) {
+        // For now a shitty mock up starting page
+        util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, "teal");
+        ctx.fillStyle="black";
+        ctx.font ="40px VT323";
+        var txt="Press S to start";
 
-            }
-            //debugY += 10;
-        }
+        ctx.fillText(txt,g_canvas.width/2- ctx.measureText(txt).width/2,g_canvas.height-40);
+        g_sprites.frontpage = new Sprite(g_images.frontpage);
+        
+        // Render player 1
+        g_sprites.frontpage.drawCentredAt(
+            ctx, ctx.canvas.width/2, ctx.canvas.height/20);
+        // Render player 2
+       // g_sprites.player2.drawCentredAt(
+            //ctx, ctx.canvas.width / 2 + 10, ctx.canvas.height / 2);
     }
-*/
+
 }
 
