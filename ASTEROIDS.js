@@ -199,6 +199,7 @@ function requestPreloads() {
         fireball: "img/fireball.png",
         fireballpwr: "img/fireballpwr.png",
         redball: "img/redball.png",
+        ball: "img/bolti.png",
         blueball: "img/blueball.png",
         greenball: "img/greenball.png",
         background: "img/grassy.png",
@@ -222,6 +223,7 @@ function preloadDone() {
     g_sprites.player2 = new Sprite(g_images.player2);
     g_sprites.redball = new Sprite(g_images.redball);
     g_sprites.blueball = new Sprite(g_images.blueball);
+    g_sprites.ball = new Sprite(g_images.ball);
     g_sprites.greenball = new Sprite(g_images.greenball);
     g_sprites.playericon = new Sprite(g_images.playericon);
     g_sprites.player2icon = new Sprite(g_images.player2icon);
