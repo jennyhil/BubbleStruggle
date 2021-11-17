@@ -17,17 +17,37 @@ var levelManager = {
     
 
     nextLevel: function () {
-        entityManager.clearPlatforms();
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
         this.addTimerToScore();
-        this.initLevel();
+        setTimeout(() => {
+            this.clearLevel();
+            this.initLevel();
+        }, 2000);
+        
     },
 
-    initLevel : function() {
+    initLevel: function () {
+        var gameOverDiv = document.getElementById("gameOver");
+        gameOverDiv.style.visibility = "hidden";
+
+        g_levelWon = false;
         this.generatePlatforms();
         this.generateBalls();
         this.initTimer();
+    },
+
+    resetLevel: function () {
+        debugger;
+        this._score = 0;
+        g_gameOver = false;
+        createInitialPlayer();
+        this.clearLevel();
+        this.initLevel();
+    },
+
+    clearLevel: function () {
+        entityManager.clearPlatforms();
     },
 
     generatePlatforms: function() {
@@ -54,14 +74,22 @@ var levelManager = {
         this._timeLeft = this._time;
         
         setInterval(() => {
-            this._timeLeft -= 200;
+            if (!g_levelWon) this._timeLeft -= 200;
         }, 200);
     },
 
     addTimerToScore: function () {
-        debugger;
         var timerScore = this._timeLeft / 10;
-        this._score += timerScore;
+        var scoreInterval = timerScore / 10;
+        
+        var interval = setInterval(() => {
+            this._score += scoreInterval;
+            this._timeLeft -= scoreInterval*10;
+        }, 200);
+
+        setTimeout(() => {
+            clearInterval(interval);
+        }, 2000);
     },
 
     gameOver: function () {
@@ -69,12 +97,13 @@ var levelManager = {
     },
 
     update: function () {
-        if (this._timeLeft <= 0) this.gameOver();
+        if (this._timeLeft <= 0 && !g_levelWon) this.gameOver();
     },
 
     render: function (ctx) {
         ctx.font = "60px VT323"
         ctx.fillText(this._score.toString(), 50, 50);
+
         var timeFillRatio = this._timeLeft / this._time;
         util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
     },

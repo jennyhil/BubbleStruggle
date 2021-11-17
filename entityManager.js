@@ -157,6 +157,7 @@ var entityManager = {
     },
 
     resetPlayers: function () {
+        debugger;
         this._forEachOf(this._players , Player.prototype.reset);
     },
 
@@ -179,7 +180,6 @@ var entityManager = {
             while (i < aCategory.length) {
               
                 var status = aCategory[i].update(du);
-                debugger;
 
                 if (status === this.KILL_ME_NOW) {
                     // remove the dead guy, and shuffle the others down to
@@ -193,7 +193,10 @@ var entityManager = {
         }
         }
 
-        if (this._balls.length === 0) levelManager.nextLevel();
+        if (this._balls.length === 0 && !g_levelWon) {
+            g_levelWon = true;
+            levelManager.nextLevel();
+        }
         
     },
 
