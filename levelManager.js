@@ -115,17 +115,15 @@ var levelManager = {
         ctx.font ="40px VT323";
         var txt="Press S to start";
 
-        ctx.fillText(txt,g_canvas.width/2- ctx.measureText(txt).width/2,g_canvas.height-40);
-        g_sprites.player = new Sprite(g_images.playerright);
-        g_sprites.player2 = new Sprite(g_images.player2right);
-        g_sprites.player.scale = 1.5;
-        
+        g_sprites.frontpage = new Sprite(g_images.frontpage);
         // Render player 1
-        g_sprites.player.drawCentredAt(
-            ctx, ctx.canvas.width / 2 - 80, ctx.canvas.height / 2);
+        g_sprites.frontpage.drawCentredAt(
+            ctx, ctx.canvas.width/2, ctx.canvas.height/20);
+
+        ctx.fillText(txt,g_canvas.width/2- ctx.measureText(txt).width/2,g_canvas.height-40);
         // Render player 2
-        g_sprites.player2.drawCentredAt(
-            ctx, ctx.canvas.width / 2 + 10, ctx.canvas.height / 2);
+       // g_sprites.player2.drawCentredAt(
+            //ctx, ctx.canvas.width / 2 + 10, ctx.canvas.height / 2);
     }
 
 }

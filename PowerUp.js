@@ -46,6 +46,14 @@ PowerUp.prototype.update = function (du) {
 
 PowerUp.prototype.render = function (ctx) {
     // (cx, cy) is the centre; must offset it for drawing
+<<<<<<< HEAD
+    var image; 
+    if (this.type == 1) image = g_images.fireball;
+    else if (this.type == 2) image = g_images.rope;
+    else if (this.type == 3) image = g_images.umbrella; //shield
+    else image = g_images.klukka; //klukka
+    // b�ta vi� 4 og 5 (aukat�mi og aukastig)
+=======
     var image;
     switch (this.type) {
         case 1:
@@ -67,6 +75,7 @@ PowerUp.prototype.render = function (ctx) {
             image = g_images.cherry;
             break;
     }
+>>>>>>> a35ec3fbacac3f41dc07014dde4783d2beec7142
     ctx.drawImage(image,this.cx - this.halfWidth,this.cy - this.halfHeight);
 };
 
@@ -75,9 +84,13 @@ PowerUp.prototype.activate = function (type, player) {
     switch (type) {
         case 1: // Normal bullet
             player.weaponType = 1;
+            g_sprites.bullet = new Sprite(g_images.fireball);
+            g_sprites.bullet.scale = 0.25;
             break;
         case 2: // Rope bullet
             player.weaponType = 2;
+            g_sprites.bullet = new Sprite(g_images.rope);
+            g_sprites.bullet.scale = 0.25;
             break;
         case 3: // Activate shield
             player.shieldActive = true;
