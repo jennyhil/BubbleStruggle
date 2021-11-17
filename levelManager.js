@@ -65,16 +65,20 @@ var levelManager = {
     generateBalls: function () {
        debugger;
         var currentLevelBalls = levels.level[this._levelID].balls;
+        var ballScale = 2;
         for (var i = 0; i < currentLevelBalls.length; i++) {
+            if (currentLevelBalls[i].scale) ballScale = currentLevelBalls[i].scale;
             entityManager.generateBall({
                 cx: currentLevelBalls[i].cx,
                 cy: currentLevelBalls[i].cy,
-                color: currentLevelBalls[i].color
+                color: currentLevelBalls[i].color,
+                scale: ballScale
             })
         }
     },
 
     initTimer: function () {
+        debugger;
         this._time = levels.level[this._levelID].time;
         this._timeLeft = this._time;
         

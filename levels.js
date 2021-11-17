@@ -23,6 +23,7 @@ var levels = {
                 {
                     cx: 500,
                     cy: 300,
+                    scale: 0.5,
                     color: "blue"
                 }
  

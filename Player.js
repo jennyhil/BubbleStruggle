@@ -24,7 +24,7 @@ function Player(descr) {
     this.sprite = this.sprite || g_sprites.player;
 
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 0.8;
     this._isWarping = false;
     this.lives = 3;
 }
