@@ -56,7 +56,7 @@ Player.prototype.velX = 0;
 Player.prototype.velY = 0;
 Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
-Player.prototype.weaponType = 2;
+Player.prototype.weaponType = 1;
 Player.prototype.shieldActive = false;
 Player.prototype.isImmune = false;
 
