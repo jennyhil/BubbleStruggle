@@ -74,6 +74,13 @@ Entity.prototype.findHitEntity = function () {
         pos.posX, pos.posY, this.getRadius()
     );
 };
+// PLATFORM COLLISION
+Entity.prototype.findHitPlatform =function (){
+    var pos = this.getPos();
+    return spatialManager.findPlatformInRange(
+        pos.posX, pos.posY, this.getRadius()
+    );
+}
 
 // This is just little "convenience wrapper"
 Entity.prototype.isColliding = function () {

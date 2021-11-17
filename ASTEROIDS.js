@@ -114,11 +114,12 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_TWO_PLAYER = keyCode('T');
-//var KEY_K = keyCode('K');
+var KEY_NEXT_LEVEL = keyCode('N');
 var KEY_START = keyCode('S')
 var twoPlayer = false;
 var gameStarted = false;
 var g_levelWon = false;
+var g_nextLevel = false;
 
 var BTN_PLAYAGAIN = document.getElementById("playAgainBtn");
 
@@ -141,12 +142,8 @@ function processDiagnostics() {
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
     if (eatKey(KEY_START)) gameStarted = true;
+    if(eatKey(KEY_NEXT_LEVEL)) g_nextLevel = true;
 
-    /*if (eatKey(KEY_2)) entityManager.generatePlayer({
-        cx: g_mouseX,
-        cy: g_mouseY,
-        sprite: g_sprites.player2
-    });*/
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
             cx: 700,

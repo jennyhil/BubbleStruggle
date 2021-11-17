@@ -45,8 +45,8 @@ var spatialManager = {
         entity.posX = pos.posX;
         entity.posY = pos.posY;
         entity.radius = entity.getRadius();
-        
-        
+
+
 
         // TODO: YOUR STUFF HERE! 
         this._entities[spatialID] = entity
@@ -56,32 +56,44 @@ var spatialManager = {
         var spatialID = entity.getSpatialID();
 
         // TODO: YOUR STUFF HERE! 
-       delete this._entities[spatialID];
-    
+        delete this._entities[spatialID];
+
     },
     findEntityInRange: function (posX, posY, radius) {
-       
+
         // TODO: YOUR STUFF HERE! 
         var entityInRange = null;
         for (var ID in this._entities) {
             var e = this._entities[ID];
-            if(e.name != "platform") {
+            if (e.name != "platform") {
                 var distSq = util.wrappedDistSq(
-                e.posX, e.posY, 
-                posX, posY, 
-                g_canvas.width, g_canvas.height);
+                    e.posX, e.posY,
+                    posX, posY,
+                    g_canvas.width, g_canvas.height);
 
-                if (distSq < util.square(radius + e.radius) && 
-                (posX!=e.posX && posY !=e.posY) ) {
+                if (distSq < util.square(radius + e.radius) &&
+                    (posX != e.posX && posY != e.posY)) {
                     entityInRange = e;
-            }
+                }
             } else {
-                //if(e.collidesWith(posX,posY,radius,radius*2)) entityInRange = e;
-                if(e.collidesWithPlatform(posX,posY,radius)) entityInRange = e;
+                if (e.collidesWith(posX, posY, radius, radius * 2)) entityInRange = e;
+                //if(e.collidesWithPlatform(posX,posY,radius)) entityInRange = e;
             }
 
         }
         return entityInRange;
+    },
+    // PLATFORM COLLISION
+    findPlatformInRange: function (posX, posY, radius) {
+        var collision = "";
+        for (var ID in this._entities) {
+            var e = this._entities[ID];
+            if (e.name === "platform") {
+                if (e.collidesWith(posX, posY, radius, radius * 2)) collision = "topOrBottom";
+                else if (e.sideHit(posX, posY, radius)) collision = "sides";
+            }
+        }
+        return collision;
     },
 
     render: function (ctx) {
@@ -90,13 +102,13 @@ var spatialManager = {
 
         for (var ID in this._entities) {
             var e = this._entities[ID];
-            if(e.name != "platform") {
+            if (e.name != "platform") {
                 util.strokeCircle(ctx, e.posX, e.posY, e.radius);
             } else {
-                
-                ctx.strokeRect(e.posX,e.posY,e.width, e.height);
+
+                ctx.strokeRect(e.posX, e.posY, e.width, e.height);
             }
-            
+
         }
         ctx.strokeStyle = oldStyle;
     }

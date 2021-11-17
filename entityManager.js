@@ -195,11 +195,10 @@ var entityManager = {
             }
         }
 
-        if (this._balls.length === 0 && !g_levelWon) {
+        if ((this._balls.length === 0 && !g_levelWon)) {
             g_levelWon = true;
             levelManager.nextLevel();
         }
-        
     },
 
     render: function (ctx) {

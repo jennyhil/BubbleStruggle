@@ -352,7 +352,7 @@ Player.prototype.maybeFireBullet = function () {
         var launchX = this.cx + dX * launchDist;
         var launchY = this.cy + dY * launchDist;
 
-        if (this.weaponType == 2 ) {
+        if (this.weaponType == 2) {
             launchY += launchDist;
             var bullets = entityManager._bullets;
             if (bullets.length > 0) entityManager.resetBullets();
@@ -361,7 +361,7 @@ Player.prototype.maybeFireBullet = function () {
             launchX, launchY,
             this.velX + relVelX, this.velY + relVelY,
             this.rotation, this.weaponType);
-     
+
     }
 
 };
@@ -385,15 +385,17 @@ Player.prototype.halt = function () {
 Player.prototype.drawLives = function (ctx) {
 
     for (var i = 0; i < this.lives; i++) {
-        this.sprite.scale = this._scale-0.6;
-        if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
-        this.sprite.image.name === "playerright"){
-        this.sprite.drawCentredAt(
-            ctx, 60 - i * 20, 550, this.rotation
+        g_sprites.playericon.scale = this._scale - 0.5;
+        g_sprites.player2icon.scale = this._scale - 0.5;
+        if (this.sprite.image.name === "player" || this.sprite.image.name === "playerleft" ||
+            this.sprite.image.name === "playerright") {
+
+            g_sprites.playericon.drawCentredAt(
+                ctx, 50 + i * 25, 550, this.rotation
+            );
+        } else g_sprites.player2icon.drawCentredAt(
+            ctx, (g_canvas.width - 90) + i * 25, 550, this.rotation
         );
-    }else this.sprite.drawCentredAt(
-        ctx, (g_canvas.width - 60) - i * 20, 550, this.rotation
-    );
     }
 }
 Player.prototype.render = function (ctx) {

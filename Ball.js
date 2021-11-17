@@ -142,6 +142,8 @@ Ball.prototype.computeThrustMag = function () {
 
 
 Ball.prototype.update = function (du) {
+    var oldPosX=this.cx;
+    var oldposY=this.cy;
     spatialManager.unregister(this);
     if (this._isDeadNow) return entityManager.KILL_ME_NOW;
 
@@ -155,39 +157,29 @@ Ball.prototype.update = function (du) {
     accelY += this.computeGravity();
     this.applyAccel(accelX, accelY, du);
 
-    /*   var minY = this.lastJumpAt;
-       var maxY = g_canvas.height - minY;
-       var nextX = this.cx += this.velX * du;
-       var nextY = this.cy + this.velY * du;*/
-
-    /* if (nextY > maxY || nextY < minY) {
-         this.velY = 1 * -0.9;
-     }
-     if (this.velY < 0) this.velY /= 1.01;
-     else if (this.velY > 0.05) this.velY *= 1.02
-     else this.velY += 0.1;*/
-    // this.cy += this.velY * du;
-
-    // TODO: YOUR STUFF HERE! --- Unregister and check for death √
-
-
-    //this.cx += this.velX * du;
-
-
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
    
-    var hitEntity = this.findHitEntity();
+  /*  var hitEntity = this.findHitEntity();
     if (hitEntity && hitEntity.name === "platform") {
         this.velY *= -1;
-    }
+    }*/
     //PLATFORM COLLISION
- /*  var hitEntity = this.findHitPlatform();
+  var hitEntity = this.findHitPlatform();
+ 
     if (hitEntity === "sides" ) {
-        this.velX *= -1;
-        //this.velY*=-1;
-    } else if (hitEntity === "topOrBottom") {this.velY *= -1;  }*/
+        console.log(this.velX)
+        this.velX *= -1; 
+        this.cx=oldPosX
+        console.log("velX",this.velX)
+      
+        //this.cy=oldposY
+    }  if (hitEntity === "topOrBottom") {
+        console.log("wtf")
+        this.velY *= -1; 
+       // this.cy=oldposY;   
+    }
 
 };
 
