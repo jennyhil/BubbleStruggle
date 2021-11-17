@@ -116,9 +116,12 @@ var KEY_2 = keyCode('2');
 var KEY_TWO_PLAYER = keyCode('T');
 //var KEY_K = keyCode('K');
 var KEY_START = keyCode('S')
+var KEY_NEXTLVL = keyCode('N');
+
 var twoPlayer = false;
 var gameStarted = false;
 var g_levelWon = false;
+var g_nextLevel = false;
 
 var BTN_PLAYAGAIN = document.getElementById("playAgainBtn");
 
@@ -139,6 +142,7 @@ function processDiagnostics() {
     if (eatKey(KEY_RESET)) entityManager.resetPlayer();
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
+    if (eatKey(KEY_NEXTLVL)) levelManager.nextLevel();
 
     if (eatKey(KEY_START)) gameStarted = true;
 

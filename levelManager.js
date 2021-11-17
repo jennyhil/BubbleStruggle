@@ -19,9 +19,10 @@ var levelManager = {
     nextLevel: function () {
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
+
+        this.clearLevel();
         this.addTimerToScore();
         setTimeout(() => {
-            this.clearLevel();
             this.initLevel();
         }, 2000);
         
@@ -51,21 +52,24 @@ var levelManager = {
         entityManager.clearBalls();
     },
 
-    generatePlatforms: function() {
-        for(var i=0; i< levels.level[this._levelID].platforms.length; i++) {
+    generatePlatforms: function () {
+        var levelPlatforms = levels.level[this._levelID].platforms;
+        for(var i=0; i< levelPlatforms.length; i++) {
             entityManager.generatePlatform({
-                cx: levels.level[this._levelID].platforms[i].cx,
-                cy: levels.level[this._levelID].platforms[i].cy
+                cx: levelPlatforms[i].cx,
+                cy: levelPlatforms[i].cy
             })
         }
     },
 
     generateBalls: function () {
-       // debugger;
-        for (var i = 0; i < levels.level[this._levelID].balls.length; i++) {
+       debugger;
+        var currentLevelBalls = levels.level[this._levelID].balls;
+        for (var i = 0; i < currentLevelBalls.length; i++) {
             entityManager.generateBall({
-                cx: levels.level[this._levelID].balls[i].cx,
-                cy: levels.level[this._levelID].balls[i].cy
+                cx: currentLevelBalls[i].cx,
+                cy: currentLevelBalls[i].cy,
+                color: currentLevelBalls[i].color
             })
         }
     },
@@ -75,22 +79,37 @@ var levelManager = {
         this._timeLeft = this._time;
         
         setInterval(() => {
-            if (!g_levelWon) this._timeLeft -= 200;
-        }, 200);
+            if (!g_levelWon) this._timeLeft -= 50;
+        }, 50);
     },
 
     addTimerToScore: function () {
         var timerScore = this._timeLeft / 10;
         var scoreInterval = timerScore / 10;
-        
+
         var interval = setInterval(() => {
             this._score += scoreInterval;
-            this._timeLeft -= scoreInterval*10;
+            this._timeLeft -= scoreInterval * 10;
         }, 200);
 
         setTimeout(() => {
             clearInterval(interval);
         }, 2000);
+
+        /*var timeInterval = 10;
+        var timeout = this._timeLeft / timeInterval;
+        var scoreInterval = timeout / timeInterval;
+        
+        var interval = setInterval(() => {
+            this._score += scoreInterval;
+            this._timeLeft -= scoreInterval*timeInterval;
+        }, timeInterval);
+
+        setTimeout(() => {
+            clearInterval(interval);
+        }, timeout);
+
+        return timeout;*/
     },
 
     gameOver: function () {
@@ -106,7 +125,8 @@ var levelManager = {
         ctx.fillText(this._score.toString(), 50, 50);
 
         var timeFillRatio = this._timeLeft / this._time;
-        util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+        var timerHeight = 10;
+        util.fillBox(ctx, 0, g_canvas.height - timerHeight, timeFillRatio * g_canvas.width, timerHeight, "red");
     },
 
     renderStart: function (ctx) {
