@@ -184,9 +184,12 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
+    
     levelManager.renderStart(ctx);
     if(gameStarted){
-    ctx.drawImage(g_images.background,0,0);
+        ctx.drawImage(g_images.background, 0, 0);
+        var gameOverDiv = document.getElementById("levels");
+        gameOverDiv.style.visibility = "hidden";
         if (!g_gameOver) {
             entityManager.render(ctx);
             levelManager.render(ctx);
@@ -267,14 +270,27 @@ function preloadDone() {
 
     entityManager.init();
     createInitialPlayer();
+    levelManager.setUpLevels();
     levelManager.initLevel();
+    
     BTN_PLAYAGAIN.onclick = resetLevel;
+    levelManager._levels.forEach(level => {
+        
+        level.onclick = clickLevel;
+    });
 
     main.init();
 }
 
 function resetLevel() {
     levelManager.resetLevel();
+}
+
+function clickLevel(e) {
+    var id = parseInt(this.id);
+    levelManager.playFinishedLevel(id);
+    console.log(id);
+    
 }
 
 // Kick it off

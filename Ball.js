@@ -86,7 +86,6 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
     // u = original velocity
     var oldVelX = this.velX;
     var oldVelY = this.velY;
-    debugger;
     // v = u + at
     // Hacky way of keeping the ball below a certain velocity so it doesn't shoot up in the air
     if( this.velX +accelX * du <8){

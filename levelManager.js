@@ -39,7 +39,6 @@ var levelManager = {
     },
 
     resetLevel: function () {
-        debugger;
         this._score = 0;
         g_gameOver = false;
         createInitialPlayer();
@@ -50,6 +49,13 @@ var levelManager = {
     clearLevel: function () {
         entityManager.clearPlatforms();
         entityManager.clearBalls();
+    },
+
+    playFinishedLevel: function (id) {
+        debugger;
+        this._levelID = id;
+        gameStarted = true;
+        this.initLevel();
     },
 
     generatePlatforms: function () {
@@ -63,7 +69,6 @@ var levelManager = {
     },
 
     generateBalls: function () {
-       debugger;
         var currentLevelBalls = levels.level[this._levelID].balls;
         var ballScale = 2;
         for (var i = 0; i < currentLevelBalls.length; i++) {
@@ -78,7 +83,6 @@ var levelManager = {
     },
 
     initTimer: function () {
-        debugger;
         this._time = levels.level[this._levelID].time;
         this._timeLeft = this._time;
         
@@ -116,6 +120,24 @@ var levelManager = {
         return timeout;*/
     },
 
+    setUpLevels: function () {
+        if (this._levels.length === 0) {
+            var allLevels = levels.level;
+            var levelDiv = document.getElementById("levels");
+            for (let i = 0; i < allLevels.length; i++) {
+                var level = document.createElement('button');
+                level.id = i;
+                level.innerHTML = i + 1;
+                level.disabled = !allLevels[i].isFinished;
+                level.onclick = this.clickLevel;
+                levelDiv.appendChild(level);
+
+                this._levels[i] = level;
+
+            }
+        }
+    },
+
     gameOver: function () {
         g_gameOver = true;
     },
@@ -138,7 +160,7 @@ var levelManager = {
         util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, "teal");
         ctx.fillStyle="black";
         ctx.font ="40px VT323";
-        var txt="Press S to start";
+        var txt = "Press S to start";
 
         g_sprites.frontpage = new Sprite(g_images.frontpage);
         // Render player 1

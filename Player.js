@@ -353,7 +353,6 @@ Player.prototype.maybeFireBullet = function () {
         var launchY = this.cy + dY * launchDist;
 
         if (this.weaponType == 2) {
-            debugger;
             launchY += launchDist;
             var bullets = entityManager._bullets;
             if (bullets.length > 0) entityManager.resetBullets();
