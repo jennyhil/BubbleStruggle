@@ -24,7 +24,7 @@ function Player(descr) {
     this.sprite = this.sprite || g_sprites.player;
 
     // Set normal drawing scale, and warp state off
-    this._scale = 1;
+    this._scale = 0.8;
     this._isWarping = false;
     this.lives = 3;
 }
@@ -56,7 +56,7 @@ Player.prototype.velX = 0;
 Player.prototype.velY = 0;
 Player.prototype.launchVel = 4;
 Player.prototype.numSubSteps = 1;
-Player.prototype.weaponType = 2;
+Player.prototype.weaponType = 1;
 Player.prototype.shieldActive = false;
 Player.prototype.isImmune = false;
 
@@ -398,6 +398,7 @@ Player.prototype.drawLives = function (ctx) {
         );
     }
 }
+
 Player.prototype.render = function (ctx) {
     if (this.lives > 0) this.drawLives(ctx);
     if (this.isGameOver()) g_gameOver = true;
@@ -413,6 +414,6 @@ Player.prototype.render = function (ctx) {
 
     if (this.shieldActive) {
         ctx.strokeStyle = "red";
-        util.strokeCircle(ctx, this.cx, this.cy, 40); // TODO: find dynamic radius value
+        util.strokeCircle(ctx, this.cx, this.cy-50, 60); // TODO: find dynamic radius value
     }
 };

@@ -23,15 +23,32 @@ h1{
     flex-direction: column;
 }
 
-    #gameOver button {
-        padding: 1em;
-        background-color: yellow;
-        border: 2px solid black;
-        border-radius: 8px;
-        margin: 0.5em;
-        font-size: 1em;
+#gameOver button {
+    padding: 1em;
+    background-color: yellow;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin: 0.5em;
+    font-size: 1em;
         
-    }
-    #gameOver button:hover {
-        background-color: greenyellow;
-    }
+}
+#gameOver button:hover {
+    background-color: greenyellow;
+}
+
+#levels {
+    width: 20%;
+    display: inline-block;
+    position: absolute;
+    bottom: 16em;
+    left: 31em;
+}
+
+#levels button {
+    margin: 1em;
+    padding: 1em;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 700;
+    background-color: orange;
+}

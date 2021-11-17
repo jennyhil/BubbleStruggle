@@ -21,7 +21,21 @@ function Ball(descr) {
     this.setVelocity();
 
     // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.redball;
+    switch (this.color) {
+        case "red":
+            this.sprite = g_sprites.redball;
+            break;
+        case "blue":
+            this.sprite = g_sprites.blueball;
+            break;
+        case "green":
+            this.sprite = g_sprites.greenball;
+            break;
+        default:
+            this.sprite = g_sprites.redball;
+            break;
+    }
+    // this.sprite = this.sprite || g_sprites.redball;
     this.scale = this.scale || 2;
 };
 
@@ -72,7 +86,6 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
     // u = original velocity
     var oldVelX = this.velX;
     var oldVelY = this.velY;
-
     // v = u + at
     // Hacky way of keeping the ball below a certain velocity so it doesn't shoot up in the air
     if( this.velX +accelX * du <8){
@@ -229,6 +242,7 @@ Ball.prototype._spawnFragment = function () {
         cx: this.cx,
         cy: this.cy,
         scale: this.scale / 2,
+        color: this.color,
         velY: this.velY,
         split: true,
         maxJumpHeight: 3 * this.maxJumpHeight / 4

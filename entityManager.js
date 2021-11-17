@@ -158,7 +158,6 @@ var entityManager = {
     },
 
     resetPlayers: function () {
-        debugger;
         this._forEachOf(this._players , Player.prototype.reset);
     },
 

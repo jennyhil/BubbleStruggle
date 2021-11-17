@@ -116,6 +116,8 @@ var KEY_2 = keyCode('2');
 var KEY_TWO_PLAYER = keyCode('T');
 var KEY_NEXT_LEVEL = keyCode('N');
 var KEY_START = keyCode('S')
+var KEY_NEXTLVL = keyCode('N');
+
 var twoPlayer = false;
 var gameStarted = false;
 var g_levelWon = false;
@@ -140,6 +142,7 @@ function processDiagnostics() {
     if (eatKey(KEY_RESET)) entityManager.resetPlayer();
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
+    if (eatKey(KEY_NEXTLVL)) levelManager.nextLevel();
 
     if (eatKey(KEY_START)) gameStarted = true;
     if(eatKey(KEY_NEXT_LEVEL)) g_nextLevel = true;
@@ -177,9 +180,12 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
+    
     levelManager.renderStart(ctx);
     if(gameStarted){
-    ctx.drawImage(g_images.background,0,0);
+        ctx.drawImage(g_images.background, 0, 0);
+        var gameOverDiv = document.getElementById("levels");
+        gameOverDiv.style.visibility = "hidden";
         if (!g_gameOver) {
             entityManager.render(ctx);
             levelManager.render(ctx);
@@ -255,19 +261,32 @@ function preloadDone() {
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
-    g_sprites.bullet = new Sprite(g_images.rope);
-    g_sprites.bullet.scale = 0.25;
+   /* g_sprites.bullet = new Sprite(g_images.rope);
+    g_sprites.bullet.scale = 0.25;*/
 
     entityManager.init();
     createInitialPlayer();
+    levelManager.setUpLevels();
     levelManager.initLevel();
+    
     BTN_PLAYAGAIN.onclick = resetLevel;
+    levelManager._levels.forEach(level => {
+        
+        level.onclick = clickLevel;
+    });
 
     main.init();
 }
 
 function resetLevel() {
     levelManager.resetLevel();
+}
+
+function clickLevel(e) {
+    var id = parseInt(this.id);
+    levelManager.playFinishedLevel(id);
+    console.log(id);
+    
 }
 
 // Kick it off

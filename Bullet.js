@@ -45,7 +45,7 @@ Bullet.prototype.rotation = 0;
 Bullet.prototype.cx = 200;
 Bullet.prototype.cy = 200;
 Bullet.prototype.velX = 4;
-Bullet.prototype.velY = 5;
+Bullet.prototype.velY = 3;
 
 // Convert times from milliseconds to "nominal" time units.
 Bullet.prototype.lifeSpan = 2200 / NOMINAL_UPDATE_INTERVAL;
@@ -100,6 +100,7 @@ Bullet.prototype.update = function (du) {
             entityManager.fireBullet(this.cx, this.cy, this.velX, this.velY, this.rotation, 2);
             this.hasFired = true;
         }
+        
         this.cy -= this.velY * du;
     }
     
