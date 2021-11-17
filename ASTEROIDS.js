@@ -71,13 +71,14 @@ function gatherInputs() {
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-
     processDiagnostics();
-    entityManager.update(du);
-    levelManager.update(); // checks if time is finished
+    if (g_gameStarted) {
+        entityManager.update(du);
+        levelManager.update(); // checks if time is finished
 
-    // Prevent perpetual firing!
-    eatKey(Player.prototype.KEY_FIRE);
+        // Prevent perpetual firing!
+        eatKey(Player.prototype.KEY_FIRE);
+    }
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -88,6 +89,11 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
 var g_gameOver = false;
+var g_twoPlayer = false;
+var g_gameStarted = false;
+var g_nextLevel = false;
+
+
 var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -102,13 +108,11 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_TWO_PLAYER = keyCode('T');
-//var KEY_K = keyCode('K');
+var KEY_NEXT_LEVEL = keyCode('N');
 var KEY_START = keyCode('S')
-var twoPlayer = false;
-var gameStarted = false;
+
 
 function processDiagnostics() {
-
 
     if (eatKey(KEY_MIXED))
         g_allowMixedActions = !g_allowMixedActions;
@@ -125,14 +129,10 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_START)) gameStarted = true;
+    if (eatKey(KEY_START)) g_gameStarted = true;
 
-    /*if (eatKey(KEY_2)) entityManager.generatePlayer({
-        cx: g_mouseX,
-        cy: g_mouseY,
-        sprite: g_sprites.player2
-    });*/
-    if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
+
+    if (eatKey(KEY_TWO_PLAYER) && !g_twoPlayer) {
         entityManager.generatePlayer({
             cx: 700,
             cy: 570,
@@ -142,12 +142,8 @@ function processDiagnostics() {
             KEY_JUMP: 'I'.charCodeAt(0),
             sprite: g_sprites.player2
         });
-        twoPlayer = true;
+        g_twoPlayer = true;
     }
-
-
-    /*if (eatKey(KEY_K)) entityManager.killNearestPlayer(
-        g_mouseX, g_mouseY);*/
 }
 
 // =================
@@ -166,17 +162,17 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
     levelManager.renderStart(ctx);
-    if(gameStarted){
-    ctx.drawImage(g_images.background,0,0);
-    if(!g_gameOver){
-        entityManager.render(ctx);
-       // var timeFillRatio = levelManager._timeLeft / levelManager._time;
-       // util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
-        }else {
-            ctx.font ="60px VT323"
-            ctx.fillText("GAME OVER",400,300);
+    if (g_gameStarted) {
+        ctx.drawImage(g_images.background, 0, 0);
+        if (!g_gameOver) {
+            entityManager.render(ctx);
+             var timeFillRatio = levelManager._timeLeft / levelManager._time;
+             util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
+        } else {
+            ctx.font = "60px VT323"
+            ctx.fillText("GAME OVER", 400, 300);
         }
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
+        if (g_renderSpatialDebug) spatialManager.render(ctx);
     }
 }
 
@@ -203,12 +199,12 @@ function requestPreloads() {
         ball: "img/bolti.png",
         background: "img/grassy.png",
         pair: "img/pair.png",
-        cherry : "img/cherry.png",
-        umbrella : "img/umbrella.png",
-        klukka : "img/klukka.png",
-        platform1 : "img/platform1.png",
-        playericon : "img/sharklitillhaus.png",
-        player2icon : "img/sportylitillhaus.png"
+        cherry: "img/cherry.png",
+        umbrella: "img/umbrella.png",
+        klukka: "img/klukka.png",
+        platform1: "img/platform1.png",
+        playericon: "img/sharklitillhaus.png",
+        player2icon: "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);

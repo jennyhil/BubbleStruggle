@@ -50,9 +50,9 @@ var entityManager = {
             closestIndex = -1,
             closestSq = 1000 * 1000;
 
-        for (var i = 0; i < this._players .length; ++i) {
+        for (var i = 0; i < this._players.length; ++i) {
 
-            var thisPlayer = this._players [i];
+            var thisPlayer = this._players[i];
             var PlayerPos = thisPlayer.getPos();
             var distSq = util.wrappedDistSq(
                 PlayerPos.posX, PlayerPos.posY,
@@ -93,20 +93,21 @@ var entityManager = {
 
     init: function () {
         //levelManager.initLevel();
-        
+
         //this._generatePlayer();
     },
 
     fireBullet: function (cx, cy, velX, velY, rotation, type) {
-        console.log(this._bullets);
-        this._bullets.push(new Bullet({
-            cx: cx,
-            cy: cy,
-            velX: velX,
-            velY: velY,
-            rotation: rotation,
-            type: type
-        }));
+        // console.log(this._bullets);
+            this._bullets.push(new Bullet({
+                cx: cx,
+                cy: cy,
+                velX: velX,
+                velY: velY,
+                rotation: rotation,
+                type: type
+            }));
+        
     },
 
     resetBullets: function () {
@@ -124,22 +125,22 @@ var entityManager = {
     },
 
     generatePlayer: function (descr) {
-        this._players .push(new Player(descr));
+        this._players.push(new Player(descr));
     },
 
     generatePlatform: function (descr) {
-        this._platforms .push(new Platform(descr));
+        this._platforms.push(new Platform(descr));
     },
 
     clearPlatforms: function () {
         this._platforms.forEach((platform) => {
             platform.kill();
         });
-      /*  for(var i=0; i <this._platform.length; i++) {
-            spatialManager.unregister(this._platform[i])
-            this._platform.splice(i, 1);
-            //this._platform[i] = this.KILL_ME_NOW;
-        }*/
+    },
+    clearBalls: function () {
+        this._balls.forEach((ball) => {
+            ball.kill();
+        });
     },
 
     killNearestPlayer: function (xPos, yPos) {
@@ -157,49 +158,47 @@ var entityManager = {
     },
 
     resetPlayers: function () {
-        this._forEachOf(this._players , Player.prototype.reset);
+        this._forEachOf(this._players, Player.prototype.reset);
     },
 
     haltPlayers: function () {
-        this._forEachOf(this._players , Player.prototype.halt);
+        this._forEachOf(this._players, Player.prototype.halt);
     },
 
     toggleBalls: function () {
         this._bShowBalls = !this._bShowBalls;
     },
-    
+
 
     update: function (du) {
-        
+
         for (var c = 0; c < this._categories.length; ++c) {
 
             var aCategory = this._categories[c];
             var i = 0;
-            if(aCategory!==this._levels){
-            while (i < aCategory.length) {
-              
-                var status = aCategory[i].update(du);
-                debugger;
+            if (aCategory !== this._levels) {
+                while (i < aCategory.length) {
 
-                if (status === this.KILL_ME_NOW) {
-                    // remove the dead guy, and shuffle the others down to
-                    // prevent a confusing gap from appearing in the array
-                    aCategory.splice(i, 1);
-                }
-                else {
-                    ++i;
+                    var status = aCategory[i].update(du);
+                    //debugger;
+
+                    if (status === this.KILL_ME_NOW) {
+                        // remove the dead guy, and shuffle the others down to
+                        // prevent a confusing gap from appearing in the array
+                        aCategory.splice(i, 1);
+                    }
+                    else {
+                        ++i;
+                    }
                 }
             }
         }
-        }
 
-        if (this._balls.length === 0) levelManager.nextLevel();
-        
+        if (this._balls.length === 0 || (eatKey(KEY_NEXT_LEVEL))) levelManager.nextLevel();
+
     },
 
     render: function (ctx) {
-
-        var debugX = 10, debugY = 100;
 
         for (var c = 0; c < this._categories.length; ++c) {
 
@@ -211,12 +210,7 @@ var entityManager = {
             for (var i = 0; i < aCategory.length; ++i) {
 
                 aCategory[i].render(ctx);
-                //debug.text(".", debugX + i * 10, debugY);
-              //  if(aCategory== this._levels)console.log(aCategory[i])
-               // else console.log("FML")
-                
             }
-            debugY += 10;
         }
     }
 
