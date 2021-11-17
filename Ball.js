@@ -182,14 +182,11 @@ Ball.prototype.update = function (du) {
   var hitEntity = this.findHitPlatform();
  
     if (hitEntity === "sides" ) {
-        console.log(this.velX)
         this.velX *= -1; 
         this.cx=oldPosX
-        console.log("velX",this.velX)
       
         //this.cy=oldposY
     }  if (hitEntity === "topOrBottom") {
-        console.log("wtf")
         this.velY *= -1; 
        // this.cy=oldposY;   
     }
