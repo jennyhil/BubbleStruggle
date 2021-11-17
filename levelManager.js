@@ -86,12 +86,12 @@ var levelManager = {
         ctx.font ="40px VT323";
         var txt="Press S to start";
 
+        g_sprites.frontpage = new Sprite(g_images.frontpage);
         // Render player 1
         g_sprites.frontpage.drawCentredAt(
             ctx, ctx.canvas.width/2, ctx.canvas.height/20);
 
         ctx.fillText(txt,g_canvas.width/2- ctx.measureText(txt).width/2,g_canvas.height-40);
-        g_sprites.frontpage = new Sprite(g_images.frontpage);
         // Render player 2
        // g_sprites.player2.drawCentredAt(
             //ctx, ctx.canvas.width / 2 + 10, ctx.canvas.height / 2);
