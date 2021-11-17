@@ -5,7 +5,7 @@
 var keys = [];
 
 function handleKeydown(evt) {
-    evt.preventDefault();
+    //evt.preventDefault(); do if space keycode
     keys[evt.keyCode] = true;
 }
 

@@ -258,8 +258,8 @@ function preloadDone() {
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
-    g_sprites.bullet = new Sprite(g_images.rope);
-    g_sprites.bullet.scale = 0.25;
+   /* g_sprites.bullet = new Sprite(g_images.rope);
+    g_sprites.bullet.scale = 0.25;*/
 
     entityManager.init();
     createInitialPlayer();
