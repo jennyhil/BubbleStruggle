@@ -97,7 +97,7 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
     // bounce
     if (this.useGravity) {
-        var ballRadius = g_sprites.ball.height / 2; // TODO: this might not be a sprite
+        var ballRadius = g_sprites.redball.height / 2; // TODO: this might not be a sprite
         var minY = g_canvas.height - this.maxJumpHeight;
         var maxY = g_canvas.height - ballRadius;
 

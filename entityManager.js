@@ -179,7 +179,7 @@ var entityManager = {
             while (i < aCategory.length) {
               
                 var status = aCategory[i].update(du);
-                debugger;
+                //debugger;
 
                 if (status === this.KILL_ME_NOW) {
                     // remove the dead guy, and shuffle the others down to
