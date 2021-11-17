@@ -269,7 +269,7 @@ var maxJumpHeight = 500;
 
 // Hjálparfall til að ath hvort sprite sé á jörðinni/lentur eftir hoppið
 Player.prototype.notOnGround = function () {
-   
+
     return (this.cy + this.getRadius() <= 590);
 }
 
@@ -328,9 +328,7 @@ Player.prototype.applyAccel = function (accelX, accelY, du) {
 };
 
 Player.prototype.maybeFireBullet = function () {
-
     if (keys[this.KEY_FIRE]) {
-
         var dX = +Math.sin(this.rotation);
         var dY = -Math.cos(this.rotation);
         var launchDist = this.getRadius() * 1.2;
@@ -342,16 +340,16 @@ Player.prototype.maybeFireBullet = function () {
         var launchX = this.cx + dX * launchDist;
         var launchY = this.cy + dY * launchDist;
 
-        if (this.weaponType == 2) {
+        if (this.weaponType == 2 ) {
             launchY += launchDist;
             var bullets = entityManager._bullets;
             if (bullets.length > 0) entityManager.resetBullets();
         }
-
         entityManager.fireBullet(
             launchX, launchY,
             this.velX + relVelX, this.velY + relVelY,
             this.rotation, this.weaponType);
+     
     }
 
 };
@@ -373,19 +371,19 @@ Player.prototype.halt = function () {
     this.velY = 0;
 };
 Player.prototype.drawLives = function (ctx) {
-    
+
     for (var i = 0; i < this.lives; i++) {
-        g_sprites.playericon.scale = this._scale-0.5;
-        g_sprites.player2icon.scale = this._scale-0.5;
-        if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
-        this.sprite.image.name === "playerright"){
+        g_sprites.playericon.scale = this._scale - 0.5;
+        g_sprites.player2icon.scale = this._scale - 0.5;
+        if (this.sprite.image.name === "player" || this.sprite.image.name === "playerleft" ||
+            this.sprite.image.name === "playerright") {
 
             g_sprites.playericon.drawCentredAt(
-            ctx, 50 +i * 25, 550, this.rotation
+                ctx, 50 + i * 25, 550, this.rotation
+            );
+        } else g_sprites.player2icon.drawCentredAt(
+            ctx, (g_canvas.width - 90) + i * 25, 550, this.rotation
         );
-    }else g_sprites.player2icon.drawCentredAt(
-        ctx, (g_canvas.width - 90) + i * 25, 550, this.rotation
-    );
     }
 }
 Player.prototype.render = function (ctx) {
@@ -397,7 +395,7 @@ Player.prototype.render = function (ctx) {
     this.sprite.scale = this._scale;
     // 60 is a weird little margin so the sprites will be drawn in the right pos
     this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy , this.rotation
+        ctx, this.cx, this.cy, this.rotation
     );
     this.sprite.scale = origScale;
 

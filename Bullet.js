@@ -77,7 +77,7 @@ Bullet.prototype.update = function (du) {
     //
     var hitEntity = this.findHitEntity();
     if (hitEntity && hitEntity.name != "player") {
-        console.log("bullet hit ", hitEntity);
+        //console.log("bullet hit ", hitEntity);
         var canTakeHit = hitEntity.takeBulletHit;
         if (canTakeHit) canTakeHit.call(hitEntity);
         if (this.type == 2) {
@@ -130,6 +130,7 @@ Bullet.prototype.render = function (ctx) {
     g_sprites.bullet.drawWrappedCentredAt(
         ctx, this.cx, this.cy, this.rotation
     );
+  
 
     ctx.globalAlpha = 1;
 };

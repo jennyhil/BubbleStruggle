@@ -25,7 +25,7 @@ function Ball(descr) {
     this.scale = this.scale || 2;
 };
 
-var i=0;
+var i = 0;
 Ball.prototype = new Entity();
 Ball.prototype.lastJumpAt = 0;
 Ball.prototype.maxJumpHeight = 400;
@@ -55,33 +55,31 @@ Ball.prototype.setPosition = function () {
 Ball.prototype.setVelocity = function () {
 
     if (i % 2 === 0) {
-        this.velX = 2;
-        this.velY = 4;
+        this.velX = 1;
+        this.velY = 6;
         i++;
     }
     else {
-        this.velX = -2;
-        this.velY = 4;
+        this.velX = -1;
+        this.velY = 6;
         i++;
     }
 
     if (this.split) this.velY *= -1;
 };
-/*Ball.prototype.setVelocity = function () {
-    this.velX = 4;
-    this.velY =4;
-};*/
 
 Ball.prototype.applyAccel = function (accelX, accelY, du) {
-
-
     // u = original velocity
     var oldVelX = this.velX;
     var oldVelY = this.velY;
 
     // v = u + at
+    // Hacky way of keeping the ball below a certain velocity so it doesn't shoot up in the air
+    if( this.velX +accelX * du <8){
     this.velX += accelX * du;
     this.velY += accelY * du;
+    } 
+    
 
     // v_ave = (u + v) / 2
     var aveVelX = (oldVelX + this.velX) / 2;
@@ -103,17 +101,17 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
         if (nextY > maxY || nextY < minY) {
             // Stay put on ground
-           
+
             if (nextY > maxY) {
                 this.useGravity = false;
                 this.velY = 0;
                 if (this.split) this.split = false;
             } else {
                 this.velY = 0;
-                this.cy += 2*du;
+                this.cy += 2 * du;
             }
             //this.velY *= -1;
-            
+
             intervalVelY = this.velY;
         }
     }
@@ -132,9 +130,9 @@ Ball.prototype.computeThrustMag = function () {
     // Ef við erum ekki í miðju hoppi eða búin að ná max hæð þá eykst thrust
     if (this.cy > 560) { // TODO: Ná í hæð bolta
         // hér er boltinn að fara upp
-        
+
         this.useGravity = false;
-        thrust += 3; 
+        thrust += 3;
     } else {
         // Ef boltinn er í max hæð þá kickar gravity inn
         this.useGravity = true;
@@ -157,39 +155,39 @@ Ball.prototype.update = function (du) {
     accelY += this.computeGravity();
     this.applyAccel(accelX, accelY, du);
 
- /*   var minY = this.lastJumpAt;
-    var maxY = g_canvas.height - minY;
-    var nextX = this.cx += this.velX * du;
-    var nextY = this.cy + this.velY * du;*/
+    /*   var minY = this.lastJumpAt;
+       var maxY = g_canvas.height - minY;
+       var nextX = this.cx += this.velX * du;
+       var nextY = this.cy + this.velY * du;*/
 
-   /* if (nextY > maxY || nextY < minY) {
-        this.velY = 1 * -0.9;
-    }
-    if (this.velY < 0) this.velY /= 1.01;
-    else if (this.velY > 0.05) this.velY *= 1.02
-    else this.velY += 0.1;*/
+    /* if (nextY > maxY || nextY < minY) {
+         this.velY = 1 * -0.9;
+     }
+     if (this.velY < 0) this.velY /= 1.01;
+     else if (this.velY > 0.05) this.velY *= 1.02
+     else this.velY += 0.1;*/
     // this.cy += this.velY * du;
 
     // TODO: YOUR STUFF HERE! --- Unregister and check for death √
-   
+
 
     //this.cx += this.velX * du;
-    
+
 
     this.keepInbounds();
     // TODO: YOUR STUFF HERE! --- (Re-)Register
     spatialManager.register(this);
-
+   
     var hitEntity = this.findHitEntity();
     if (hitEntity && hitEntity.name === "platform") {
         this.velY *= -1;
     }
-/*
-    if(_level.collidesWith(nextX,nextY)){
-        this.velY *= -1;
-        this.lastJumpAt = this.cy;
-        console.log("collision!");
-    }*/
+    //PLATFORM COLLISION
+ /*  var hitEntity = this.findHitPlatform();
+    if (hitEntity === "sides" ) {
+        this.velX *= -1;
+        //this.velY*=-1;
+    } else if (hitEntity === "topOrBottom") {this.velY *= -1;  }*/
 
 };
 
@@ -222,7 +220,7 @@ Ball.prototype.takeBulletHit = function () {
 
 Ball.prototype._spawnPowerup = function () {
     var id = Math.floor(Math.random() * 4) + 1; // currently 4 powerups
-    
+
     entityManager.generatePowerup({
         cx: this.cx,
         cy: this.cy,
@@ -240,12 +238,13 @@ Ball.prototype._spawnFragment = function () {
         scale: this.scale / 2,
         velY: this.velY,
         split: true,
-        maxJumpHeight: 3*this.maxJumpHeight / 4
-        
+        maxJumpHeight: 3 * this.maxJumpHeight / 4
+
     });
 };
-            
+
 Ball.prototype.render = function (ctx) {
+
     var origScale = this.sprite.scale;
     // pass my scale into the sprite, for drawing
     this.sprite.scale = this.scale;
