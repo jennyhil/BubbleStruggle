@@ -198,8 +198,11 @@ function requestPreloads() {
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
         fireball: "img/fireball.png",
         fireballpwr: "img/fireballpwr.png",
-        ball: "img/bolti.png",
+        redball: "img/redball.png",
+        blueball: "img/blueball.png",
+        greenball: "img/greenball.png",
         background: "img/grassy.png",
+        frontpage: "img/frontpage.png",
         rope : "img/rope.png",
         umbrella : "img/umbrella.png",
         klukka : "img/klukka.png",
@@ -217,7 +220,9 @@ function preloadDone() {
 
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
-    g_sprites.ball = new Sprite(g_images.ball);
+    g_sprites.redball = new Sprite(g_images.redball);
+    g_sprites.blueball = new Sprite(g_images.blueball);
+    g_sprites.greenball = new Sprite(g_images.greenball);
     g_sprites.playericon = new Sprite(g_images.playericon);
     g_sprites.player2icon = new Sprite(g_images.player2icon);
 

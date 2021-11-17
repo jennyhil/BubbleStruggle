@@ -21,7 +21,7 @@ function Ball(descr) {
     this.setVelocity();
 
     // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.ball;
+    this.sprite = this.sprite || g_sprites.redball;
     this.scale = this.scale || 2;
 };
 
