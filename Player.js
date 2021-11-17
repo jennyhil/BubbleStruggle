@@ -27,6 +27,7 @@ function Player(descr) {
     this._scale = 1;
     this._isWarping = false;
     this.lives = 3;
+    this.score = 0;
 }
 
 Player.prototype = new Entity();
@@ -47,6 +48,7 @@ Player.prototype.KEY_FIRE = ' '.charCodeAt(0);
 Player.prototype.KEY_ONE = '1'.charCodeAt(0); // Regular bullet
 Player.prototype.KEY_TWO = '2'.charCodeAt(0); // Rope bullet
 Player.prototype.KEY_THREE = '3'.charCodeAt(0); // Shield
+Player.prototype.KEY_FOUR = '4'.charCodeAt(0); // Extra time
 
 // Initial, inheritable, default values
 Player.prototype.rotation = 0;
@@ -181,6 +183,7 @@ Player.prototype.update = function (du) {
     if (keys[this.KEY_ONE]) this.weaponType = 1;
     if (keys[this.KEY_TWO]) this.weaponType = 2;
     if (eatKey(this.KEY_THREE)) this.shieldActive = !this.shieldActive;
+   // if (eatKey(this.KEY_FOUR))
 
     //platform trampolin collision!
     var hitEntity = this.findHitEntity();
@@ -386,6 +389,7 @@ Player.prototype.drawLives = function (ctx) {
         );
     }
 }
+
 Player.prototype.render = function (ctx) {
     if (this.lives > 0) this.drawLives(ctx);
     if (this.isGameOver()) g_gameOver = true;

@@ -21,7 +21,7 @@ function Ball(descr) {
     this.setVelocity();
 
     // Default sprite and scale, if not otherwise specified
-    this.sprite = this.sprite || g_sprites.ball;
+    this.sprite = this.sprite || g_sprites.redball;
     this.scale = this.scale || 2;
 };
 
@@ -95,7 +95,7 @@ Ball.prototype.applyAccel = function (accelX, accelY, du) {
 
     // bounce
     if (this.useGravity) {
-        var ballRadius = g_sprites.ball.height / 2; // TODO: this might not be a sprite
+        var ballRadius = g_sprites.redball.height / 2; // TODO: this might not be a sprite
         var minY = g_canvas.height - this.maxJumpHeight;
         var maxY = g_canvas.height - ballRadius;
 
@@ -203,6 +203,7 @@ Ball.prototype.evaporateSound = new Audio(
 
 Ball.prototype.takeBulletHit = function () {
     this.kill();
+    levelManager._score += 50;
 
     if (this.scale > 0.25) {
         this._spawnFragment();
@@ -219,8 +220,8 @@ Ball.prototype.takeBulletHit = function () {
 };
 
 Ball.prototype._spawnPowerup = function () {
-    var id = Math.floor(Math.random() * 4) + 1; // currently 4 powerups
-
+    var id = Math.floor(Math.random() * 5) + 1; // currently 5 powerups
+    
     entityManager.generatePowerup({
         cx: this.cx,
         cy: this.cy,

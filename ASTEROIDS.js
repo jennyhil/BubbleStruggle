@@ -162,17 +162,17 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
     levelManager.renderStart(ctx);
-    if (g_gameStarted) {
-        ctx.drawImage(g_images.background, 0, 0);
-        if (!g_gameOver) {
-            entityManager.render(ctx);
-             var timeFillRatio = levelManager._timeLeft / levelManager._time;
-             util.fillBox(ctx, 0, g_canvas.height - 20, timeFillRatio * g_canvas.width, 20, "white");
-        } else {
-            ctx.font = "60px VT323"
-            ctx.fillText("GAME OVER", 400, 300);
-        }
-        if (g_renderSpatialDebug) spatialManager.render(ctx);
+    if(g_gameStarted){
+    ctx.drawImage(g_images.background,0,0);
+    if(!g_gameOver){
+        entityManager.render(ctx);
+        levelManager.render(ctx);
+        
+    } else {
+        ctx.font ="60px VT323"
+        ctx.fillText("GAME OVER",400,300);
+    }
+    if (g_renderSpatialDebug) spatialManager.render(ctx);
     }
 }
 
@@ -195,16 +195,20 @@ function requestPreloads() {
         player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
         player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
         player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
-        fireball: "https://notendur.hi.is/sbm11/assets/fireball100.png",
+        fireball: "img/fireball.png",
+        fireballpwr: "img/fireballpwr.png",
+        redball: "img/redball.png",
         ball: "img/bolti.png",
+        blueball: "img/blueball.png",
+        greenball: "img/greenball.png",
         background: "img/grassy.png",
-        pair: "img/pair.png",
-        cherry: "img/cherry.png",
-        umbrella: "img/umbrella.png",
-        klukka: "img/klukka.png",
-        platform1: "img/platform1.png",
-        playericon: "img/sharklitillhaus.png",
-        player2icon: "img/sportylitillhaus.png"
+        frontpage: "img/frontpage.png",
+        rope : "img/rope.png",
+        umbrella : "img/umbrella.png",
+        klukka : "img/klukka.png",
+        platform1 : "img/platform1.png",
+        playericon : "img/sharklitillhaus.png",
+        player2icon : "img/sportylitillhaus.png"
     };
 
     imagesPreload(requiredImages, g_images, preloadDone);
@@ -216,11 +220,16 @@ function preloadDone() {
 
     g_sprites.player = new Sprite(g_images.player);
     g_sprites.player2 = new Sprite(g_images.player2);
+    g_sprites.redball = new Sprite(g_images.redball);
+    g_sprites.blueball = new Sprite(g_images.blueball);
     g_sprites.ball = new Sprite(g_images.ball);
+    g_sprites.greenball = new Sprite(g_images.greenball);
     g_sprites.playericon = new Sprite(g_images.playericon);
     g_sprites.player2icon = new Sprite(g_images.player2icon);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
+    g_sprites.bullet.scale = 0.25;
+    g_sprites.bullet = new Sprite(g_images.rope);
     g_sprites.bullet.scale = 0.25;
 
     entityManager.init();

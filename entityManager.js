@@ -99,15 +99,15 @@ var entityManager = {
 
     fireBullet: function (cx, cy, velX, velY, rotation, type) {
         // console.log(this._bullets);
-            this._bullets.push(new Bullet({
-                cx: cx,
-                cy: cy,
-                velX: velX,
-                velY: velY,
-                rotation: rotation,
-                type: type
-            }));
-        
+        this._bullets.push(new Bullet({
+            cx: cx,
+            cy: cy,
+            velX: velX,
+            velY: velY,
+            rotation: rotation,
+            type: type
+        }));
+
     },
 
     resetBullets: function () {
