@@ -48,6 +48,7 @@ var levelManager = {
 
     clearLevel: function () {
         entityManager.clearPlatforms();
+        entityManager.clearBalls();
     },
 
     generatePlatforms: function() {
