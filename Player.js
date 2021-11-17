@@ -17,7 +17,7 @@ function Player(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-    this.lives = 3;
+
     this.rememberResets();
 
     // Default sprite, if not otherwise specified
@@ -26,8 +26,7 @@ function Player(descr) {
     // Set normal drawing scale, and warp state off
     this._scale = 1;
     this._isWarping = false;
-    
-    this.score = 0;
+    this.lives = 3;
 }
 
 Player.prototype = new Entity();
@@ -38,7 +37,6 @@ Player.prototype.rememberResets = function () {
     this.reset_cx = this.cx;
     this.reset_cy = this.cy;
     this.reset_rotation = this.rotation;
-    this.reset_lives = this.lives;
 };
 
 Player.prototype.KEY_JUMP = 'W'.charCodeAt(0);
@@ -49,7 +47,6 @@ Player.prototype.KEY_FIRE = ' '.charCodeAt(0);
 Player.prototype.KEY_ONE = '1'.charCodeAt(0); // Regular bullet
 Player.prototype.KEY_TWO = '2'.charCodeAt(0); // Rope bullet
 Player.prototype.KEY_THREE = '3'.charCodeAt(0); // Shield
-Player.prototype.KEY_FOUR = '4'.charCodeAt(0); // Extra time
 
 // Initial, inheritable, default values
 Player.prototype.rotation = 0;
@@ -139,6 +136,18 @@ Player.prototype.isGameOver = function () {
     else if (entityManager._players[0]._isDeadNow && entityManager._players[1]._isDeadNow) return true;
     else return false;
 }
+/* TODO: Þarf að finpussa, skores hja player 2 færist í player 1 þegar deyr 
+Player.prototype.showLives = function () {
+    var oldStyle = ctx.fillStyle;
+    g_ctx.fillStyle = "white";
+    g_ctx.font = "16px Arial";
+    // Gætum viljað gert hnitin f. scores meira mathematically staðsett með offset t.d.
+    g_ctx.fillText("Lives: " + entityManager._players[0].lives, 10, 570);
+    if (entityManager._players.length > 1) {
+        g_ctx.fillText("Lives: " + entityManager._players[1].lives, 940, 550);
+    }
+    ctx.fillStyle = oldStyle;
+}*/
 
 // Changes direction of sprite image
 Player.prototype.changeDirection = function () {
@@ -184,7 +193,6 @@ Player.prototype.update = function (du) {
     if (keys[this.KEY_ONE]) this.weaponType = 1;
     if (keys[this.KEY_TWO]) this.weaponType = 2;
     if (eatKey(this.KEY_THREE)) this.shieldActive = !this.shieldActive;
-   // if (eatKey(this.KEY_FOUR))
 
     //platform trampolin collision!
     var hitEntity = this.findHitEntity();
@@ -366,10 +374,8 @@ Player.prototype.getRadius = function () {
 
 
 Player.prototype.reset = function () {
-    debugger;
     this.setPos(this.reset_cx, this.reset_cy);
     this.rotation = this.reset_rotation;
-    this.lives = 3;
 
     this.halt();
 };
@@ -379,22 +385,19 @@ Player.prototype.halt = function () {
     this.velY = 0;
 };
 Player.prototype.drawLives = function (ctx) {
-    
+
     for (var i = 0; i < this.lives; i++) {
-        g_sprites.playericon.scale = this._scale-0.5;
-        g_sprites.player2icon.scale = this._scale-0.5;
+        this.sprite.scale = this._scale-0.6;
         if(this.sprite.image.name==="player" || this.sprite.image.name === "playerleft" ||
         this.sprite.image.name === "playerright"){
-
-            g_sprites.playericon.drawCentredAt(
-            ctx, 50 +i * 25, 550, this.rotation
+        this.sprite.drawCentredAt(
+            ctx, 60 - i * 20, 550, this.rotation
         );
-    }else g_sprites.player2icon.drawCentredAt(
-        ctx, (g_canvas.width - 90) + i * 25, 550, this.rotation
+    }else this.sprite.drawCentredAt(
+        ctx, (g_canvas.width - 60) - i * 20, 550, this.rotation
     );
     }
 }
-
 Player.prototype.render = function (ctx) {
     if (this.lives > 0) this.drawLives(ctx);
     if (this.isGameOver()) g_gameOver = true;
@@ -404,7 +407,7 @@ Player.prototype.render = function (ctx) {
     this.sprite.scale = this._scale;
     // 60 is a weird little margin so the sprites will be drawn in the right pos
     this.sprite.drawCentredAt(
-        ctx, this.cx, this.cy , this.rotation
+        ctx, this.cx, this.cy - 60, this.rotation
     );
     this.sprite.scale = origScale;
 
