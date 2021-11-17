@@ -158,7 +158,8 @@ var entityManager = {
     },
 
     resetPlayers: function () {
-        this._forEachOf(this._players, Player.prototype.reset);
+        debugger;
+        this._forEachOf(this._players , Player.prototype.reset);
     },
 
     haltPlayers: function () {
@@ -194,8 +195,11 @@ var entityManager = {
             }
         }
 
-        if (this._balls.length === 0 || (eatKey(KEY_NEXT_LEVEL))) levelManager.nextLevel();
-
+        if (this._balls.length === 0 && !g_levelWon) {
+            g_levelWon = true;
+            levelManager.nextLevel();
+        }
+        
     },
 
     render: function (ctx) {

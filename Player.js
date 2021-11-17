@@ -17,7 +17,7 @@ function Player(descr) {
 
     // Common inherited setup logic from Entity
     this.setup(descr);
-
+    this.lives = 3;
     this.rememberResets();
 
     // Default sprite, if not otherwise specified
@@ -26,7 +26,7 @@ function Player(descr) {
     // Set normal drawing scale, and warp state off
     this._scale = 1;
     this._isWarping = false;
-    this.lives = 3;
+    
     this.score = 0;
 }
 
@@ -38,6 +38,7 @@ Player.prototype.rememberResets = function () {
     this.reset_cx = this.cx;
     this.reset_cy = this.cy;
     this.reset_rotation = this.rotation;
+    this.reset_lives = this.lives;
 };
 
 Player.prototype.KEY_JUMP = 'W'.charCodeAt(0);
@@ -363,8 +364,10 @@ Player.prototype.getRadius = function () {
 
 
 Player.prototype.reset = function () {
+    debugger;
     this.setPos(this.reset_cx, this.reset_cy);
     this.rotation = this.reset_rotation;
+    this.lives = 3;
 
     this.halt();
 };

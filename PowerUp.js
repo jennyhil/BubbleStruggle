@@ -49,10 +49,10 @@ PowerUp.prototype.render = function (ctx) {
     var image;
     switch (this.type) {
         case 1:
-            image = g_images.pair;
+            image = g_images.fireball;
             break;
         case 2:
-            image = g_images.cherry; // breyta í fire
+            image = g_images.rope; // breyta í fire
             break;
         case 3:
             image = g_images.umbrella;
@@ -61,7 +61,7 @@ PowerUp.prototype.render = function (ctx) {
             image = g_images.klukka; // klukka
             break;
         case 5:
-            image = g_images.klukka;
+            image = g_images.pair;
             break;
         default:
             image = g_images.cherry;

@@ -11,5 +11,26 @@ html{
 h1{
     margin: auto;
     width:30%;
-    color:gold
 }
+
+#gameOver {
+    visibility: hidden;
+    position: absolute;
+    bottom: 12em;
+    left: 32em;
+    display: flex;
+    flex-direction: column;
+}
+
+    #gameOver button {
+        padding: 1em;
+        background-color: yellow;
+        border: 2px solid black;
+        border-radius: 8px;
+        margin: 0.5em;
+        font-size: 1em;
+        
+    }
+    #gameOver button:hover {
+        background-color: greenyellow;
+    }

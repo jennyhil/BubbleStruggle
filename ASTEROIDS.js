@@ -44,6 +44,18 @@ function createInitialPlayer() {
 
     });
 
+    if (twoPlayer) {
+        entityManager.generatePlayer({
+            cx: 700,
+            cy: 570,
+            KEY_LEFT: 'J'.charCodeAt(0),
+            KEY_RIGHT: 'L'.charCodeAt(0),
+            KEY_FIRE: 'K'.charCodeAt(0),
+            KEY_JUMP: 'I'.charCodeAt(0),
+            sprite: g_sprites.player2
+        });
+    }
+
 }
 
 // =============
@@ -71,14 +83,13 @@ function gatherInputs() {
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-    processDiagnostics();
-    if (g_gameStarted) {
-        entityManager.update(du);
-        levelManager.update(); // checks if time is finished
 
-        // Prevent perpetual firing!
-        eatKey(Player.prototype.KEY_FIRE);
-    }
+    processDiagnostics();
+    entityManager.update(du);
+    levelManager.update(); // checks if time is finished
+
+    // Prevent perpetual firing!
+    eatKey(Player.prototype.KEY_FIRE);
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -89,12 +100,8 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
 var g_gameOver = false;
-var g_twoPlayer = false;
-var g_gameStarted = false;
-var g_nextLevel = false;
-
-
-var KEY_MIXED = keyCode('M');;
+var g_levelWon = false;
+var KEY_MIXED = keyCode('M');
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
@@ -108,11 +115,16 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_TWO_PLAYER = keyCode('T');
-var KEY_NEXT_LEVEL = keyCode('N');
+//var KEY_K = keyCode('K');
 var KEY_START = keyCode('S')
+var twoPlayer = false;
+var gameStarted = false;
+
+var BTN_PLAYAGAIN = document.getElementById("playAgainBtn");
 
 
 function processDiagnostics() {
+
 
     if (eatKey(KEY_MIXED))
         g_allowMixedActions = !g_allowMixedActions;
@@ -129,10 +141,14 @@ function processDiagnostics() {
 
     if (eatKey(KEY_0)) entityManager.toggleBalls();
 
-    if (eatKey(KEY_START)) g_gameStarted = true;
+    if (eatKey(KEY_START)) gameStarted = true;
 
-
-    if (eatKey(KEY_TWO_PLAYER) && !g_twoPlayer) {
+    /*if (eatKey(KEY_2)) entityManager.generatePlayer({
+        cx: g_mouseX,
+        cy: g_mouseY,
+        sprite: g_sprites.player2
+    });*/
+    if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
             cx: 700,
             cy: 570,
@@ -142,8 +158,12 @@ function processDiagnostics() {
             KEY_JUMP: 'I'.charCodeAt(0),
             sprite: g_sprites.player2
         });
-        g_twoPlayer = true;
+        twoPlayer = true;
     }
+
+
+    /*if (eatKey(KEY_K)) entityManager.killNearestPlayer(
+        g_mouseX, g_mouseY);*/
 }
 
 // =================
@@ -162,16 +182,21 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
     levelManager.renderStart(ctx);
-    if(g_gameStarted){
+    if(gameStarted){
     ctx.drawImage(g_images.background,0,0);
-    if(!g_gameOver){
-        entityManager.render(ctx);
-        levelManager.render(ctx);
-        
-    } else {
-        ctx.font ="60px VT323"
-        ctx.fillText("GAME OVER",400,300);
-    }
+        if (!g_gameOver) {
+            entityManager.render(ctx);
+            levelManager.render(ctx);
+
+        } else if (g_levelWon) {
+            ctx.font = "60px VT323"
+            ctx.fillText("LEVEL COMPLETE", 400, 300);
+        } else {
+            ctx.font ="60px VT323"
+            ctx.fillText("GAME OVER", 400, 300);
+            var gameOverDiv = document.getElementById("gameOver");
+            gameOverDiv.style.visibility = "visible";
+        }
     if (g_renderSpatialDebug) spatialManager.render(ctx);
     }
 }
@@ -235,7 +260,12 @@ function preloadDone() {
     entityManager.init();
     createInitialPlayer();
     levelManager.initLevel();
+    BTN_PLAYAGAIN.onclick = resetLevel;
     main.init();
+}
+
+function resetLevel() {
+    levelManager.resetLevel();
 }
 
 // Kick it off
