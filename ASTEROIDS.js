@@ -44,18 +44,6 @@ function createInitialPlayer() {
 
     });
 
-    if (twoPlayer) {
-        entityManager.generatePlayer({
-            cx: 700,
-            cy: 570,
-            KEY_LEFT: 'J'.charCodeAt(0),
-            KEY_RIGHT: 'L'.charCodeAt(0),
-            KEY_FIRE: 'K'.charCodeAt(0),
-            KEY_JUMP: 'I'.charCodeAt(0),
-            sprite: g_sprites.player2
-        });
-    }
-
 }
 
 // =============
@@ -100,8 +88,7 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
 var g_gameOver = false;
-var g_levelWon = false;
-var KEY_MIXED = keyCode('M');
+var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
 var KEY_SPATIAL = keyCode('X');
@@ -119,9 +106,7 @@ var KEY_TWO_PLAYER = keyCode('T');
 var KEY_START = keyCode('S')
 var twoPlayer = false;
 var gameStarted = false;
-
-var BTN_PLAYAGAIN = document.getElementById("playAgainBtn");
-
+var g_levelWon= false;
 
 function processDiagnostics() {
 
@@ -184,19 +169,14 @@ function renderSimulation(ctx) {
     levelManager.renderStart(ctx);
     if(gameStarted){
     ctx.drawImage(g_images.background,0,0);
-        if (!g_gameOver) {
-            entityManager.render(ctx);
-            levelManager.render(ctx);
-
-        } else if (g_levelWon) {
-            ctx.font = "60px VT323"
-            ctx.fillText("LEVEL COMPLETE", 400, 300);
-        } else {
-            ctx.font ="60px VT323"
-            ctx.fillText("GAME OVER", 400, 300);
-            var gameOverDiv = document.getElementById("gameOver");
-            gameOverDiv.style.visibility = "visible";
-        }
+    if(!g_gameOver){
+        entityManager.render(ctx);
+        levelManager.render(ctx);
+        
+    } else {
+        ctx.font ="60px VT323"
+        ctx.fillText("GAME OVER",400,300);
+    }
     if (g_renderSpatialDebug) spatialManager.render(ctx);
     }
 }
@@ -214,12 +194,12 @@ function requestPreloads() {
     var requiredImages = {
         //player:"ship.png",
         //player2:"ship.png",
-        player: "https://notendur.hi.is/sbm11/assets/rabbidssharkback100.png",
-        playerright: "https://notendur.hi.is/sbm11/assets/hakarlhlid100.png",
-        playerleft: "https://notendur.hi.is/sbm11/assets/hakarlhlidvinstri100.png",
-        player2: "https://notendur.hi.is/sbm11/assets/rabbidfitnesback100.png",
-        player2right: "https://notendur.hi.is/sbm11/assets/rabbidfitnesside100.png",
-        player2left: "https://notendur.hi.is/sbm11/assets/rabbidfitnessidevinstri.png",
+        player: "img/rabbitsharkback.png",
+        playerright: "img/rabbitsharkright.png",
+        playerleft: "img/rabbitsharkleft.png",
+        player2: "img/rabbitfitnessback.png",
+        player2right: "img/rabbitfitnessright.png",
+        player2left: "img/rabbitfitnessleft.png",
         fireball: "img/fireball.png",
         fireballpwr: "img/fireballpwr.png",
         redball: "img/redball.png",
@@ -229,6 +209,8 @@ function requestPreloads() {
         background: "img/grassy.png",
         frontpage: "img/frontpage.png",
         rope : "img/rope.png",
+        pair: "img/pair.png",
+        cherry: "img/cherry.png",
         umbrella : "img/umbrella.png",
         klukka : "img/klukka.png",
         platform1 : "img/platform1.png",
@@ -248,9 +230,12 @@ function preloadDone() {
     g_sprites.redball = new Sprite(g_images.redball);
     g_sprites.blueball = new Sprite(g_images.blueball);
     g_sprites.ball = new Sprite(g_images.ball);
+    g_sprites.pair = new Sprite(g_images.pair);
+    g_sprites.cherry = new Sprite(g_images.cherry);
     g_sprites.greenball = new Sprite(g_images.greenball);
     g_sprites.playericon = new Sprite(g_images.playericon);
     g_sprites.player2icon = new Sprite(g_images.player2icon);
+    g_sprites.frontpage = new Sprite(g_images.frontpage);
 
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
@@ -260,12 +245,7 @@ function preloadDone() {
     entityManager.init();
     createInitialPlayer();
     levelManager.initLevel();
-    BTN_PLAYAGAIN.onclick = resetLevel;
     main.init();
-}
-
-function resetLevel() {
-    levelManager.resetLevel();
 }
 
 // Kick it off
