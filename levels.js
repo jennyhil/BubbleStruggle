@@ -2,55 +2,39 @@ var levels = {
     level :
     [
             { // Level 1
-            time: 40000,
+            time: 50000,
             isFinished: true,
-            platforms : [
+            platforms: [
                 {
-                    cx: 200,
-                    cy: 200
-                },
-                {
-                    cx: 450,
-                    cy: 350
-                },
-                {
-                    cx: 750,
-                    cy: 450
+
                 }
             ],
-
             balls: [
                 {
                     cx: 500,
                     cy: 300,
-                    scale: 0.5,
-                    color: "blue"
+                    scale: 2,
+                    color: "red"
                 }
- 
-
             ]
             },
             { // Level 2
                 time: 45000,
                 isFinished: false,
-            platforms: [
-                {
-                    cx: 360,
-                    cy: 200
-                },
-                {
-                    cx: 560,
-                    cy: 350
-                },
-                {
-                    cx: 760,
-                    cy: 500
-                },
-                {
-                    cx: 160,
-                    cy: 150
-                }
-            ],
+                platforms: [
+                    {
+                        cx: 200,
+                        cy: 200
+                    },
+                    {
+                        cx: 450,
+                        cy: 350
+                    },
+                    {
+                        cx: 750,
+                        cy: 450
+                    }
+                ],
 
             balls: [
                 {

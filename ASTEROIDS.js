@@ -222,6 +222,7 @@ function requestPreloads() {
         player2: "img/rabbitfitnessback.png",
         player2right: "img/rabbitfitnessright.png",
         player2left: "img/rabbitfitnessleft.png",
+        fire: "img/fire.png",
         fireball: "img/fireball.png",
         fireballpwr: "img/fireballpwr.png",
         redball: "img/redball.png",
@@ -259,7 +260,7 @@ function preloadDone() {
     g_sprites.player2icon = new Sprite(g_images.player2icon);
     g_sprites.frontpage = new Sprite(g_images.frontpage);
 
-    g_sprites.bullet = new Sprite(g_images.fireball);
+    g_sprites.bullet = new Sprite(g_images.fire);
     g_sprites.bullet.scale = 0.25;
    /* g_sprites.bullet = new Sprite(g_images.rope);
     g_sprites.bullet.scale = 0.25;*/
@@ -267,7 +268,7 @@ function preloadDone() {
     entityManager.init();
     createInitialPlayer();
     levelManager.setUpLevels();
-    levelManager.initLevel();
+    //levelManager.initLevel();
     
     BTN_PLAYAGAIN.onclick = resetLevel;
     levelManager._levels.forEach(level => {
