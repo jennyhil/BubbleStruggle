@@ -49,7 +49,7 @@ PowerUp.prototype.render = function (ctx) {
     var image;
     switch (this.type) {
         case 1:
-            image = g_images.fireball;
+            image = g_images.fire;
             break;
         case 2:
             image = g_images.rope; // breyta í fire
