@@ -230,9 +230,12 @@ function requestPreloads() {
         blueball: "img/blueball.png",
         greenball: "img/greenball.png",
         background: "img/grassy.png",
+        background2: "img/background2.png",
+        background3: "img/background3.png",
         frontpage: "img/frontpage.png",
         rope : "img/rope.png",
         pair: "img/pair.png",
+        fire: "img/fire.png",
         cherry: "img/cherry.png",
         umbrella : "img/umbrella.png",
         klukka : "img/klukka.png",
@@ -254,6 +257,7 @@ function preloadDone() {
     g_sprites.blueball = new Sprite(g_images.blueball);
     g_sprites.ball = new Sprite(g_images.ball);
     g_sprites.pair = new Sprite(g_images.pair);
+    g_sprites.fire = new Sprite(g_images.fire);
     g_sprites.cherry = new Sprite(g_images.cherry);
     g_sprites.greenball = new Sprite(g_images.greenball);
     g_sprites.playericon = new Sprite(g_images.playericon);
