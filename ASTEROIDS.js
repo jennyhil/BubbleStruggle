@@ -189,14 +189,6 @@ function renderSimulation(ctx) {
             entityManager.render(ctx);
             levelManager.render(ctx);
 
-        } else if (g_levelWon) {
-            ctx.font = "60px VT323"
-            ctx.fillText("LEVEL COMPLETE", 400, 300);
-        } else if (g_gameWon) {
-            ctx.font = "60px VT323"
-            ctx.fillText("YOU WON!", 400, 300);
-            var gameOverDiv = document.getElementById("gameOver");
-            gameOverDiv.style.visibility = "visible";
         } else {
             ctx.font = "60px VT323"
             ctx.fillText("GAME OVER", 400, 300);

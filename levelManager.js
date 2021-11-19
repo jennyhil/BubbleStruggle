@@ -22,9 +22,9 @@ var levelManager = {
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
         this.addTimerToScore();
+        this.clearLevel();
 
         if (levels.level[this._levelID]) {
-            this.clearLevel();
             setTimeout(() => {
                 this.initLevel();
             }, 2000);
@@ -181,6 +181,19 @@ var levelManager = {
         var timeFillRatio = this._timeLeft / this._time;
         var timerHeight = 10;
         util.fillBox(ctx, 0, g_canvas.height - timerHeight, timeFillRatio * g_canvas.width, timerHeight, "red");
+
+        if (g_levelWon) {
+
+            if (g_gameWon) {
+                ctx.font = "60px VT323"
+                ctx.fillText("YOU WON!", 400, 300);
+                var gameOverDiv = document.getElementById("gameOver");
+                gameOverDiv.style.visibility = "visible";
+            } else {
+                ctx.font = "60px VT323"
+                ctx.fillText("LEVEL COMPLETE", 400, 300);
+            }
+        }
     },
 
     renderStart: function (ctx) {
