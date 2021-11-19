@@ -14,7 +14,7 @@ var levelManager = {
     _time: 0,
     _timeLeft: 0,
     _score: 0,
-    
+
 
     nextLevel: function () {
         //debugger;
@@ -26,16 +26,16 @@ var levelManager = {
 
         if (levels.level[this._levelID]) {
             setTimeout(() => {
-                if(levelManager._levelID==0 && entityManager._balls.length < 1) this.initLevel();
-                else if(levelManager._levelID!=0) this.initLevel();
+                if (levelManager._levelID == 0 && entityManager._balls.length < 1) this.initLevel();
+                else if (levelManager._levelID != 0) this.initLevel();
             }, 2000);
         }
         else {
             this.gameWon();
         }
-        
-       
-        
+
+
+
     },
 
     initLevel: function () {
@@ -52,7 +52,7 @@ var levelManager = {
     },
 
     resetLevel: function () {
-       
+
         this._score = 0;
         g_gameOver = false;
         g_sprites.bullet = new Sprite(g_images.fireball);
@@ -61,8 +61,8 @@ var levelManager = {
         this.clearLevel();
         gameStarted = true;
         this.initLevel();
-        
-      
+
+
     },
 
     clearLevel: function () {
@@ -78,7 +78,7 @@ var levelManager = {
 
     generatePlatforms: function () {
         var levelPlatforms = levels.level[this._levelID].platforms;
-        for(var i=0; i< levelPlatforms.length; i++) {
+        for (var i = 0; i < levelPlatforms.length; i++) {
             entityManager.generatePlatform({
                 cx: levelPlatforms[i].cx,
                 cy: levelPlatforms[i].cy
@@ -103,10 +103,9 @@ var levelManager = {
     initTimer: function () {
         this._time = levels.level[this._levelID].time;
         this._timeLeft = this._time;
-        
-        setInterval(() => {
-            if (!g_levelWon) this._timeLeft -= 50;
-        }, 50);
+            setInterval(() => {
+                if (!g_levelWon) this._timeLeft -= 50;
+            }, 50);
     },
 
     addTimerToScore: function () {
@@ -152,7 +151,7 @@ var levelManager = {
             this._levels[i] = level;
 
         }
-        
+
     },
 
     updateLevels: function () {
@@ -180,7 +179,7 @@ var levelManager = {
 
     render: function (ctx) {
         g_sprites.background[this._levelID].drawCentredAt(
-            ctx, ctx.canvas.width/2, ctx.canvas.height/20);
+            ctx, ctx.canvas.width / 2, ctx.canvas.height / 20);
         ctx.font = "60px VT323"
         ctx.fillText(this._score.toString(), 50, 50);
 
@@ -192,12 +191,12 @@ var levelManager = {
 
             if (g_gameWon) {
                 ctx.font = "60px VT323"
-                ctx.fillText("YOU WON!", 400, 300);
+                ctx.fillText("YOU WON!", 350, 300);
                 var gameOverDiv = document.getElementById("gameOver");
                 gameOverDiv.style.visibility = "visible";
             } else {
                 ctx.font = "60px VT323"
-                ctx.fillText("LEVEL COMPLETE", 400, 300);
+                ctx.fillText("LEVEL COMPLETE", 350, 300);
             }
         }
     },
@@ -206,7 +205,7 @@ var levelManager = {
         g_sprites.frontpage = new Sprite(g_images.frontpage);
         // Render player 1
         g_sprites.frontpage.drawCentredAt(
-            ctx, ctx.canvas.width/2, ctx.canvas.height/20);
+            ctx, ctx.canvas.width / 2, ctx.canvas.height / 20);
     }
 
 }
