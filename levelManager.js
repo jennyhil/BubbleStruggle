@@ -17,7 +17,7 @@ var levelManager = {
     
 
     nextLevel: function () {
-        debugger;
+        //debugger;
         g_levelWon = true;
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
@@ -26,10 +26,10 @@ var levelManager = {
 
         if (levels.level[this._levelID]) {
             setTimeout(() => {
-                this.initLevel();
+                if(levelManager._levelID==0 && entityManager._balls.length < 1) this.initLevel();
+                else if(levelManager._levelID!=0) this.initLevel();
             }, 2000);
         }
-
         else {
             this.gameWon();
         }
@@ -39,17 +39,20 @@ var levelManager = {
     },
 
     initLevel: function () {
-        debugger;
+        //debugger;
+        //entityManager.clearBalls();
         var gameOverDiv = document.getElementById("gameOver");
         gameOverDiv.style.visibility = "hidden";
 
         g_levelWon = false;
         this.generatePlatforms();
         this.generateBalls();
+
         this.initTimer();
     },
 
     resetLevel: function () {
+       
         this._score = 0;
         g_gameOver = false;
         g_sprites.bullet = new Sprite(g_images.fireball);
@@ -58,6 +61,8 @@ var levelManager = {
         this.clearLevel();
         gameStarted = true;
         this.initLevel();
+        
+      
     },
 
     clearLevel: function () {
@@ -66,10 +71,9 @@ var levelManager = {
     },
 
     playFinishedLevel: function (id) {
-        debugger;
-        
+        //debugger;
         this._levelID = id;
-        this.resetLevel();
+        resetLevel();
     },
 
     generatePlatforms: function () {
@@ -154,7 +158,7 @@ var levelManager = {
     updateLevels: function () {
         var allLevels = levels.level;
         var levelDiv = document.getElementById("levels");
-        debugger;
+        //debugger;
         for (let i = 0; i < allLevels.length; i++) {
             var level = levelDiv.children[i];
             level.disabled = !allLevels[i].isFinished;
@@ -199,21 +203,10 @@ var levelManager = {
     },
 
     renderStart: function (ctx) {
-        // For now a shitty mock up starting page
-        util.fillBox(ctx, 0, 0, ctx.canvas.width, ctx.canvas.height, "teal");
-        ctx.fillStyle="black";
-        ctx.font ="40px VT323";
-        var txt = "Press S to start";
-
         g_sprites.frontpage = new Sprite(g_images.frontpage);
         // Render player 1
         g_sprites.frontpage.drawCentredAt(
             ctx, ctx.canvas.width/2, ctx.canvas.height/20);
-
-        ctx.fillText(txt,g_canvas.width/2- ctx.measureText(txt).width/2,g_canvas.height-40);
-        // Render player 2
-       // g_sprites.player2.drawCentredAt(
-            //ctx, ctx.canvas.width / 2 + 10, ctx.canvas.height / 2);
     }
 
 }

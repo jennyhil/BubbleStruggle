@@ -210,6 +210,7 @@ var entityManager = {
                 aCategory == this._balls)
                 continue;
             for (var i = 0; i < aCategory.length; ++i) {
+                
 
                 aCategory[i].render(ctx);
             }

@@ -11,11 +11,12 @@ var levels = {
             ],
             balls: [
                 {
-                    cx: 500,
+                    cx: 300,
                     cy: 300,
                     scale: 2,
                     color: "red"
-                }
+                },
+                
             ]
             },
             { // Level 2

@@ -191,8 +191,7 @@ function renderSimulation(ctx) {
         if (!g_gameOver) {
             levelManager.render(ctx);
             entityManager.render(ctx);
-
-
+ 
         } else if (g_levelWon) {
             ctx.font = "60px VT323"
             ctx.fillText("LEVEL COMPLETE", 400, 300);
