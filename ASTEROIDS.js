@@ -114,16 +114,15 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_TWO_PLAYER = keyCode('T');
-var KEY_NEXT_LEVEL = keyCode('N');
 var KEY_START = keyCode('S')
 var KEY_NEXTLVL = keyCode('N');
 
 var twoPlayer = false;
 var gameStarted = false;
 var g_levelWon = false;
-var g_nextLevel = false;
 
 var BTN_PLAYAGAIN = document.getElementById("playAgainBtn");
+var BTN_HOMEPAGE = document.getElementById("homePage");
 
 function processDiagnostics() {
 
@@ -145,7 +144,6 @@ function processDiagnostics() {
     if (eatKey(KEY_NEXTLVL)) levelManager.nextLevel();
 
     if (eatKey(KEY_START)) gameStarted = true;
-    if(eatKey(KEY_NEXT_LEVEL)) g_nextLevel = true;
 
     if (eatKey(KEY_TWO_PLAYER) && !twoPlayer) {
         entityManager.generatePlayer({
@@ -184,8 +182,8 @@ function renderSimulation(ctx) {
     levelManager.renderStart(ctx);
     if(gameStarted){
         ctx.drawImage(g_images.background, 0, 0);
-        var gameOverDiv = document.getElementById("levels");
-        gameOverDiv.style.visibility = "hidden";
+        var levelDiv = document.getElementById("levels");
+        levelDiv.style.visibility = "hidden";
         if (!g_gameOver) {
             entityManager.render(ctx);
             levelManager.render(ctx);
@@ -264,7 +262,7 @@ function preloadDone() {
     g_sprites.player2icon = new Sprite(g_images.player2icon);
     g_sprites.frontpage = new Sprite(g_images.frontpage);
 
-    g_sprites.bullet = new Sprite(g_images.fire);
+    g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
    /* g_sprites.bullet = new Sprite(g_images.rope);
     g_sprites.bullet.scale = 0.25;*/
@@ -275,6 +273,7 @@ function preloadDone() {
     //levelManager.initLevel();
     
     BTN_PLAYAGAIN.onclick = resetLevel;
+    BTN_HOMEPAGE.onclick = goToHomePage;
     levelManager._levels.forEach(level => {
         
         level.onclick = clickLevel;
@@ -285,6 +284,15 @@ function preloadDone() {
 
 function resetLevel() {
     levelManager.resetLevel();
+}
+
+function goToHomePage() {
+    var gameOverDiv = document.getElementById("gameOver");
+    gameOverDiv.style.visibility = "hidden";
+    var levelDiv = document.getElementById("levels");
+    levelDiv.style.visibility = "visible";
+    gameStarted = false;
+    levelManager.updateLevels();
 }
 
 function clickLevel(e) {

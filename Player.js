@@ -414,6 +414,7 @@ Player.prototype.render = function (ctx) {
 
     if (this.shieldActive) {
         ctx.strokeStyle = "red";
+        ctx.lineWidth = 4;
         util.strokeCircle(ctx, this.cx, this.cy-50, 60); // TODO: find dynamic radius value
     }
 };

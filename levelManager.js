@@ -17,9 +17,11 @@ var levelManager = {
     
 
     nextLevel: function () {
+        debugger;
+        g_levelWon = true;
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
-
+        
         this.clearLevel();
         this.addTimerToScore();
         setTimeout(() => {
@@ -29,6 +31,7 @@ var levelManager = {
     },
 
     initLevel: function () {
+        debugger;
         var gameOverDiv = document.getElementById("gameOver");
         gameOverDiv.style.visibility = "hidden";
 
@@ -42,6 +45,8 @@ var levelManager = {
         this._score = 0;
         g_gameOver = false;
         createInitialPlayer();
+        g_sprites.bullet = new Sprite(g_images.fireball);
+        g_sprites.bullet.scale = 0.25;
         this.clearLevel();
         this.initLevel();
     },
@@ -54,6 +59,7 @@ var levelManager = {
     playFinishedLevel: function (id) {
         debugger;
         this._levelID = id;
+        g_gameOver = false;
         gameStarted = true;
         this.initLevel();
     },
@@ -121,20 +127,30 @@ var levelManager = {
     },
 
     setUpLevels: function () {
-        if (this._levels.length === 0) {
-            var allLevels = levels.level;
-            var levelDiv = document.getElementById("levels");
-            for (let i = 0; i < allLevels.length; i++) {
-                var level = document.createElement('button');
-                level.id = i;
-                level.innerHTML = i + 1;
-                level.disabled = !allLevels[i].isFinished;
-                level.onclick = this.clickLevel;
-                levelDiv.appendChild(level);
+        var allLevels = levels.level;
+        var levelDiv = document.getElementById("levels");
+        for (let i = 0; i < allLevels.length; i++) {
+            var level = document.createElement('button');
+            level.id = i;
+            level.innerHTML = i + 1;
+            level.disabled = !allLevels[i].isFinished;
+            level.onclick = this.clickLevel;
+            levelDiv.appendChild(level);
 
-                this._levels[i] = level;
+            this._levels[i] = level;
 
-            }
+        }
+        
+    },
+
+    updateLevels: function () {
+        var allLevels = levels.level;
+        var levelDiv = document.getElementById("levels");
+        debugger;
+        for (let i = 0; i < allLevels.length; i++) {
+            var level = levelDiv.children[i];
+            level.disabled = !allLevels[i].isFinished;
+
         }
     },
 
