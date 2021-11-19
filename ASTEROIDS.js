@@ -100,6 +100,7 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
 var g_gameOver = false;
+var g_frontPage = true;
 var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -178,15 +179,18 @@ function processDiagnostics() {
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-    
-    levelManager.renderStart(ctx);
+    if (g_frontPage) {
+        levelManager.renderStart(ctx);
+    }
     if(gameStarted){
-        ctx.drawImage(g_images.background, 0, 0);
-        var levelDiv = document.getElementById("levels");
-        levelDiv.style.visibility = "hidden";
+        g_frontPage = false;
+        //ctx.drawImage(g_images.background, 0, 0);
+        var gameOverDiv = document.getElementById("levels");
+        gameOverDiv.style.visibility = "hidden";
         if (!g_gameOver) {
-            entityManager.render(ctx);
             levelManager.render(ctx);
+            entityManager.render(ctx);
+            
 
         } else if (g_levelWon) {
             ctx.font = "60px VT323"
@@ -261,7 +265,10 @@ function preloadDone() {
     g_sprites.playericon = new Sprite(g_images.playericon);
     g_sprites.player2icon = new Sprite(g_images.player2icon);
     g_sprites.frontpage = new Sprite(g_images.frontpage);
-
+    g_sprites.background = [];
+    g_sprites.background[0] = new Sprite(g_images.background);
+    g_sprites.background[1] = new Sprite(g_images.background2);
+    g_sprites.background[2] = new Sprite(g_images.background3);
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
    /* g_sprites.bullet = new Sprite(g_images.rope);
@@ -287,6 +294,7 @@ function resetLevel() {
 }
 
 function goToHomePage() {
+    g_frontPage = true;
     var gameOverDiv = document.getElementById("gameOver");
     gameOverDiv.style.visibility = "hidden";
     var levelDiv = document.getElementById("levels");

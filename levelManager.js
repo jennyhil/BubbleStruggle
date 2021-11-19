@@ -163,6 +163,8 @@ var levelManager = {
     },
 
     render: function (ctx) {
+        g_sprites.background[this._levelID].drawCentredAt(
+            ctx, ctx.canvas.width/2, ctx.canvas.height/20);
         ctx.font = "60px VT323"
         ctx.fillText(this._score.toString(), 50, 50);
 

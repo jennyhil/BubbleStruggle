@@ -40,6 +40,21 @@ function Platform(descr) {
     }
     return false
  }
+
+ Platform.prototype.collidesWithPlatform = function(posX,posY,radius) {
+   var distX = Math.abs(posX - this.cx - this.width/2);
+   var distY = Math.abs(posY - this.cy - this.height/2);
+   var dx = distX - this.width/2;
+   var dy = distY - this.height/2;
+
+   if (distX > (this.width/2 + radius)) return false;
+   if (distY > (this.height/2 + radius)) return false;
+
+   if (distX <= this.width/2) return true;
+   if (distY <= this.height/2) return true;
+   if (dx*dx+dy*dy <= radius * radius) return true;
+}
+
  Platform.prototype.collidesWith = function (posX, posY, width, height) {
     var halfWidth = width / 2;
     var halfHeight = height / 2;
