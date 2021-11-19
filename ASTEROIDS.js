@@ -101,6 +101,7 @@ var g_renderSpatialDebug = false;
 var g_bulletType = 1;
 var g_gameOver = false;
 var g_frontPage = true;
+var g_gameWon = false;
 var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -190,7 +191,7 @@ function renderSimulation(ctx) {
         if (!g_gameOver) {
             levelManager.render(ctx);
             entityManager.render(ctx);
-            
+
 
         } else if (g_levelWon) {
             ctx.font = "60px VT323"

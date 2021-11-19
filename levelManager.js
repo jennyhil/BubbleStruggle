@@ -21,12 +21,20 @@ var levelManager = {
         g_levelWon = true;
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
-        
-        this.clearLevel();
         this.addTimerToScore();
-        setTimeout(() => {
-            this.initLevel();
-        }, 2000);
+        this.clearLevel();
+
+        if (levels.level[this._levelID]) {
+            setTimeout(() => {
+                this.initLevel();
+            }, 2000);
+        }
+
+        else {
+            this.gameWon();
+        }
+        
+       
         
     },
 
@@ -44,10 +52,11 @@ var levelManager = {
     resetLevel: function () {
         this._score = 0;
         g_gameOver = false;
-        createInitialPlayer();
         g_sprites.bullet = new Sprite(g_images.fireball);
         g_sprites.bullet.scale = 0.25;
+        if (entityManager._players.length == 0) createInitialPlayer();
         this.clearLevel();
+        gameStarted = true;
         this.initLevel();
     },
 
@@ -58,10 +67,9 @@ var levelManager = {
 
     playFinishedLevel: function (id) {
         debugger;
+        
         this._levelID = id;
-        g_gameOver = false;
-        gameStarted = true;
-        this.initLevel();
+        this.resetLevel();
     },
 
     generatePlatforms: function () {
@@ -150,12 +158,16 @@ var levelManager = {
         for (let i = 0; i < allLevels.length; i++) {
             var level = levelDiv.children[i];
             level.disabled = !allLevels[i].isFinished;
-
         }
     },
 
     gameOver: function () {
         g_gameOver = true;
+    },
+
+    gameWon: function () {
+        console.log("game won");
+        g_gameWon = true;
     },
 
     update: function () {
@@ -171,6 +183,19 @@ var levelManager = {
         var timeFillRatio = this._timeLeft / this._time;
         var timerHeight = 10;
         util.fillBox(ctx, 0, g_canvas.height - timerHeight, timeFillRatio * g_canvas.width, timerHeight, "red");
+
+        if (g_levelWon) {
+
+            if (g_gameWon) {
+                ctx.font = "60px VT323"
+                ctx.fillText("YOU WON!", 400, 300);
+                var gameOverDiv = document.getElementById("gameOver");
+                gameOverDiv.style.visibility = "visible";
+            } else {
+                ctx.font = "60px VT323"
+                ctx.fillText("LEVEL COMPLETE", 400, 300);
+            }
+        }
     },
 
     renderStart: function (ctx) {
