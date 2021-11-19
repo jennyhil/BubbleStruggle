@@ -19,7 +19,7 @@ var levels = {
                 ]
             },
             { // Level 2
-                time: 60000,
+                time: 120000,
                 isFinished: false,
                 platforms: [
                     {
@@ -51,7 +51,7 @@ var levels = {
                 ]
             },
             { // Level 3
-                time: 50000,
+                time: 100000,
                 isFinished: false,
                 platforms: [
                     {
@@ -87,7 +87,7 @@ var levels = {
                 ]
             },
             { // Level 4
-                time: 60000,
+                time: 120000,
                 isFinished: false,
                 platforms: [
                     {
@@ -124,7 +124,7 @@ var levels = {
                 ]
             },
             { // Level 5
-                time: 65000,
+                time: 130000,
                 isFinished: false,
                 platforms: [
                     {
@@ -161,7 +161,7 @@ var levels = {
                 ]
             },
             { // Level 5
-                time: 70000,
+                time: 140000,
                 isFinished: false,
                 platforms: [
                     {
