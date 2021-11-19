@@ -296,6 +296,7 @@ function goToHomePage() {
 }
 
 function clickLevel(e) {
+    debugger;
     var id = parseInt(this.id);
     levelManager.playFinishedLevel(id);
     console.log(id);

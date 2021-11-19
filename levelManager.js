@@ -44,10 +44,11 @@ var levelManager = {
     resetLevel: function () {
         this._score = 0;
         g_gameOver = false;
-        createInitialPlayer();
         g_sprites.bullet = new Sprite(g_images.fireball);
         g_sprites.bullet.scale = 0.25;
+        if (entityManager._players.length == 0) createInitialPlayer();
         this.clearLevel();
+        gameStarted = true;
         this.initLevel();
     },
 
@@ -58,10 +59,9 @@ var levelManager = {
 
     playFinishedLevel: function (id) {
         debugger;
+        
         this._levelID = id;
-        g_gameOver = false;
-        gameStarted = true;
-        this.initLevel();
+        this.resetLevel();
     },
 
     generatePlatforms: function () {
