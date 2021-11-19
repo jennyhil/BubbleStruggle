@@ -100,6 +100,7 @@ var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_bulletType = 1;
 var g_gameOver = false;
+var g_gameWon = false;
 var KEY_MIXED = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
@@ -191,6 +192,11 @@ function renderSimulation(ctx) {
         } else if (g_levelWon) {
             ctx.font = "60px VT323"
             ctx.fillText("LEVEL COMPLETE", 400, 300);
+        } else if (g_gameWon) {
+            ctx.font = "60px VT323"
+            ctx.fillText("YOU WON!", 400, 300);
+            var gameOverDiv = document.getElementById("gameOver");
+            gameOverDiv.style.visibility = "visible";
         } else {
             ctx.font = "60px VT323"
             ctx.fillText("GAME OVER", 400, 300);

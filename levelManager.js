@@ -21,12 +21,20 @@ var levelManager = {
         g_levelWon = true;
         levels.level[this._levelID].isFinished = true;
         this._levelID++;
-        
-        this.clearLevel();
         this.addTimerToScore();
-        setTimeout(() => {
-            this.initLevel();
-        }, 2000);
+
+        if (levels.level[this._levelID]) {
+            this.clearLevel();
+            setTimeout(() => {
+                this.initLevel();
+            }, 2000);
+        }
+
+        else {
+            this.gameWon();
+        }
+        
+       
         
     },
 
@@ -150,12 +158,16 @@ var levelManager = {
         for (let i = 0; i < allLevels.length; i++) {
             var level = levelDiv.children[i];
             level.disabled = !allLevels[i].isFinished;
-
         }
     },
 
     gameOver: function () {
         g_gameOver = true;
+    },
+
+    gameWon: function () {
+        console.log("game won");
+        g_gameWon = true;
     },
 
     update: function () {
