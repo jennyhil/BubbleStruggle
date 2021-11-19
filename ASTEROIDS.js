@@ -235,6 +235,9 @@ function requestPreloads() {
         background: "img/grassy.png",
         background2: "img/background2.png",
         background3: "img/background3.png",
+        background4: "img/milky-way.jpg",
+        background5: "img/background5.png",
+        background6: "img/background6.png",
         frontpage: "img/frontpage.png",
         rope : "img/rope.png",
         pair: "img/pair.png",
@@ -270,6 +273,9 @@ function preloadDone() {
     g_sprites.background[0] = new Sprite(g_images.background);
     g_sprites.background[1] = new Sprite(g_images.background2);
     g_sprites.background[2] = new Sprite(g_images.background3);
+    g_sprites.background[3] = new Sprite(g_images.background4);
+    g_sprites.background[4] = new Sprite(g_images.background5);
+    g_sprites.background[5] = new Sprite(g_images.background6);
     g_sprites.bullet = new Sprite(g_images.fireball);
     g_sprites.bullet.scale = 0.25;
    /* g_sprites.bullet = new Sprite(g_images.rope);

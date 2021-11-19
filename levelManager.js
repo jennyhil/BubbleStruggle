@@ -39,7 +39,6 @@ var levelManager = {
     },
 
     initLevel: function () {
-        debugger;
         var gameOverDiv = document.getElementById("gameOver");
         gameOverDiv.style.visibility = "hidden";
 
@@ -73,7 +72,7 @@ var levelManager = {
     },
 
     generatePlatforms: function () {
-        var levelPlatforms = levels.level[this._levelID].platforms;
+        var levelPlatforms = levels.level[this._levelID-1].platforms;
         for(var i=0; i< levelPlatforms.length; i++) {
             entityManager.generatePlatform({
                 cx: levelPlatforms[i].cx,
@@ -83,7 +82,7 @@ var levelManager = {
     },
 
     generateBalls: function () {
-        var currentLevelBalls = levels.level[this._levelID].balls;
+        var currentLevelBalls = levels.level[this._levelID-1].balls;
         var ballScale = 2;
         for (var i = 0; i < currentLevelBalls.length; i++) {
             if (currentLevelBalls[i].scale) ballScale = currentLevelBalls[i].scale;
@@ -97,7 +96,7 @@ var levelManager = {
     },
 
     initTimer: function () {
-        this._time = levels.level[this._levelID].time;
+        this._time = levels.level[this._levelID-1].time;
         this._timeLeft = this._time;
         
         setInterval(() => {
@@ -175,7 +174,7 @@ var levelManager = {
     },
 
     render: function (ctx) {
-        g_sprites.background[this._levelID].drawCentredAt(
+        g_sprites.background[this._levelID-1].drawCentredAt(
             ctx, ctx.canvas.width/2, ctx.canvas.height/20);
         ctx.font = "60px VT323"
         ctx.fillText(this._score.toString(), 50, 50);
