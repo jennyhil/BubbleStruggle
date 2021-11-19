@@ -40,7 +40,6 @@ var levelManager = {
 
     initLevel: function () {
         //debugger;
-        //entityManager.clearBalls();
         var gameOverDiv = document.getElementById("gameOver");
         gameOverDiv.style.visibility = "hidden";
 
